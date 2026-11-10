@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Как сделать страницу устава с помощью нейросети · «КрокоМетрика»</title>
+<link rel="icon" href="../../img/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--page:#eceef2;--bar:#fff;--card:#fff;--line:#d9dde6;--ink:#1a2130;--ink-2:#5d6676;--ink-3:#8a92a1;--acc:#1f5f45;--acc-soft:#e3f0e8;
+  --ch-bg:#f6dedb;--ch-fg:#a3302b;--warn:#a2581a;--warn-soft:#f8ebde;--code:#f4f5f8;
+  --f:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root{--page:#12151b;--bar:#181c24;--card:#1b2029;--line:#2e3542;--ink:#e6e9ef;--ink-2:#a2abba;--ink-3:#727b8b;--acc:#6cc69a;--acc-soft:#16301f;
+  --ch-bg:#3a1c19;--ch-fg:#f0897f;--warn:#e3a468;--warn-soft:#3a2818;--code:#141820;color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--page);color:var(--ink);font:15px/1.55 var(--f);padding-bottom:48px}
+a{color:var(--acc)}
+.top{background:var(--bar);border-bottom:1px solid var(--line)}
+.top-in{max-width:900px;margin:0 auto;padding:10px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto;text-decoration:none;color:inherit}
+.brand img{width:34px;height:34px;border-radius:9px}
+.brand b{display:block;font-size:15px}.brand small{display:block;font-size:12px;color:var(--ink-2)}
+.top nav{display:flex;gap:14px;font-size:13.5px;font-weight:500}
+.top nav a{text-decoration:none}
+main{max-width:900px;margin:0 auto;padding:0 16px}
+h1{font-size:clamp(23px,3.4vw,31px);line-height:1.2;margin:6px 0 8px;text-wrap:balance}
+.hw{display:inline-block;margin-top:26px;padding:4px 12px;border-radius:7px;background:var(--acc);color:#fff;font-weight:600;font-size:14px;letter-spacing:.02em}
+@media (prefers-color-scheme:dark){.hw{color:#0e1a13}}
+.lead{font-size:16.5px;color:var(--ink-2);margin:0 0 18px;max-width:68ch}
+.deadline{display:flex;flex-wrap:wrap;gap:8px 22px;padding:12px 16px;border-radius:10px;background:var(--card);border:1px solid var(--line);font-size:14px}
+.deadline b{font-weight:600}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0 6px;font-size:13px}
+.flow span{padding:6px 11px;border-radius:999px;background:var(--card);border:1px solid var(--line);white-space:nowrap}
+.flow span.k{background:var(--acc-soft);border-color:transparent;color:var(--acc);font-weight:600}
+.flow span.c{background:var(--ch-bg);border-color:transparent;color:var(--ch-fg);font-weight:600}
+.flow i{font-style:normal;color:var(--ink-3)}
+.step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:0 14px;margin-top:30px}
+.step>.no{width:36px;height:36px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px}
+@media (prefers-color-scheme:dark){.step>.no{color:#0e1a13}}
+.step h2{font-size:19px;margin:5px 0 6px;line-height:1.3}
+.step p{margin:0 0 10px;max-width:70ch}
+.step ul,.step ol{margin:4px 0 12px;padding-left:1.25em;max-width:70ch}
+.step li{margin:4px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0 12px}
+.note{border-left:3px solid var(--warn);background:var(--warn-soft);padding:10px 14px;border-radius:0 8px 8px 0;margin:10px 0 12px;font-size:14px;max-width:72ch}
+.why{border:1px dashed var(--acc);border-radius:12px;padding:14px 18px;margin:30px 0 0;background:var(--card)}
+.why h2{font-size:16px;margin:0 0 6px;color:var(--acc)}
+.why p{margin:0 0 8px;max-width:72ch}.why p:last-child{margin:0}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:9px;background:var(--acc);color:#fff;font-weight:600;text-decoration:none;font-size:14.5px;border:0;cursor:pointer;font-family:inherit}
+@media (prefers-color-scheme:dark){.btn{color:#0e1a13}}
+.btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn.ghost{background:transparent;color:var(--acc);border:1px solid var(--acc);padding:6px 12px;font-size:13px}
+.copybox{position:relative;margin:8px 0 12px}
+.copybox pre{margin:0;background:var(--code);border:1px solid var(--line);border-radius:10px;padding:46px 16px 14px;font:13px/1.55 var(--mono);white-space:pre-wrap;word-break:break-word;max-height:420px;overflow:auto}
+.copybox .btn{position:absolute;top:8px;right:8px}
+.copybox .btn.ok{background:var(--acc);color:#fff}
+figure{margin:12px 0 14px}
+figure img{display:block;max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line)}
+figcaption{font-size:12.5px;color:var(--ink-3);margin-top:6px}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.pair figure{margin:0}
+/* макет окна чата */
+.chat{border:1px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden;font-size:13.5px}
+.chat .hd{display:flex;align-items:center;gap:6px;padding:8px 12px;border-bottom:1px solid var(--line);color:var(--ink-3);font-size:12px}
+.chat .hd i{width:10px;height:10px;border-radius:50%;background:var(--line)}
+.chat .bd{padding:14px;display:grid;gap:10px}
+.msg{justify-self:end;max-width:88%;background:var(--acc-soft);border-radius:14px 14px 4px 14px;padding:10px 13px}
+.msg.ai{justify-self:start;background:var(--code);border-radius:14px 14px 14px 4px}
+.file{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card);border-radius:9px;padding:6px 10px;margin-bottom:8px;font-size:12.5px}
+.file b{display:block;font-weight:600}.file small{color:var(--ink-3)}
+.file .ic{width:26px;height:30px;border-radius:4px;background:var(--ch-bg);color:var(--ch-fg);display:grid;place-items:center;font:600 9px var(--mono)}
+.codeblk{border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-top:6px}
+.codeblk .t{display:flex;justify-content:space-between;align-items:center;padding:5px 10px;background:var(--line);font:12px var(--mono);color:var(--ink-2)}
+.codeblk .t span.cp{background:var(--card);border-radius:5px;padding:1px 8px;color:var(--ink);font-family:var(--f);outline:2px solid var(--warn);outline-offset:1px}
+.codeblk pre{margin:0;padding:8px 10px;font:11.5px/1.5 var(--mono);color:var(--ink-2);white-space:pre;overflow:hidden}
+.arrow{position:relative}
+.hl{outline:2px solid var(--warn);outline-offset:2px;border-radius:6px}
+/* макет «Сохранить как» */
+.save{border:1px solid var(--line);border-radius:10px;background:var(--card);font-size:13px;max-width:460px}
+.save .hd{padding:7px 12px;border-bottom:1px solid var(--line);font-weight:600;font-size:12.5px}
+.save .rw{display:grid;grid-template-columns:110px 1fr;gap:8px;align-items:center;padding:6px 12px}
+.save .rw span{color:var(--ink-2)}
+.save .rw b{font-weight:500;border:1px solid var(--line);border-radius:5px;padding:3px 8px;background:var(--code);font-family:var(--mono);font-size:12.5px}
+.save .ft{display:flex;justify-content:flex-end;padding:8px 12px 10px}
+.save .ft i{font-style:normal;background:var(--acc);color:#fff;border-radius:6px;padding:4px 14px}
+table.ways{border-collapse:collapse;width:100%;font-size:14px;margin:6px 0 12px}
+table.ways th,table.ways td{text-align:left;vertical-align:top;padding:8px 10px 8px 0;border-bottom:1px solid var(--line)}
+table.ways th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);font-weight:600}
+.check{list-style:none;padding:0!important;margin:6px 0 12px!important}
+.check li{margin:0!important;border-bottom:1px solid var(--line)}
+.check label{display:grid;grid-template-columns:22px 1fr;gap:10px;padding:9px 2px;cursor:pointer}
+.check input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--acc)}
+.check input:checked+span{color:var(--ink-3);text-decoration:line-through}
+.prog{font-size:13px;color:var(--ink-2);margin-top:4px}
+details.fix{border:1px solid var(--line);border-radius:10px;background:var(--card);margin:8px 0;padding:0 14px}
+details.fix>summary{cursor:pointer;padding:11px 0;font-weight:600}
+details.fix[open]>summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+details.fix p{margin:0 0 8px}
+.todo{background:#fff3b0;color:#4a3b00;padding:0 4px;border-radius:3px;font-weight:600}
+kbd{font:12px var(--mono);border:1px solid var(--line);border-bottom-width:2px;border-radius:4px;padding:0 5px;background:var(--code)}
+@media (max-width:560px){.step{grid-template-columns:1fr}.step>.no{margin-bottom:6px}.save .rw{grid-template-columns:90px 1fr}}
+</style>
+</head>
+<body>
+<header class="top"><div class="top-in">
+  <a class="brand" href="../../"><img src="../../img/logo.svg" alt=""><span><b>Проект «КрокоМетрика»</b><small>Домашнее задание №1 · инструкция</small></span></a>
+  <nav><a href="../../">Портал проекта →</a><a href="../">Вводные →</a></nav>
+</div></header>
+
+<main>
+<div class="hw">Домашнее задание №1 · Устав проекта</div>
+<h1>Как сделать страницу устава с помощью нейросети</h1>
+<p class="lead">Вы пишете устав проекта, а нейросеть упаковывает его в страницу портала: HTML-файл в оформлении, как у бизнес-кейса. Нейросеть может быть любой: Claude, ChatGPT, DeepSeek, GigaChat, Алиса.</p>
+
+<div class="deadline">
+  <span>Сдать: <b>один файл <code>ustav-фамилия.html</code></b></span>
+  <span>Срок: <b>15 ноября, 14:00 МСК</b> включительно</span>
+  <span>Куда: <b><a href="#" class="todo">ссылка на форму</a></b></span>
+</div>
+
+<div class="flow" aria-label="Порядок работы">
+  <span>Вводные и бизнес-документы</span><i>→</i><span class="k">Ваш текст устава</span><i>→</i><span>Шаблон + текст → нейросеть</span><i>→</i><span class="c">ustav-фамилия.html</span><i>→</i><span>Проверка в браузере</span><i>→</i><span>Форма</span>
+</div>
+
+<section class="step"><div class="no">1</div><div>
+  <h2>Скачайте шаблон страницы устава</h2>
+  <p>Это та же страница, что на портале во вкладке «Устав», только в виде файла. В начале файла записана инструкция для нейросети: что можно менять, а что нельзя. Вам её править не нужно.</p>
+  <p><a class="btn" href="../ustav-template.html" download="ustav-template.html"><svg viewBox="0 0 24 24"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 19h16"/></svg>Скачать ustav-template.html</a></p>
+  <div class="pair">
+    <figure><img src="before.png" alt="Шаблон устава: разделы с подсказками и пустыми полями" loading="lazy"><figcaption>Шаблон: в каждом разделе есть подсказка и пустое поле.</figcaption></figure>
+    <figure><img src="after.png" alt="Те же разделы после заполнения" loading="lazy"><figcaption>После нейросети: подсказок нет, текст оформлен (на картинке текст условный).</figcaption></figure>
+  </div>
+</div></section>
+
+<section class="step"><div class="no">2</div><div>
+  <h2>Напишите текст устава. Это главная часть задания</h2>
+  <p>Изучите вводные: письмо, голосовое, рабочий чат, бизнес-кейс и план выгод. Запишите содержание устава обычным текстом в Word, Google Docs или заметках. Нейросеть можно использовать как собеседника, но за решения отвечаете вы. Ищите в материалах сроки, суммы, полномочия и <b>противоречия</b> между стейкхолдерами.</p>
+  <p>Вот заготовка по разделам шаблона. Скопируйте её и заполните:</p>
+  <div class="copybox"><button class="btn ghost" data-copy="draft">Копировать</button><pre id="draft">УСТАВ ПРОЕКТА «КрокоМетрика» — черновик
+
+ШАПКА: версия, статус, действует с, спонсор, заказчик, исполнитель, доступ к документу, кто утверждает (должность, ФИО)
+
+1. Обоснование проекта:
+
+2. Цели (измеримые):
+   Проект успешен, если:
+
+3. Входит в проект:
+   Не входит в проект:
+
+4. Основные результаты (поставки):
+
+5. Ключевые вехи (веха — день проекта Д… — почему её нельзя сдвинуть):
+
+6. Бюджет: итоговая сумма, из чего складывается, где резервы и кто ими распоряжается:
+
+7. Высокоуровневые требования:
+
+8. Допущения:
+   Ограничения:
+
+9. Терминирующие риски:
+
+10. Руководитель проекта и полномочия (кем назначен, финансовые полномочия, кто решает по изменениям, кто принимает работу, о чём и кому сообщать немедленно):
+
+11. Ключевые стейкхолдеры (спонсор, заказчик, руководитель проекта):
+
+12. Критерии завершения проекта:</pre></div>
+  <div class="note">Сроки в проекте считаются в рабочих днях: <b>Д55</b> — это 55-й рабочий день проекта. Пишите их так. Календарные даты портал подставит сам.</div>
+</div></section>
+
+<section class="step"><div class="no">3</div><div>
+  <h2>Отдайте шаблон и текст нейросети</h2>
+  <p>Откройте новый чат. <b>Прикрепите файл</b> <code>ustav-template.html</code> (скрепка или «+» рядом с полем ввода), вставьте промпт, а под ним свой текст устава:</p>
+  <div class="copybox"><button class="btn ghost" data-copy="prompt">Копировать</button><pre id="prompt">Во вложении — шаблон страницы «Устав проекта» нашего корпоративного портала (файл ustav-template.html). В начале файла есть инструкция для тебя — выполни её точно.
+
+Ниже — текст моего устава по разделам. Перенеси его в шаблон и верни один полный HTML-файл.
+
+=== ТЕКСТ УСТАВА ===
+(вставьте сюда свой текст)</pre></div>
+  <div class="chat" aria-label="Пример: как выглядит сообщение нейросети">
+    <div class="hd"><i></i><i></i><i></i><span style="margin-left:6px">Новый чат</span></div>
+    <div class="bd">
+      <div class="msg"><div class="file hl"><span class="ic">HTML</span><span><b>ustav-template.html</b><small>15 КБ</small></span></div>
+        <div>Во вложении — шаблон страницы «Устав проекта» нашего корпоративного портала… выполни её точно.<br><br>=== ТЕКСТ УСТАВА ===<br>УСТАВ ПРОЕКТА «КрокоМетрика» — черновик<br>1. Обоснование проекта: …</div></div>
+      <div class="msg ai">Готово. Вот заполненная страница устава.
+        <div class="codeblk"><div class="t"><span>html</span><span class="cp">Копировать</span></div><pre>&lt;!doctype html&gt;
+&lt;html lang="ru"&gt;
+&lt;head&gt; …</pre></div>
+        <div style="margin-top:8px">Пометил [НЕТ ДАННЫХ]: раздел 9 — … Заметил противоречие: …</div></div>
+    </div>
+  </div>
+  <p style="margin-top:12px"><b>Нейросеть не принимает файлы?</b> Откройте <code>ustav-template.html</code> в Блокноте, скопируйте всё содержимое и вставьте в конец сообщения после строки <code>=== ШАБЛОН ===</code>. В промпте замените «Во вложении» на «Ниже».</p>
+  <p><b>Обязательно прочитайте, что нейросеть написала после файла.</b> Она перечислит поля, для которых не нашла данных, и противоречия, которые заметила. С ними нужно разобраться вам: вернитесь к вводным, допишите текст и попросите обновить страницу.</p>
+</div></section>
+
+<section class="step"><div class="no">4</div><div>
+  <h2>Сохраните результат в файл</h2>
+  <table class="ways">
+    <thead><tr><th>Что выдала нейросеть</th><th>Что делать</th></tr></thead>
+    <tbody>
+      <tr><td>Файл или окно с готовой страницей и кнопкой «Скачать»</td><td>Скачайте и переименуйте в <code>ustav-фамилия.html</code>.</td></tr>
+      <tr><td>Код в окне чата</td><td>Нажмите «Копировать» над кодом и вставьте в Блокнот. Сохраните, как на картинке ниже.</td></tr>
+    </tbody>
+  </table>
+  <div class="pair">
+    <div class="save" aria-label="Пример окна сохранения в Блокноте">
+      <div class="hd">Блокнот (Windows): Файл → Сохранить как</div>
+      <div class="rw"><span>Имя файла</span><b>ustav-ivanov.html</b></div>
+      <div class="rw"><span>Тип файла</span><b>Все файлы (*.*)</b></div>
+      <div class="rw"><span>Кодировка</span><b>UTF-8</b></div>
+      <div class="ft"><i>Сохранить</i></div>
+    </div>
+    <div class="card" style="margin:0;font-size:14px">
+      <b>Mac, TextEdit:</b> сначала <i>Формат → Конвертировать в простой текст</i> (<kbd>⇧</kbd><kbd>⌘</kbd><kbd>T</kbd>), затем <i>Файл → Сохранить</i>. Имя файла <code>ustav-ivanov.html</code>, кодировка «Юникод (UTF-8)». Если система спросит, какое расширение оставить, выберите <code>.html</code>.
+    </div>
+  </div>
+  <div class="note"><b>Превью в чате может выглядеть «голым»:</b> без цветов и верхнего меню. Это нормально. Оформление и меню подгружаются с сайта портала, а превью в чате часто их блокирует. Смотрите результат в браузере: откройте файл двойным щелчком, нужен интернет.</div>
+</div></section>
+
+<section class="step"><div class="no">5</div><div>
+  <h2>Откройте файл в браузере и проверьте</h2>
+  <ul class="check" id="check">
+    <li><label><input type="checkbox"><span>Сверху меню портала «КрокоМетрика», фон страницы красноватый, как у вкладки «Устав».</span></label></li>
+    <li><label><input type="checkbox"><span>На месте все разделы 1–12, номера и названия как в шаблоне.</span></label></li>
+    <li><label><input type="checkbox"><span>Не осталось серых подсказок, пунктирных полей, плашки «Шаблон устава» и многоточий «…».</span></label></li>
+    <li><label><input type="checkbox"><span>Нет пометок «[НЕТ ДАННЫХ]»: вы нашли данные во вводных или осознанно решили, что их нет, и написали, как с этим быть.</span></label></li>
+    <li><label><input type="checkbox"><span>Каждая сумма, дата, фамилия и процент взяты из вводных. Нейросеть ничего не придумала и не «округлила».</span></label></li>
+    <li><label><input type="checkbox"><span>Текст можно прочитать за 10 минут: короткие абзацы и списки, а не стена текста.</span></label></li>
+    <li><label><input type="checkbox"><span>Ссылки «бизнес-кейс» и «план управления выгодами» внизу открывают портал.</span></label></li>
+    <li><label><input type="checkbox"><span>Страница читается на телефоне: сузьте окно браузера или откройте файл на телефоне.</span></label></li>
+    <li><label><input type="checkbox"><span>Файл называется <code>ustav-фамилия.html</code>.</span></label></li>
+  </ul>
+  <div class="prog" id="prog" aria-live="polite"></div>
+
+  <h2 style="font-size:16px;margin-top:20px">Если что-то пошло не так</h2>
+  <details class="fix"><summary>Ответ оборвался на середине</summary>
+    <p>Напишите в том же чате:</p>
+    <div class="copybox"><button class="btn ghost" data-copy="f1">Копировать</button><pre id="f1">Ответ оборвался. Продолжи ровно с того места, где остановился, без повторения начала.</pre></div>
+    <p>Вставьте продолжение в Блокноте сразу после последней строки первой части. Если обрывается снова, начните новый чат и попросите формулировать короче. Или попробуйте другую нейросеть.</p></details>
+  <details class="fix"><summary>Нейросеть «улучшила» оформление: другие цвета, шрифты, нет меню</summary>
+    <div class="copybox"><button class="btn ghost" data-copy="f2">Копировать</button><pre id="f2">Ты изменил оформление. Верни блок &lt;head&gt;, тег &lt;km-shell&gt; и скрипты в конце точно как в шаблоне, удали все свои стили (&lt;style&gt; и style="…") и используй только классы из инструкции в шаблоне. Верни файл целиком.</pre></div></details>
+  <details class="fix"><summary>В тексте появились факты, которых не было в моём черновике</summary>
+    <div class="copybox"><button class="btn ghost" data-copy="f3">Копировать</button><pre id="f3">В разделе … есть данные, которых нет в моём тексте: … Убери их. Где данных нет — поставь пометку [НЕТ ДАННЫХ]. Верни файл целиком.</pre></div></details>
+  <details class="fix"><summary>В браузере вместо букв «кракозябры»</summary>
+    <p>Файл сохранён не в UTF-8. Пересохраните его в Блокноте и выберите кодировку UTF-8.</p></details>
+</div></section>
+
+<section class="step"><div class="no">6</div><div>
+  <h2>Сдайте работу</h2>
+  <p>Заполните <a href="#" class="todo">форму</a> до <b>15 ноября, 14:00 МСК</b>. В форме:</p>
+  <ol>
+    <li>файл <code>ustav-фамилия.html</code>;</li>
+    <li><b>три пункта: что нейросеть сделала не так и что вы исправили.</b> Пишите конкретно: «перепутала спонсора и заказчика, исправил по письму» — хорошо, «немного поправил текст» — нет.</li>
+  </ol>
+  <p>После срока на портале появится устав, подготовленный тренером. Сравните его со своим.</p>
+</div></section>
+
+<div class="why">
+  <h2>Зачем страница, а не документ в Word</h2>
+  <p>Портал проекта — это общее оформление (стили и меню) плюс отдельная страница на каждый документ. У каждого документа свой цвет: бизнес-документы зелёные, устав красноватый. Следующие документы — стейкхолдеры, коммуникации, риски — встанут в тот же портал рядом с вашим уставом.</p>
+  <p>Этот приём работает и на вашем реальном проекте. Сделайте один раз шаблон документа с инструкцией для нейросети, как в начале <code>ustav-template.html</code>. Дальше любой документ проекта за 15 минут превращается в аккуратную страницу в едином стиле.</p>
+</div>
+</main>
+
+<script>
+document.querySelectorAll('[data-copy]').forEach(b=>b.addEventListener('click',async()=>{
+  const t=document.getElementById(b.dataset.copy).innerText;let ok=false;
+  try{await navigator.clipboard.writeText(t);ok=true}catch(e){
+    try{const r=document.createRange();r.selectNodeContents(document.getElementById(b.dataset.copy));const s=getSelection();s.removeAllRanges();s.addRange(r);ok=document.execCommand('copy');s.removeAllRanges()}catch(e2){}}
+  const old=b.textContent;b.textContent=ok?'Скопировано ✓':'Выделите текст вручную';b.classList.toggle('ok',ok);setTimeout(()=>{b.textContent=old;b.classList.remove('ok')},1800);
+}));
+(()=>{const box=document.getElementById('check'),pr=document.getElementById('prog'),cb=[...box.querySelectorAll('input')];
+  const K='km-hw1-check';let st=[];try{st=JSON.parse(localStorage.getItem(K)||'[]')}catch(e){}
+  cb.forEach((c,i)=>{c.checked=!!st[i];c.addEventListener('change',upd)});
+  function upd(){const v=cb.map(c=>c.checked);try{localStorage.setItem(K,JSON.stringify(v))}catch(e){}
+    const n=v.filter(Boolean).length;pr.textContent=n===cb.length?'Всё проверено — можно сдавать.':'Проверено '+n+' из '+cb.length+'.'}
+  upd();})();
+</script>
+</body>
+</html>

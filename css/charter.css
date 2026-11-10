@@ -1,0 +1,125 @@
+/* Общие стили страницы «Устав проекта» портала «КрокоМетрика». Подключаются из файла страницы: <link rel="stylesheet" href=".../css/charter.css"> */
+body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+
+/* Layout: шапка компании (как в Ганте, реестре и плане коммуникаций) → один лист документа на светло-красной подложке: реквизиты и «Утверждаю» → разделы устава → лист согласования с подписями → история версий. */
+:root{
+  --page:#f6dedb; --page-line:#e7bfba; --doc:#a3302b;
+  --paper:#ffffff; --paper-2:#fbf5f4; --line:#ead9d7; --line-strong:#d4bcb9;
+  --ink:#231a1b; --ink-2:#5e5152; --ink-3:#938687;
+  --sign:#1f3f8f; --stamp:#a3302b; --ok:#2c7a4d; --ok-soft:#e3f1e8; --warn:#a2581a; --warn-soft:#f8ebde;
+  --shadow:0 18px 50px rgba(90,30,26,.14);
+  --f-ui:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --f-doc:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+  --f-sig:"Marck Script","Segoe Script","Brush Script MT",cursive;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page:#24110f; --page-line:#4a2522; --doc:#f0897f;
+  --paper:#1b1617; --paper-2:#221b1c; --line:#33292a; --line-strong:#4a3c3d;
+  --ink:#ece4e3; --ink-2:#b5a8a7; --ink-3:#857878;
+  --sign:#9db4ff; --stamp:#f0897f; --ok:#6cc895; --ok-soft:#18301f; --warn:#e3a468; --warn-soft:#3a2818;
+  --shadow:0 18px 50px rgba(0,0,0,.5); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --page:#24110f; --page-line:#4a2522; --doc:#f0897f;
+  --paper:#1b1617; --paper-2:#221b1c; --line:#33292a; --line-strong:#4a3c3d;
+  --ink:#ece4e3; --ink-2:#b5a8a7; --ink-3:#857878;
+  --sign:#9db4ff; --stamp:#f0897f; --ok:#6cc895; --ok-soft:#18301f; --warn:#e3a468; --warn-soft:#3a2818;
+  --shadow:0 18px 50px rgba(0,0,0,.5); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);font-family:var(--f-ui);font-size:14px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 36px}
+:focus-visible{outline:2px solid var(--doc);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* Шапка */
+.head{display:flex;gap:16px;align-items:center;max-width:920px;margin:0 auto}
+.logo{border-radius:14px;width:64px;height:64px;flex:none;background:url(../img/logo.svg) center/contain no-repeat}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo{border-radius:14px;filter:invert(1)}}
+:root[data-theme="dark"] .logo{border-radius:14px;filter:invert(1)}
+.head-main{min-width:0}
+.eyebrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.eyebrow svg{width:12px;height:12px;fill:currentColor}
+.doctype{margin-left:6px;padding:2px 8px;border-radius:5px;background:var(--doc);color:var(--paper);letter-spacing:.06em}
+.head h1{margin:2px 0 4px;font-size:clamp(19px,2.6vw,26px);line-height:1.2;font-weight:600;text-wrap:balance}
+.facts{display:flex;flex-wrap:wrap;gap:4px 18px;color:var(--ink-2);font-size:13.5px}
+.facts b{color:var(--ink);font-weight:600}
+
+/* Лист */
+.sheet{max-width:920px;margin:20px auto 0;background:var(--paper);border:1px solid var(--page-line);box-shadow:var(--shadow);
+  padding:clamp(20px,5vw,56px) clamp(16px,5.5vw,64px) clamp(24px,5vw,52px);font-family:var(--f-doc);font-size:15px;line-height:1.55}
+.req{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px 32px;align-items:flex-start;font-family:var(--f-ui);font-size:12.5px;color:var(--ink-2)}
+.req dl{display:grid;grid-template-columns:auto 1fr;gap:3px 14px;margin:0}
+.req dt{color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;font-size:11px;padding-top:1px}
+.req dd{margin:0;color:var(--ink)}
+.approve{min-width:250px;border:1px solid var(--line-strong);padding:12px 16px;font-family:var(--f-doc);font-size:13.5px;color:var(--ink);background:var(--paper-2)}
+.approve .cap{font-family:var(--f-ui);font-weight:600;letter-spacing:.14em;font-size:12px;color:var(--stamp)}
+.approve .sigline{display:flex;align-items:flex-end;gap:10px;margin-top:6px}
+.title{text-align:center;margin:30px 0 26px}
+.title .kind{font-family:var(--f-ui);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--doc);font-weight:600}
+.title h2{font-size:clamp(21px,3.4vw,30px);font-weight:600;line-height:1.2;margin:6px auto 6px;max-width:28ch;text-wrap:balance}
+.title p{margin:0;color:var(--ink-2);font-style:italic}
+
+section{display:grid;grid-template-columns:2.4em minmax(0,1fr);gap:0 6px;padding:16px 0;border-top:1px solid var(--line)}
+section>.n{font-family:var(--f-ui);font-weight:600;color:var(--doc);font-size:15px;padding-top:1px}
+section>.b{min-width:0}
+section h3{font-family:var(--f-ui);font-size:15px;font-weight:600;margin:0 0 6px;letter-spacing:.01em}
+section p{margin:0 0 8px;max-width:72ch}
+section p:last-child{margin-bottom:0}
+ul.l,ol.l{margin:4px 0 0;padding-left:1.2em;max-width:72ch}
+ul.l li,ol.l li{margin:3px 0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 28px}
+.sub{font-family:var(--f-ui);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin:2px 0 2px}
+.wrap{overflow-x:auto;margin-top:6px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{font-family:var(--f-ui);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);font-weight:600;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid var(--line-strong);white-space:nowrap}
+td{padding:6px 10px 6px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td.r,th.r{text-align:right}
+tr.tot td{font-weight:600;border-bottom:0;border-top:1px solid var(--line-strong)}
+.code{font-family:var(--f-ui);font-size:12.5px;color:var(--ink-2);white-space:nowrap}
+.chip{display:inline-block;font-family:var(--f-ui);font-size:11.5px;padding:0 6px;border-radius:4px;background:var(--warn-soft);color:var(--warn);white-space:nowrap}
+
+/* Лист согласования */
+.signs{margin-top:8px;display:grid;gap:0}
+.sg{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(130px,1fr) 104px;gap:6px 18px;align-items:end;padding:12px 0;border-bottom:1px solid var(--line)}
+.sg .who b{display:block;font-weight:600}
+.sg .who span{display:block;font-size:13px;color:var(--ink-2);font-family:var(--f-ui)}
+.sg .role{font-family:var(--f-ui);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--doc);font-weight:600}
+.sig{font-family:var(--f-sig);color:var(--sign);font-size:26px;line-height:1;border-bottom:1px solid var(--ink-3);padding:0 4px 2px;transform:rotate(-3deg);transform-origin:left bottom;white-space:nowrap;overflow:hidden}
+.date{font-family:var(--f-ui);font-size:13px;border-bottom:1px solid var(--ink-3);padding-bottom:3px;text-align:center}
+.cap2{font-family:var(--f-ui);font-size:10.5px;color:var(--ink-3);text-align:center;letter-spacing:.05em;margin-top:2px}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;margin-top:22px;font-family:var(--f-ui);font-size:11.5px;color:var(--ink-3)}
+
+/* Вопросы */
+details.qs{max-width:920px;margin:16px auto 0;background:var(--paper);border:1px solid var(--page-line);padding:12px 18px}
+details.qs summary{cursor:pointer;font-weight:600;color:var(--doc)}
+details.qs ol{margin:10px 0 2px;padding-left:1.3em;font-family:var(--f-doc);font-size:14.5px;max-width:80ch}
+details.qs li{margin:5px 0}
+
+@media (max-width:620px){
+  .sg{grid-template-columns:1fr 104px}
+  .sg .who{grid-column:1/-1}
+  section{grid-template-columns:1.9em minmax(0,1fr)}
+  .approve{min-width:0;width:100%}
+}
+.mission{margin:0 0 10px;padding:8px 12px;background:var(--paper-2);border:1px solid var(--line);border-radius:6px}
+
+section a{color:var(--doc)}
+.hard{margin-top:10px!important;padding:10px 14px;background:var(--warn-soft);border-left:3px solid var(--warn);max-width:72ch}
+.note{font-size:13.5px;color:var(--ink-2)}
+.budget{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 20px;padding:10px 14px;background:var(--paper-2);border:1px solid var(--line);max-width:72ch}
+.budget span{font-family:var(--f-ui);font-size:14px}.budget b{font-family:var(--f-ui);font-size:20px;font-weight:600;color:var(--doc)}
+details.calc{margin-top:8px;max-width:72ch}details.calc>summary{cursor:pointer;font-family:var(--f-ui);font-size:13px;font-weight:600;color:var(--doc)}
+.locked-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-ui);font-size:13px;color:var(--ink-3);text-decoration:underline dotted;cursor:not-allowed}
+.locked-link svg{width:11px;height:11px;fill:currentColor}
+.ph{color:var(--ink-3)!important;font-style:italic;font-weight:400}
+.foot a{color:var(--doc)}
+section.svc .b>.signs,section.svc .b>.wrap{opacity:.4;pointer-events:none;filter:grayscale(1)}
+section.svc h3{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+section.svc .n{opacity:.45}
+.svc-tag{font-family:var(--f-ui);font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);border-radius:4px;padding:1px 7px}
+.svc-note{margin:2px 0 10px;font-family:var(--f-ui);font-size:13px;color:var(--ink-3);font-style:italic}
+.tpl-banner{max-width:920px;margin:20px auto 16px;padding:10px 14px;border:1px dashed var(--doc);color:var(--doc);background:var(--paper);font:13.5px/1.5 var(--f-ui)}
+.hint{margin:2px 0 10px;padding:9px 13px;border-left:3px solid var(--doc);background:color-mix(in srgb,var(--doc) 6%,transparent);font-family:var(--f-ui);font-size:13.5px;color:var(--ink-2);max-width:76ch}
+.hint p{margin:0 0 4px}.hint ul{margin:4px 0 0;padding-left:1.2em}.hint li{margin:2px 0}
+.fill{min-height:84px;border:1.5px dashed var(--line);border-radius:6px;background:repeating-linear-gradient(transparent 0 27px,color-mix(in srgb,var(--line) 55%,transparent) 27px 28px)}
+.fill.short{min-height:56px;margin-top:8px}

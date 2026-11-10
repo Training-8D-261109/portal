@@ -3,6 +3,10 @@
 (()=>{
 const LOGO='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxZjVmNDUiLz48cGF0aCBkPSJNMTAgMzZjNC05IDEwLTEzIDE0LTEzIDMgMCA0IDMgNiAzczMtMyA2LTNjNCAwIDEwIDQgMTggMTMiIGZpbGw9IiM3ZmM3OWEiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48Y2lyY2xlIGN4PSIzNiIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48cGF0aCBkPSJNNiAzOGM0IDAgNCAzIDggM3M0LTMgOC0zIDQgMyA4IDMgNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDQgM3Y5SDZ6IiBmaWxsPSIjM2I4ZmM5Ii8+PHBhdGggZD0iTTYgNDZjNCAwIDQgMyA4IDNzNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDggMyA0LTMgOC0zIDQgMyA0IDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E5ZDZmMiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4K';
 const P=KM_PROJECT;
+/* Ссылки шапки считаются от папки портала (на уровень выше js/shell.js), поэтому шапка работает и на странице, сохранённой у студента на компьютере. */
+const BASE=(()=>{try{const c=document.currentScript;return c&&c.src?new URL('../',c.src).href:''}catch(e){return ''}})();
+const U=h=>{try{return BASE?new URL(h,BASE).href:h}catch(e){return h}};
+window.KM_BASE=BASE;
 const LOCK='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 1 0-4 0v2z"/></svg>';
 const NAV=[
   {k:'gantt',color:'серый',t:'Гант',lock:1,hint:'ИСР, диаграмма Ганта, вехи и критический путь'},
@@ -13,7 +17,7 @@ const NAV=[
   {k:'risks',color:'чёрный',t:'Риски',lock:1,hint:'Реестр рисков, журнал проблем, резервы'},
   {k:'pmo',color:'белый',t:'Сводка PMO',lock:1,hint:'Светофоры и сводка для проектного офиса'}
 ];
-NAV.forEach(n=>{if(n.lock)n.href='soon.html#'+n.k});
+NAV.forEach(n=>{if(n.lock)n.href='soon.html#'+n.k;n.href=U(n.href)});
 window.KM_NAV=NAV;
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const CSS=`
@@ -128,7 +132,7 @@ class Shell extends HTMLElement{
     const start=DT?DT.fmt(DT.wd(1)):'',end=DT?DT.fmt(DT.wd(P.close)):'';
     root.innerHTML=`<style>${CSS}</style>
     <div class="bar">
-      <a class="id" href="index.html" title="Главная страница проекта">
+      <a class="id" href="${U('index.html')}" title="Главная страница проекта">
         <img src="${LOGO}" alt="">
         <span><b>Проект «${esc(P.name)}»</b><small>${esc(P.org)} · Д1 ${start} → Д${P.close} ${end}</small></span>
       </a>
