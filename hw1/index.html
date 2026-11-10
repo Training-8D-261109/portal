@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Вводные для домашнего задания №1 · «КрокоМетрика»</title>
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxZjVmNDUiLz48cGF0aCBkPSJNMTAgMzZjNC05IDEwLTEzIDE0LTEzIDMgMCA0IDMgNiAzczMtMyA2LTNjNCAwIDEwIDQgMTggMTMiIGZpbGw9IiM3ZmM3OWEiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48Y2lyY2xlIGN4PSIzNiIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48cGF0aCBkPSJNNiAzOGM0IDAgNCAzIDggM3M0LTMgOC0zIDQgMyA4IDMgNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDQgM3Y5SDZ6IiBmaWxsPSIjM2I4ZmM5Ii8+PHBhdGggZD0iTTYgNDZjNCAwIDQgMyA4IDNzNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDggMyA0LTMgOC0zIDQgMyA0IDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E5ZDZmMiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4K">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap">
+<style>
+:root{--page:#eceef2;--bar:#fff;--line:#d9dde6;--ink:#1a2130;--ink-2:#5d6676;--ink-3:#8a92a1;--acc:#1f5f45;
+  --f:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--page);color:var(--ink);font:15px/1.5 var(--f);
+  padding:0 max(0px,env(safe-area-inset-right,0px)) 40px max(0px,env(safe-area-inset-left,0px))}
+.top{background:var(--bar);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.top-in{max-width:1000px;margin:0 auto;padding:10px 16px 0;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto}
+.brand img{width:34px;height:34px;border-radius:9px}
+.brand b{display:block;font-size:15px}.brand small{display:block;font-size:12px;color:var(--ink-2)}
+.tabs{display:flex;gap:2px;width:100%;overflow-x:auto;scrollbar-width:none}
+.tabs a{display:inline-flex;align-items:center;gap:8px;padding:10px 14px 11px;color:var(--ink-2);text-decoration:none;font-weight:500;font-size:14px;border-bottom:3px solid transparent;white-space:nowrap}
+.tabs a:hover{color:var(--ink)}
+.tabs a[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--acc)}
+.tabs svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.view{max-width:1000px;margin:20px auto 0;padding:0 16px}
+.view[hidden]{display:none}
+
+/* ===== E-MAIL ===== */
+.mail{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;color:#202124}
+.mail-tool{display:flex;align-items:center;gap:6px;padding:8px 12px;border-bottom:1px solid #eceff3;color:#5f6368;font-size:13px}
+.mail-tool span.tb{padding:5px 9px;border-radius:6px}
+.mail-tool .sp{margin-left:auto;font-size:12px}
+.mail-subj{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:18px 24px 6px}
+.mail-subj h1{margin:0;font-size:21px;font-weight:500}
+.lbl{font-size:12px;padding:1px 8px;border-radius:4px;background:#eef0f3;color:#444}
+.lbl.imp{background:#fce8e6;color:#c5221f}
+.mail-hd{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:start;padding:12px 24px 4px}
+.ava{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:600;font-size:14px}
+.mail-from b{font-weight:600}.mail-from .addr{color:#5f6368;font-size:13px}
+.mail-to{color:#5f6368;font-size:13px}
+.mail-date{color:#5f6368;font-size:12.5px;white-space:nowrap;text-align:right}
+.mail-date .star{display:block;color:#f4b400;font-size:16px;margin-top:2px}
+.mail-body{padding:14px 24px 22px 80px;font-size:15px;line-height:1.6;white-space:normal}
+.mail-body p{margin:0 0 12px}
+.mail-sig{color:#5f6368;margin-top:6px}
+.mail-sig b{color:#202124;font-weight:600}
+.mail-upd{margin-top:18px;padding-top:14px;border-top:1px dashed #dadce0}
+.mail-acts{display:flex;gap:8px;padding:0 24px 22px 80px}
+.mail-acts span{border:1px solid #dadce0;border-radius:18px;padding:6px 16px;color:#3c4043;font-size:13.5px}
+@media (max-width:640px){.mail-body,.mail-acts{padding-left:20px;padding-right:20px}.mail-hd{grid-template-columns:40px 1fr;padding:12px 20px 4px}.mail-date{grid-column:2;text-align:left}.mail-subj{padding:16px 20px 4px}}
+
+/* ===== VOICE ===== */
+.vc{max-width:720px;margin:0 auto}
+.vc-chat{background:#cfdde9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='3' cy='3' r='1.2' fill='%23b7c9d8'/%3E%3C/svg%3E");border-radius:12px;padding:18px 16px;border:1px solid #bfd0de}
+.vc-hd{display:flex;align-items:center;gap:10px;background:#fff;border-radius:12px 12px 0 0;padding:10px 14px;border:1px solid #d9e2ea;border-bottom:0}
+.vc-hd b{display:block;font-size:15px}.vc-hd small{color:#7a8794;font-size:12.5px}
+.vc-wrap{border-radius:0 0 12px 12px}
+.vbub{background:#fff;border-radius:14px 14px 14px 4px;padding:10px 12px 8px;max-width:520px;box-shadow:0 1px 1px rgb(0 0 0/.08)}
+.vrow{display:flex;align-items:center;gap:10px}
+.vplay{width:44px;height:44px;border-radius:50%;border:0;background:#3a8fd8;display:grid;place-items:center;cursor:pointer;flex:none}
+.vplay svg{width:18px;height:18px;fill:#fff}
+.wave{display:flex;align-items:center;gap:2px;height:30px;flex:1;min-width:0;overflow:hidden}
+.wave i{display:block;width:3px;border-radius:2px;background:#b8cde0;flex:none}
+.wave i.on{background:#3a8fd8}
+.vmeta{display:flex;justify-content:space-between;align-items:center;margin-top:4px;font-size:12px;color:#7a8794}
+.vmeta .tr{color:#3a8fd8;font-weight:500}
+.vtr{margin-top:10px;padding-top:10px;border-top:1px solid #eef2f5}
+.vtr .note{font-size:12px;color:#7a8794;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.vtr p{margin:0 0 10px;font-size:15px;line-height:1.6}
+.vtr p .ts{display:inline-block;min-width:40px;color:#3a8fd8;font-size:12px;font-variant-numeric:tabular-nums;font-weight:500;margin-right:4px}
+.vtime{text-align:right;font-size:12px;color:#7a8794;margin-top:4px}
+
+/* ===== CHAT ===== */
+.tg{max-width:760px;margin:0 auto;border-radius:12px;overflow:hidden;border:1px solid #bfd0de}
+.tg-hd{display:flex;align-items:center;gap:10px;background:#fff;padding:10px 14px;border-bottom:1px solid #e4e9ee}
+.tg-hd .gava{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#2e9e5b,#1f5f45);display:grid;place-items:center;color:#fff;font-weight:600}
+.tg-hd b{display:block}.tg-hd small{color:#7a8794;font-size:12.5px}
+.tg-body{background:#cfdde9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='3' cy='3' r='1.2' fill='%23b7c9d8'/%3E%3C/svg%3E");padding:12px 12px 18px;display:flex;flex-direction:column;gap:3px}
+.sys{align-self:center;background:rgb(70 100 130/.35);color:#fff;font-size:12.5px;padding:3px 10px;border-radius:12px;margin:8px 0}
+.m{display:flex;align-items:flex-end;gap:8px;max-width:86%}
+.m.cont{margin-left:42px}
+.m .ma{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:12px;font-weight:600;flex:none}
+.m.cont .ma{display:none}
+.b{background:#fff;border-radius:14px 14px 14px 4px;padding:6px 10px 5px;box-shadow:0 1px 1px rgb(0 0 0/.08);font-size:14.5px;line-height:1.45;min-width:80px}
+.m.cont .b{border-radius:14px}
+.b .nm{font-weight:600;font-size:13px;margin-bottom:1px}
+.b .nm small{font-weight:400;color:#8a97a5;margin-left:4px;font-size:12px}
+.b .tx{white-space:pre-wrap;word-wrap:break-word}
+.b .tm{float:right;margin:6px 0 -2px 10px;font-size:11.5px;color:#8a97a5}
+.b .rp{border-left:3px solid #3a8fd8;padding:1px 0 1px 7px;margin:2px 0 4px;font-size:13px;color:#4a5866;background:#f2f7fb;border-radius:0 4px 4px 0}
+.b .rp b{display:block;color:#3a8fd8;font-size:12.5px}
+.m.out{align-self:flex-end;flex-direction:row-reverse}
+.m.out .ma{display:none}
+.m.out .b{background:#effdde;border-radius:14px 14px 4px 14px}
+.m.out .tm{color:#5fa35f}
+.react{display:inline-block;margin-top:3px;font-size:12px;background:#e8f1f8;border-radius:10px;padding:0 7px;color:#3a6d96}
+.gap{height:8px}
+@media (max-width:640px){.m{max-width:94%}.view{padding:0 8px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="top-in">
+    <div class="brand"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxZjVmNDUiLz48cGF0aCBkPSJNMTAgMzZjNC05IDEwLTEzIDE0LTEzIDMgMCA0IDMgNiAzczMtMyA2LTNjNCAwIDEwIDQgMTggMTMiIGZpbGw9IiM3ZmM3OWEiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48Y2lyY2xlIGN4PSIzNiIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48cGF0aCBkPSJNNiAzOGM0IDAgNCAzIDggM3M0LTMgOC0zIDQgMyA4IDMgNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDQgM3Y5SDZ6IiBmaWxsPSIjM2I4ZmM5Ii8+PHBhdGggZD0iTTYgNDZjNCAwIDQgMyA4IDNzNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDggMyA0LTMgOC0zIDQgMyA0IDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E5ZDZmMiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4K" alt=""><span><b>Вводные для домашнего задания №1</b><small>Проект «КрокоМетрика» · материалы для руководителя проекта · <a href="../" style="color:var(--acc)">портал проекта →</a></small></span></div>
+    <nav class="tabs" role="tablist" aria-label="Материалы">
+      <a href="#letter" role="tab" data-v="letter"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Письмо спонсора</a>
+      <a href="#voice" role="tab" data-v="voice"><svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>Голосовое заказчика</a>
+      <a href="#chat" role="tab" data-v="chat"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1.1-4.6A8 8 0 1 1 21 12z"/></svg>Рабочий чат</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ ПИСЬМО ============ -->
+<main class="view" id="v-letter" role="tabpanel" hidden>
+  <article class="mail">
+    <div class="mail-tool"><span class="tb">← Входящие</span><span class="tb">Архив</span><span class="tb">Пометить</span><span class="sp">1 из 34</span></div>
+    <div class="mail-subj"><h1>КрокоМетрика. Прочитай внимательно</h1><span class="lbl imp">Важное</span><span class="lbl">Входящие</span></div>
+    <div class="mail-hd">
+      <div class="ava" style="background:#c8372d">МВ</div>
+      <div>
+        <div class="mail-from"><b>Марк Волынский</b> <span class="addr">&lt;m.volynsky@exoagro.example&gt;</span></div>
+        <div class="mail-to">кому: мне · копия: Сергей Калинин &lt;s.kalinin@teplyinil.example&gt;</div>
+      </div>
+      <div class="mail-date">Пн, 07:42<span class="star">★</span></div>
+    </div>
+    <div class="mail-body">
+      <p>Добрый день.</p>
+      <p>Сергей (Калинин, гендиректор «Тёплого Нила», твой заказчик) сказал, что проект ведёшь ты. Значит, с этой минуты за результат спрашиваю с тебя. Пишу один раз и подробно, дальше — коротко и по делу.</p>
+      <p>Зачем всё это. Бизнес-кейс ты видел, пересказывать не буду. Мы заходим в Москву и область, потом к соседям. Маркетинг стартует месяца через три после того, как ты должен сдать систему. Сдвигать кампанию из-за фермы я не буду. Если реклама приведёт людей, а ферма их завалит — отвечать будут все, и ты первый.</p>
+      <p>Деньги. На проект я дал 18,9. Девятьсот тысяч из них — мой резерв, он лежит у меня, и на него ты не рассчитываешь. Понадобится — приходи с обоснованием. Внутри твоего бюджета есть полтора с лишним миллиона на непредвиденное. По мелочи, тысяч до трёхсот на одну историю, решай сам и меня не дёргай, но Сергею скажи в тот же день, край — на следующий. Всё, что крупнее, — через нормальный запрос на изменение ко мне. Письменно. Не звонком и не в коридоре. Если меняешь что-то по содержанию — сначала договорись с Сергеем, принимать работу ему.</p>
+      <p>Сроки и бюджет. Небольшие задержки меня не пугают, так бывает. Но если видишь, что уезжаешь больше чем на рабочую неделю, — сообщай сразу. С деньгами так же: пара сотен тысяч сверху меня не напряжёт. А если перерасход тянет на двадцатую часть бюджета и больше — я должен узнать об этом раньше, чем ты сам до конца в это поверишь. Отчётного периода не жди. Увидел — пришёл и сказал. Плохие новости я переношу нормально. Плохие новости, которые от меня прятали, — нет.</p>
+      <p>Что первым. Инкубаторы, климат в ангарах, вода, «Меркурий». Это ядро, без него проект не нужен. Учёт кормов и ветжурнал — следом. Бронирование экскурсий должно работать до старта кампании в Москве, это не пожелание. Остальное из третьей очереди — браслеты и прочее — начинаешь не раньше, чем система выпишет первый ветсертификат. Если ради сроков по ядру придётся что-то из третьей очереди выкинуть за рамки проекта — выкидывай, разрешаю без бумаг. Но узнать об этом я должен от тебя, а не от Сергея.</p>
+      <p>Инкубаторы. Там сроки диктуют крокодилы, а не мы и не подрядчик. Если чуешь, что к закладке не успеваете, — звони мне в тот же день. Не «на неделе», а в тот же день.</p>
+      <p>Чего ты не контролируешь. Ветслужбы, карантины, решения холдинга по стратегии — не твоя зона, и героизм тут не нужен. Случилось такое — не пытайся спасать проект сам, сразу ко мне. Я решу, ставим на паузу или закрываем.</p>
+      <p>Устав жду через неделю, утверждаю его я. С Сергеем согласуй до того, как он ляжет мне на стол. Сюрпризы от вас двоих мне не нужны.</p>
+      <div class="mail-sig">М. Волынский<br><b>Управляющий партнёр</b> · АО «ЭкзоАгро»<br>Отправлено с iPhone</div>
+      <div class="mail-upd">
+        <p>UPD: да, вот ещё что. Особое внимание на ветеринарные допуски. НЕЛЬЗЯ продавать мясо без документов. ОДНА отгрузка — и жди ветеринарную инспекцию. Конкуренты (консорциум «СтраусЭкоГранд») запросто организуют нам провокационную закупку и тут же «заложат» инспекции. Так что очень важно: ни одна партия мяса не уходит с фермы без ветеринарных документов.</p>
+        <p>И ещё: животные — наш самый ценный актив. Если хоть один крокодил (или всё, что вылупилось из яйца) пострадает из-за ИТ — я точно поменяю всю управляющую вертикаль, включая менеджера проекта. Так что давай договоримся об этом сразу. Кладку мы можем позволить себе частично потерять (тут я согласен — инкубаторы штука тонкая). Но после вылупления — если хоть один ящер не достанется заказчику, потому что «отдал концы» раньше времени из-за сбоев софта, — мы расстанемся. Хорошо?</p>
+      </div>
+    </div>
+    <div class="mail-acts"><span>↩ Ответить</span><span>↪ Переслать</span></div>
+  </article>
+</main>
+
+<!-- ============ ГОЛОСОВОЕ ============ -->
+<main class="view" id="v-voice" role="tabpanel" hidden>
+  <div class="vc">
+    <div class="vc-hd"><div class="ava" style="background:linear-gradient(135deg,#e0a106,#2e9e5b)">СК</div><div><b>Сергей Калинин</b><small>был(а) недавно</small></div></div>
+    <div class="vc-chat vc-wrap">
+      <div class="vbub">
+        <div class="vrow">
+          <button class="vplay" type="button" id="vplay" aria-label="Воспроизвести"><svg viewBox="0 0 24 24" id="vicon"><path d="M8 5v14l11-7z"/></svg></button>
+          <div class="wave" id="wave" aria-hidden="true"></div>
+        </div>
+        <div class="vmeta"><span id="vdur">6:55</span><span class="tr">Расшифровка ▾</span></div>
+        <div class="vtr">
+          <div class="note">✦ Расшифровано автоматически, возможны неточности</div>
+          <div id="vtext"></div>
+        </div>
+        <div class="vtime">Вс, 18:47</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ============ ЧАТ ============ -->
+<main class="view" id="v-chat" role="tabpanel" hidden>
+  <div class="tg">
+    <div class="tg-hd"><div class="gava">КМ</div><div><b>КрокоМетрика · старт</b><small>8 участников</small></div></div>
+    <div class="tg-body" id="chatlog"></div>
+  </div>
+</main>
+
+<script>
+/* ---------- голосовое ---------- */
+const VOICE=[
+['0:00','Алло… а, это голосовое, да. Привет! Это Сергей, Сергей Калинин. Слушай, извини, что голосом, я сейчас еду из района, там… ну неважно, потом расскажу.'],
+['0:14','Значит, по проекту. Я очень рад, что ты с нами, правда. Марк тебе, наверное, уже написал — Марк Волынский, это наш управляющий партнёр в холдинге, он проект и финансирует. Он… ну, он умеет писать, да. Ты не пугайся, он по делу. Деньги, сроки — это он, это его. А я хотел рассказать, что ферме нужно, как я это вижу.'],
+['0:41','Смотри. Я вот иногда представляю: приезжает группа туристов, и на большом экране видно, что в инкубаторе… в реальном времени, понимаешь, температура, всё… и тут вылупляется крокодильчик. Ну это я забегаю, это потом. Это не сейчас.'],
+['1:02','Так. Инкубаторы. Это самое… это прям самое главное. Двенадцать шкафов. Там от температуры зависит, кто вылупится, мальчик или девочка, и вообще — здоровый или нет. Десятые доли градуса, представляешь? А у нас контроллеры старые, они полградуса туда-сюда гуляют. И мы каждый сезон… ну, теряем. Выход у нас процентов семьдесят, а хочется хотя бы восемьдесят. Восемьдесят пять — вообще было бы чудесно. И знаешь, чего я больше всего боюсь? Чтобы мы из-за системы кладку потеряли. Ни одной не хочу потерять, правда. Это для меня… ну, ты понимаешь. Закладка где-то в конце февраля, точнее у Пети спроси — у Гончарова, Пётр Гончаров, наш главный зоотехник, он за инкубаторную отвечает, — он по дням знает, я… я всегда путаю.'],
+['2:03','Ангары. Их три. Мне важно, чтобы ночью, если котёл встал… У нас был случай, давно, Николай расскажет — Николай Ершов, наш главный инженер, на нём котлы, насосы, всё железо, — я не люблю вспоминать. Дежурный должен узнать сразу, а не утром. И мороз — чтобы система как-то заранее… прогревала, что ли, видела прогноз. И бассейны, восемь штук. Там аммиак, pH, фильтры. Фильтры и насосы очень дорогие, хочется, чтобы она сама подсказывала, когда чистить, а не когда уже, ну…'],
+['2:47','Ой, «Меркурий» забыл. Это важно. Без него мясо в рестораны не продашь, сертификаты эти… Это всё через Тимура — Тимур Ахмедов, наш главный ветврач, — у него подпись, он там… он сам расскажет, он лучше знает.'],
+['3:06','Что ещё… Учёт кормов. Нам отходы с птицефабрик возят, и кормления надо планировать, сейчас это всё в тетрадке у Пети. Только не надо большую ERP, пожалуйста, бухгалтерия пусть в 1С остаётся. Ольга… Ольга Лаптева, наш главный бухгалтер… она не переживёт ещё одну программу. Ветжурнал Тимуру, на планшете, чтобы истории болезней, прививки… И камеры над вольерами — смотреть, как растут, и если дерутся. Это вот всё… вторая очередь, наверное. Да, вторая.'],
+['3:48','И туризм. Простенькое бронирование на сайте, билеты. Алина — Алина Сорокина, она у нас продажами занимается, и рестораны, и экскурсии, — так вот, она по выходным с телефона не слезает, мне её жалко, честно. Только без CRM, без приложений для туристов, это потом как-нибудь.'],
+['4:12','Браслеты для ребят, с кнопкой SOS. Марк сказал — это в последнюю очередь, ну… наверное, он прав, ребята по двое ходят. Хотя я бы… ладно. Это ты сам посмотри.'],
+['4:29','Чего не делаем — я списочек… сейчас. Котлы, насосы, шкафы не меняем, подключаемся к тому, что есть. Кожу на экспорт, всякие эти CITES — не сейчас. Регистрацию в ветеринарной системе Тимур сам делает, это не проект. И после того как сдадут — сопровождение потом отдельно, с подрядчиком договоримся. Подрядчик — «Агросенсор», они тебе своё предложение пришлют, там Артём Березин, технический руководитель, толковый парень.'],
+['5:12','Как я буду принимать… Я бы хотел, чтобы система недели две поработала у нас по-настоящему. И чтобы за эти две недели ни Тимур, ни Петя не вернулись к бумажкам. Вот если не вернулись — значит, работает, значит, подписываю. Инкубаторы отдельно, вместе с Петей. Без Пети не подпишу, он за них отвечает, я его подставлять не буду. И чтобы научили людей — Тимура, Петю, Алину. Им каждый день в этом работать, мне важно, чтобы им было удобно, а не… а не наоборот.'],
+['6:04','И… да, у Марка кампания в Москве. Я очень не хочу его подвести. Так что, наверное, затягивать нам нельзя. Ты, если что, приходи ко мне сначала, ладно? Вместе подумаем, как ему сказать.'],
+['6:26','Всё. Ну, вроде всё. Если что-то забыл, я тебе ещё запишу. Приеду — чаю попьём, поговорим нормально. Давай, спасибо тебе!']];
+const esc=s=>s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+document.getElementById('vtext').innerHTML=VOICE.map(([t,x])=>`<p><span class="ts">${t}</span>${esc(x)}</p>`).join('');
+(()=>{const w=document.getElementById('wave');let h='';let seed=7;const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280};
+ for(let i=0;i<64;i++){const v=6+Math.round((0.35+0.65*Math.abs(Math.sin(i*0.55)))*rnd()*24);h+=`<i style="height:${v}px"></i>`}w.innerHTML=h;
+ const bars=[...w.children],TOT=415;let t=0,tm=null;const dur=document.getElementById('vdur'),icon=document.getElementById('vicon');
+ const fmt=s=>Math.floor(s/60)+':'+String(s%60).padStart(2,'0');
+ const draw=()=>{const k=Math.round(t/TOT*bars.length);bars.forEach((b,i)=>b.classList.toggle('on',i<k));dur.textContent=t?fmt(t)+' / 6:55':'6:55'};
+ document.getElementById('vplay').onclick=()=>{if(tm){clearInterval(tm);tm=null;icon.innerHTML='<path d="M8 5v14l11-7z"/>';return}
+   icon.innerHTML='<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>';tm=setInterval(()=>{t=Math.min(TOT,t+5);draw();if(t>=TOT){clearInterval(tm);tm=null;t=0;icon.innerHTML='<path d="M8 5v14l11-7z"/>';setTimeout(draw,600)}},100)};})();
+
+/* ---------- чат ---------- */
+const P={
+ pm:{n:'Руководитель проекта',c:'#1f5f45',i:'РП'},
+ al:{n:'Алина Сорокина',r:'продажи и туризм',c:'#d0462f',i:'АС'},
+ ar:{n:'Артём Березин',r:'Агросенсор',c:'#d18f00',i:'АБ'},
+ pe:{n:'Пётр Гончаров',r:'главный зоотехник',c:'#2f6fc4',i:'ПГ'},
+ ni:{n:'Николай Ершов',r:'главный инженер',c:'#5b6b84',i:'НЕ'},
+ ti:{n:'Тимур Ахмедов',r:'главный ветврач',c:'#2e9e5b',i:'ТА'},
+ ol:{n:'Ольга Лаптева',r:'главный бухгалтер',c:'#6a4fc4',i:'ОЛ'}};
+const CHAT=[
+ ['sys','Пятница'],
+ ['sys','Руководитель проекта создал(а) группу «КрокоМетрика · старт»'],
+ ['pm','10:04','Коллеги, добрый день! Меня назначили руководителем проекта «КрокоМетрика». Собираю вводные для устава. Напишите, пожалуйста, что для вас критично: сроки, ограничения, чего нельзя ломать. Можно коротко, можно голосом.'],
+ ['al','10:05','Ура, наконец-то!! 🎉'],
+ ['al','10:05','мне главное БРОНИРОВАНИЕ до кампании в Москве'],
+ ['al','10:06','Марк уже сказал что туристов будет в разы больше, я и сейчас по выходным с телефона не слезаю 😩😩'],
+ ['al','10:06','и рестораны! это вообще отдельная история, потом напишу'],
+ ['ar','10:11','Коллеги, всем привет!! 👋 Артём, «Агросенсор», мы ваш подрядчик. Очень рады старту, проект огонь 🔥 КП вам уже прислали, если что — я на связи 24/7, всё сделаем! 💪',null,'👍 2'],
+ ['pe','10:34','Добрый день. Пишу один раз, поэтому прошу прочитать внимательно.\n\n1. Закладка. По прошлым сезонам самки откладывают в конце февраля, плюс-минус три дня. В пересчёте на ваш график это Д60. Сдвинуть её нельзя. Это биология, а не совещание.\n2. Инкубаторы должны быть приняты минимум за две недели до закладки. На реальном режиме, а не на пустых шкафах.\n3. После закладки в инкубаторную не заходит никто, кроме меня. Хотите что-то докрутить — до закладки.\n4. В вольеры — только со мной или с моим замом. Вторник и пятница — кормление, в эти дни никакого монтажа.\n5. Ручное управление не трогать. Пусть висит.'],
+ ['ar','10:41','Пётр, спасибо, очень чётко 👍 По п.2 — две недели до Д60 это Д50, тут будет сложно 😅 Мы реально сдаём к Д55, это прям с запасом прикинули. И то если протокол шкафов будет у нас до Д20. Испытания 72 часа на пустых шкафах — это стандарт, так все делают.',['Пётр Гончаров','2. Инкубаторы должны быть приняты минимум за две недели до закладки…']],
+ ['pe','10:43','«Так все делают» — не аргумент. На пустых шкафах вы проверите шкафы, а не режим.'],
+ ['ar','10:44','Понял-понял, давайте созвонимся и обсудим, найдём решение 🙏'],
+ ['al','10:45','а Д55 это когда в нормальных датах?? 🙈'],
+ ['ni','13:20','Про протокол шкафов. Писал производителю в октябре. Ответа нет. Котлы по Modbus — без вопросов, там всё открыто.'],
+ ['pe','13:22','Значит, будем принимать впритык. Прекрасно.'],
+ ['ti','14:10','Всем добрый день 🙂 По «Меркурию»: заявку на регистрацию площадки подал, обещают до конца января. Это до закладки, должны успеть.'],
+ ['ti','14:11','Сразу одна важная вещь, чтобы потом не было недопонимания. Электронные сертификаты подписываю я, как уполномоченное лицо. Никаких «система сама подписала». Каждая операция должна быть видна в журнале — спросят с меня.',null,'👍 3'],
+ ['ar','14:13','Тимур, конечно!! Всё будет логироваться, сделаем красиво 👌'],
+ ['ti','14:20','И про планшет. В ангаре +32, влажность под 80, мы в перчатках. Если там будут мелкие кнопки — пользоваться не смогу, честно предупреждаю 🙂 По времени: 4 часа в неделю — мой максимум. В сезон закладки меньше, не обижайтесь.'],
+ ['al','14:22','Тимур 😂👍'],
+ ['al','14:25','так, рестораны. три письма о намерениях, в сумме 3,5 т в год. ещё двое думают, но там почти точно!!'],
+ ['al','14:25','шеф из одного спрашивает можно ли хвосты отдельно продавать 🐊'],
+ ['al','14:26','это не к проекту наверное, но просто чтоб вы знали'],
+ ['ol','15:48','Уважаемые коллеги.\n\n1. Смета подрядчика — 16,4 млн руб. Холдинг выделил 18,9 млн руб. Прошу пояснить разницу. Если это резервы, прошу указать, какие, кто ими распоряжается и на каком основании.\n2. Управленческий резерв, насколько я поняла из письма М. Волынского, ферме не передаётся. Прошу подтвердить.\n3. Акты по этапам прошу заводить в 1С в день подписания, а не в конце квартала.'],
+ ['ar','15:52','Ольга, по актам — конечно! Пришлём всё в лучшем виде 🙏'],
+ ['ol','15:53','Артём, вопрос 1 был адресован руководителю проекта.',['Артём Березин','Ольга, по актам — конечно! Пришлём всё в лучшем виде 🙏']],
+ ['ni','17:35','Про связь. Оптика у нас одна, линия идёт вдоль дороги. Два года назад её порвал грейдер, сутки сидели без интернета. 4G на ферме ловит плохо, нужна внешняя антенна.'],
+ ['ni','17:37','И для истории, раз уж собираете. За восемь лет была одна серьёзная авария. Ночью встал котёл во втором ангаре, к утру потеряли 14 голов. С тех пор обход каждые три часа. Пишу как есть.'],
+ ['pe','17:40','Кстати, кто опять оставил дверь во второй ангар открытой? Не буду показывать пальцем. Но это был не я.'],
+ ['al','17:41','это туристы!!! я им говорила 😤'],
+ ['al','17:41','и дорогу опять замело, в субботу еле довезли группу. может это тоже в проект? 🙈'],
+ ['pe','18:02','По браслетам. Слышал, что они «по остаточному принципу». Мы ходим по двое, но в прошлом месяце Денис поскользнулся у бортика во втором вольере. Хорошо, что напарник был рядом. Я бы не стал это откладывать. Решайте сами, но я предупредил.'],
+ ['ti','18:15','И ещё, на всякий случай. В соседнем районе в ноябре был карантин по птице. Если у нас введут что-то подобное, на ферму никого не пустят — ни подрядчиков, ни покупателей. Тогда проект просто встанет. Надеюсь, не понадобится 🤞'],
+ ['ar','18:17','Тьфу-тьфу-тьфу 🙏🙏'],
+ ['pm','18:30','Спасибо, коллеги, всё забрал. Про приёмку инкубаторов уточню у Сергея.'],
+ ['pe','18:31','Уточни. Только без меня не подписывайте.',['Руководитель проекта','Спасибо, коллеги, всё забрал. Про приёмку инкубаторов уточню у Сергея.']]];
+(()=>{let h='',prev=null;
+ for(const r of CHAT){
+  if(r[0]==='sys'){h+=`<div class="sys">${esc(r[1])}</div>`;prev=null;continue}
+  const [k,t,x,rp,re]=r,p=P[k],out=k==='pm',cont=prev===k;
+  h+=`${!cont&&prev?'<div class="gap"></div>':''}<div class="m${out?' out':''}${cont&&!out?' cont':''}">`+
+     `<div class="ma" style="background:${p.c}">${p.i}</div><div class="b">`+
+     `${!cont&&!out?`<div class="nm" style="color:${p.c}">${p.n}<small>${p.r||''}</small></div>`:''}`+
+     `${rp?`<div class="rp"><b>${esc(rp[0])}</b>${esc(rp[1])}</div>`:''}`+
+     `<span class="tx">${esc(x)}</span><span class="tm">${t}${out?' ✓✓':''}</span>`+
+     `${re?`<div><span class="react">${re}</span></div>`:''}</div></div>`;
+  prev=k;}
+ document.getElementById("chatlog").innerHTML=h;})();
+
+/* ---------- вкладки ---------- */
+(()=>{const V=['letter','voice','chat'];
+ const show=()=>{let v=location.hash.slice(1);if(!V.includes(v))v='letter';
+   V.forEach(k=>{document.getElementById('v-'+k).hidden=k!==v;document.querySelector(`.tabs a[data-v="${k}"]`).setAttribute('aria-selected',k===v)});
+   scrollTo(0,0)};
+ addEventListener('hashchange',show);show();})();
+</script>
+</body>
+</html>
