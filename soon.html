@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Раздел пока закрыт · «КрокоМетрика»</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+:root{--page:#eef0f4;--card:#fff;--line:#d9dde6;--ink:#1a2130;--ink-2:#5d6676;--ink-3:#8a92a1;--acc:#1f5f45;
+  --f:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+@media (prefers-color-scheme:dark){:root{--page:#12151b;--card:#1a1f27;--line:#2c323e;--ink:#e6e9ef;--ink-2:#9aa3b3;--ink-3:#6e7787;--acc:#7fc79a;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page);color:var(--ink);font:14px/1.5 var(--f);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 36px}
+.card{max-width:620px;margin:8vh auto 0;background:var(--card);border:1px dashed var(--line);border-radius:12px;padding:32px clamp(18px,5vw,40px);text-align:center}
+.ic{width:52px;height:52px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;background:var(--page);color:var(--ink-2)}
+.ic svg{width:22px;height:22px;fill:currentColor}
+h1{margin:0 0 6px;font-size:22px;font-weight:600}
+.hint{margin:0 0 18px;color:var(--ink-2)}
+.tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:4px;background:var(--page);color:var(--ink-2);margin-bottom:12px}
+.open{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:6px}
+.open a{display:inline-flex;align-items:center;height:34px;padding:0 14px;border-radius:7px;border:1px solid var(--line);color:var(--acc);font-weight:600;text-decoration:none}
+.open a:hover{background:var(--page)}
+.small{font-size:12.5px;color:var(--ink-3);margin-top:18px}
+body[data-k] .card{background:var(--sb);color:var(--sf);border:1px solid color-mix(in srgb,var(--sf) 25%,transparent)}
+body[data-k] .hint,body[data-k] .small{color:inherit;opacity:.8}
+body[data-k] .ic,body[data-k] .tag{background:color-mix(in srgb,var(--sf) 12%,transparent);color:inherit}
+body[data-k] .open a{color:inherit;border-color:color-mix(in srgb,var(--sf) 35%,transparent)}
+body[data-k] .open a:hover{background:color-mix(in srgb,var(--sf) 10%,transparent)}
+body[data-k="gantt"]{--sb:#eef0f4;--sf:#2a3140} body[data-k="sh"]{--sb:#e3ebf7;--sf:#2f4fc4}
+body[data-k="comms"]{--sb:#f8eec4;--sf:#7a560a} body[data-k="risks"]{--sb:#2b2b31;--sf:#f2f1f5}
+body[data-k="pmo"]{--sb:#ffffff;--sf:#1a2130}
+@media (prefers-color-scheme:dark){body[data-k="gantt"]{--sb:#232933;--sf:#cdd3de} body[data-k="sh"]{--sb:#1b2742;--sf:#9db2ff}
+ body[data-k="comms"]{--sb:#352d12;--sf:#e2bb52} body[data-k="risks"]{--sb:#050507;--sf:#ecebf0} body[data-k="pmo"]{--sb:#161a21;--sf:#e6e9ef}}
+</style>
+</head>
+<body>
+<km-shell page="" bleed></km-shell>
+<main class="card">
+  <div class="ic"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 1 0-4 0v2z"/></svg></div>
+  <div class="tag">Раздел пока закрыт</div>
+  <h1 id="t">Раздел портала</h1>
+  <p class="hint" id="h">Откроется на следующих занятиях тренинга.</p>
+  <div class="open"><a href="index.html">Устав проекта</a><a href="business-case.html">Бизнес-кейс</a><a href="business-case.html#benefits">План управления выгодами</a></div>
+  <p class="small">Раздел откроется на следующих занятиях тренинга.</p>
+</main>
+<script src="data/project.js" charset="utf-8"></script>
+<script src="js/dates.js" charset="utf-8"></script>
+<script src="js/shell.js" charset="utf-8"></script>
+<script>
+(()=>{const sh=document.querySelector('km-shell');
+ const set=()=>{const k=location.hash.slice(1),n=(window.KM_NAV||[]).find(x=>x.k===k&&x.lock);
+   sh.shadowRoot&&sh.shadowRoot.querySelectorAll('.btn').forEach(b=>b.dataset.k===k?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current'));
+   document.getElementById('t').textContent=n?n.t:'Раздел портала';
+   n?document.body.dataset.k=n.k:delete document.body.dataset.k;
+   document.getElementById('h').textContent=n?n.hint:'Этот раздел ещё готовится.';
+   document.title=(n?n.t:'Раздел')+' · пока закрыт · «КрокоМетрика»';};
+ addEventListener('hashchange',set);set();})();
+</script>
+</body>
+</html>

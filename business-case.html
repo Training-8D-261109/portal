@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Бизнес-кейс «КрокоМетрика»</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Marck+Script&display=swap">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/* Layout: вкладки «Бизнес-кейс / План выгод» → шапка компании (как в Ганте, реестре и плане коммуникаций) → один лист документа на светло-зелёной подложке: реквизиты и «Утверждаю» → разделы бизнес-кейса → лист согласования с подписями → история версий. */
+:root{
+  --page:#dbeedd; --page-line:#b6d6bd; --doc:#22703f;
+  --paper:#ffffff; --paper-2:#f3f9f4; --line:#d5e7d9; --line-strong:#b4ccba;
+  --ink:#16211a; --ink-2:#4c5d51; --ink-3:#82948a;
+  --sign:#1f3f8f; --stamp:#22703f; --ok:#22703f; --ok-soft:#e1f2e5; --warn:#a2581a; --warn-soft:#f8ebde; --neg:#b0372f; --neg-soft:#f9e4e2;
+  --shadow:0 18px 50px rgba(24,70,38,.14); --page-bmp:#c4e1ca; --page-line-bmp:#9fc8a9; --bar:#22703f; --bar-soft:#cfe7d6; --proj:#7a8a80;
+  --f-ui:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --f-doc:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+  --f-sig:"Marck Script","Segoe Script","Brush Script MT",cursive;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page:#0f1f14; --page-line:#25432d; --doc:#7fd39b;
+  --paper:#151b17; --paper-2:#1b231d; --line:#28332b; --line-strong:#3c4b40;
+  --ink:#e3ece5; --ink-2:#a9b8ad; --ink-3:#7c8c80;
+  --sign:#9db4ff; --stamp:#7fd39b; --ok:#6cc895; --ok-soft:#173022; --warn:#e3a468; --warn-soft:#3a2818; --neg:#f08a80; --neg-soft:#3a1c1a;
+  --shadow:0 18px 50px rgba(0,0,0,.5); --page-bmp:#163322; --page-line-bmp:#2f5a3c; --bar:#6cc895; --bar-soft:#1f3a29; --proj:#8a9a90; --page-bmp:#163322; --page-line-bmp:#2f5a3c; --bar:#6cc895; --bar-soft:#1f3a29; --proj:#8a9a90; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --page:#0f1f14; --page-line:#25432d; --doc:#7fd39b;
+  --paper:#151b17; --paper-2:#1b231d; --line:#28332b; --line-strong:#3c4b40;
+  --ink:#e3ece5; --ink-2:#a9b8ad; --ink-3:#7c8c80;
+  --sign:#9db4ff; --stamp:#7fd39b; --ok:#6cc895; --ok-soft:#173022; --warn:#e3a468; --warn-soft:#3a2818; --neg:#f08a80; --neg-soft:#3a1c1a;
+  --shadow:0 18px 50px rgba(0,0,0,.5); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);font-family:var(--f-ui);font-size:14px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 36px}
+:focus-visible{outline:2px solid var(--doc);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* Шапка */
+.head{display:flex;gap:16px;align-items:center;max-width:920px;margin:0 auto}
+.logo{border-radius:14px;width:64px;height:64px;flex:none;background:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxZjVmNDUiLz48cGF0aCBkPSJNMTAgMzZjNC05IDEwLTEzIDE0LTEzIDMgMCA0IDMgNiAzczMtMyA2LTNjNCAwIDEwIDQgMTggMTMiIGZpbGw9IiM3ZmM3OWEiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48Y2lyY2xlIGN4PSIzNiIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48cGF0aCBkPSJNNiAzOGM0IDAgNCAzIDggM3M0LTMgOC0zIDQgMyA4IDMgNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDQgM3Y5SDZ6IiBmaWxsPSIjM2I4ZmM5Ii8+PHBhdGggZD0iTTYgNDZjNCAwIDQgMyA4IDNzNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDggMyA0LTMgOC0zIDQgMyA0IDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E5ZDZmMiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4K) center/contain no-repeat}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo{border-radius:14px;filter:invert(1)}}
+:root[data-theme="dark"] .logo{border-radius:14px;filter:invert(1)}
+.head-main{min-width:0}
+.eyebrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.eyebrow svg{width:12px;height:12px;fill:currentColor}
+.doctype{margin-left:6px;padding:2px 8px;border-radius:5px;background:var(--doc);color:var(--paper);letter-spacing:.06em}
+.head h1{margin:2px 0 4px;font-size:clamp(19px,2.6vw,26px);line-height:1.2;font-weight:600;text-wrap:balance}
+.facts{display:flex;flex-wrap:wrap;gap:4px 18px;color:var(--ink-2);font-size:13.5px}
+.facts b{color:var(--ink);font-weight:600}
+
+/* Лист */
+.sheet{max-width:920px;margin:20px auto 0;background:var(--paper);border:1px solid var(--page-line);box-shadow:var(--shadow);
+  padding:clamp(20px,5vw,56px) clamp(16px,5.5vw,64px) clamp(24px,5vw,52px);font-family:var(--f-doc);font-size:15px;line-height:1.55}
+.req{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px 32px;align-items:flex-start;font-family:var(--f-ui);font-size:12.5px;color:var(--ink-2)}
+.req dl{display:grid;grid-template-columns:auto 1fr;gap:3px 14px;margin:0}
+.req dt{color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;font-size:11px;padding-top:1px}
+.req dd{margin:0;color:var(--ink)}
+.approve{min-width:250px;border:1px solid var(--line-strong);padding:12px 16px;font-family:var(--f-doc);font-size:13.5px;color:var(--ink);background:var(--paper-2)}
+.approve .cap{font-family:var(--f-ui);font-weight:600;letter-spacing:.14em;font-size:12px;color:var(--stamp)}
+.approve .sigline{display:flex;align-items:flex-end;gap:10px;margin-top:6px}
+.title{text-align:center;margin:30px 0 26px}
+.title .kind{font-family:var(--f-ui);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--doc);font-weight:600}
+.title h2{font-size:clamp(21px,3.4vw,30px);font-weight:600;line-height:1.2;margin:6px auto 6px;max-width:28ch;text-wrap:balance}
+.title p{margin:0;color:var(--ink-2);font-style:italic}
+
+section{display:grid;grid-template-columns:2.4em minmax(0,1fr);gap:0 6px;padding:16px 0;border-top:1px solid var(--line)}
+section>.n{font-family:var(--f-ui);font-weight:600;color:var(--doc);font-size:15px;padding-top:1px}
+section>.b{min-width:0}
+section h3{font-family:var(--f-ui);font-size:15px;font-weight:600;margin:0 0 6px;letter-spacing:.01em}
+section p{margin:0 0 8px;max-width:72ch}
+section p:last-child{margin-bottom:0}
+ul.l,ol.l{margin:4px 0 0;padding-left:1.2em;max-width:72ch}
+ul.l li,ol.l li{margin:3px 0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 28px}
+.sub{font-family:var(--f-ui);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin:2px 0 2px}
+.wrap{overflow-x:auto;margin-top:6px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{font-family:var(--f-ui);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);font-weight:600;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid var(--line-strong);white-space:nowrap}
+td{padding:6px 10px 6px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td.r,th.r{text-align:right}
+tr.tot td{font-weight:600;border-bottom:0;border-top:1px solid var(--line-strong)}
+.code{font-family:var(--f-ui);font-size:12.5px;color:var(--ink-2);white-space:nowrap}
+.chip{display:inline-block;font-family:var(--f-ui);font-size:11.5px;padding:0 6px;border-radius:4px;background:var(--warn-soft);color:var(--warn);white-space:nowrap}
+
+/* Лист согласования */
+.signs{margin-top:8px;display:grid;gap:0}
+.sg{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(130px,1fr) 104px;gap:6px 18px;align-items:end;padding:12px 0;border-bottom:1px solid var(--line)}
+.sg .who b{display:block;font-weight:600}
+.sg .who span{display:block;font-size:13px;color:var(--ink-2);font-family:var(--f-ui)}
+.sg .role{font-family:var(--f-ui);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--doc);font-weight:600}
+.sig{font-family:var(--f-sig);color:var(--sign);font-size:26px;line-height:1;border-bottom:1px solid var(--ink-3);padding:0 4px 2px;transform:rotate(-3deg);transform-origin:left bottom;white-space:nowrap;overflow:hidden}
+.date{font-family:var(--f-ui);font-size:13px;border-bottom:1px solid var(--ink-3);padding-bottom:3px;text-align:center}
+.cap2{font-family:var(--f-ui);font-size:10.5px;color:var(--ink-3);text-align:center;letter-spacing:.05em;margin-top:2px}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;margin-top:22px;font-family:var(--f-ui);font-size:11.5px;color:var(--ink-3)}
+
+/* Вопросы */
+details.qs{max-width:920px;margin:16px auto 0;background:var(--paper);border:1px solid var(--page-line);padding:12px 18px}
+details.qs summary{cursor:pointer;font-weight:600;color:var(--doc)}
+details.qs ol{margin:10px 0 2px;padding-left:1.3em;font-family:var(--f-doc);font-size:14.5px;max-width:80ch}
+details.qs li{margin:5px 0}
+
+@media (max-width:620px){
+  .sg{grid-template-columns:1fr 104px}
+  .sg .who{grid-column:1/-1}
+  section{grid-template-columns:1.9em minmax(0,1fr)}
+  .approve{min-width:0;width:100%}
+}
+
+/* Бизнес-кейс */
+.ask{margin-top:10px;padding:10px 14px;background:var(--ok-soft);border-left:3px solid var(--doc);max-width:72ch}
+dl.situ{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:6px 16px;margin:6px 0 0;padding:12px 16px;background:var(--paper-2);border:1px solid var(--line);max-width:76ch}
+dl.situ dt{font-family:var(--f-ui);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--doc);font-weight:600;padding-top:3px}
+dl.situ dd{margin:0}
+.pill{display:inline-block;font-family:var(--f-ui);font-size:11px;font-weight:600;padding:1px 7px;border-radius:4px;white-space:nowrap;margin-right:4px}
+.pill.yes{background:var(--ok-soft);color:var(--ok)}
+.pill.no{background:var(--neg-soft);color:var(--neg)}
+tr.rec td{background:var(--ok-soft)}
+tr.rec td:first-child{box-shadow:inset 3px 0 0 var(--doc);padding-left:8px}
+td.pos{color:var(--ok)} td.neg{color:var(--neg)} .muted{color:var(--ink-3)}
+table.cf td:first-child,table.opt td:first-child{min-width:220px}
+table.kp{margin-top:14px}
+.note{font-size:13.5px;color:var(--ink-2)}
+@media (max-width:620px){dl.situ{grid-template-columns:1fr}dl.situ dt{padding-top:6px}}
+.foot a,.note a{color:var(--doc)}
+
+/* Вкладки документов */
+body{transition:background-color .25s}
+body[data-doc="benefits"]{--page:var(--page-bmp);--page-line:var(--page-line-bmp)}
+.tabs{max-width:920px;margin:0 auto 16px;display:flex;gap:4px;border-bottom:1px solid var(--page-line)}
+.tabs button{appearance:none;flex:0 1 auto;min-width:0;border:1px solid transparent;border-bottom:0;background:transparent;padding:8px 14px 9px;margin-bottom:-1px;border-radius:6px 6px 0 0;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;text-align:left;line-height:1.25;font-family:var(--f-ui);color:var(--ink-2)}
+.tabs .en{font-weight:600;font-size:13.5px}
+.tabs .ru{font-size:12px;color:var(--ink-3)}
+.tabs button:hover .en{color:var(--doc)}
+.tabs button[aria-selected="true"]{background:var(--paper);border-color:var(--page-line)}
+.tabs button[aria-selected="true"] .en{color:var(--doc)}
+@media (max-width:520px){.tabs button{flex:1 1 0;padding:8px 10px}}
+@media (prefers-reduced-motion:reduce){body{transition:none}}
+h3 .en{color:var(--doc)}
+.note a,.foot a{color:var(--doc)}
+
+/* Номера выгод */
+.bid{display:inline-block;font-family:var(--f-ui);font-size:11px;font-weight:600;line-height:1.5;padding:0 6px;border-radius:4px;background:var(--doc);color:var(--paper);margin-right:2px;vertical-align:1px}
+.bid.n{background:var(--ink-2)}
+table.ben td:first-child{min-width:230px}
+table.ben td.r{white-space:normal;min-width:150px}
+
+/* Приватные блоки для C-level */
+details.clevel{margin:16px 0 0;border:1px dashed var(--line-strong);background:var(--paper-2);border-radius:4px}
+details.clevel>summary{cursor:pointer;list-style:none;padding:10px 14px;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;font-family:var(--f-ui)}
+details.clevel>summary::-webkit-details-marker{display:none}
+details.clevel>summary::after{content:"Показать ▾";margin-left:auto;font-size:12px;font-weight:600;color:var(--doc)}
+details.clevel[open]>summary::after{content:"Скрыть ▴"}
+details.clevel>section{padding-left:14px;padding-right:14px}
+.lock{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--neg);background:var(--neg-soft);padding:2px 8px;border-radius:4px}
+.lock svg{width:11px;height:11px;fill:currentColor}
+.clevel .st{font-size:13px;color:var(--ink-2)}
+details.clevel + section{margin-top:16px}
+
+/* Таймлайн выгод */
+.tlw{overflow-x:auto;margin-top:10px}
+.tl{padding-right:24px;min-width:700px;display:grid;grid-template-columns:200px minmax(0,1fr);font-family:var(--f-ui);font-size:12.5px}
+.tl .lab{padding:7px 10px 7px 0;border-bottom:1px solid var(--line);line-height:1.3}
+.tl .lab b{display:block;font-weight:600;color:var(--ink)}
+.tl .lab span{color:var(--ink-3);font-size:11.5px}
+.tl .trk{position:relative;border-bottom:1px solid var(--line);min-height:46px}
+.tl .trk.tall{min-height:58px}
+.tl .hdl{border-bottom:1px solid var(--line-strong)}
+.tl .trk.hdl{min-height:0;padding-bottom:4px}
+.yrs,.qs{position:relative;height:18px}
+.yrs>div,.qs>div{position:absolute;top:0;height:100%;text-align:center;border-left:1px solid var(--line-strong);white-space:nowrap;overflow:hidden}
+.yrs>div{font-weight:600;color:var(--ink-2)}
+.qs>div{font-size:11px;color:var(--ink-3);border-left-color:var(--line)}
+.grid{position:absolute;inset:0;pointer-events:none}
+.grid i{position:absolute;top:0;bottom:0;border-left:1px solid var(--line)}
+.bar{position:absolute;top:50%;height:18px;transform:translateY(-50%);border-radius:3px;background:var(--bar);color:var(--paper);font-size:11px;line-height:18px;padding:0 6px;white-space:nowrap;overflow:hidden;text-overflow:clip}
+.bar.prep{background:repeating-linear-gradient(135deg,var(--bar-soft) 0 5px,transparent 5px 9px);border:1px solid var(--bar);line-height:16px;color:var(--ink-2)}
+.bar.proj{background:var(--proj)}
+.bar.soft{background:var(--bar-soft);color:var(--ink)}
+.dia{position:absolute;top:50%;width:13px;height:13px;background:var(--stamp);transform:translate(-50%,-50%) rotate(45deg);border:2px solid var(--paper)}
+.dia.m{background:var(--warn)}
+.tall .dia{top:36%}
+.dlab{position:absolute;bottom:3px;transform:translateX(-50%);font-size:10.5px;color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums}
+.vl{position:absolute;top:0;bottom:0;border-left:2px dashed var(--neg);opacity:.75}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:10px;font-family:var(--f-ui);font-size:12px;color:var(--ink-2)}
+.legend i{display:inline-block;width:22px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.legend i.d{width:10px;height:10px;transform:rotate(45deg);border-radius:0}
+.legend i.hatch{background:repeating-linear-gradient(135deg,var(--bar-soft) 0 5px,transparent 5px 9px);border:1px solid var(--bar)}
+.legend i.vline{width:0;height:12px;border-left:2px dashed var(--neg);border-radius:0}
+.fc{display:inline-block;font-family:var(--f-ui);font-size:11.5px;font-weight:600;padding:1px 7px;border-radius:4px;white-space:nowrap}
+.fc.ok{color:var(--ok);background:var(--ok-soft)}.fc.warn{color:var(--warn);background:var(--warn-soft)}.fc.bad{color:var(--neg);background:var(--neg-soft)}
+.fcn{font-size:11.5px;color:var(--ink-2);margin-top:3px}.ash{margin:18px 0 6px;font-size:13px}
+</style>
+</head>
+<body>
+<km-shell page="bc" bleed></km-shell>
+<nav class="tabs" role="tablist" aria-label="Документы">
+  <button type="button" role="tab" id="tab-bc" data-tab="business-case" aria-controls="doc-business-case"><span class="en">Business Case</span><span class="ru">Бизнес-кейс</span></button>
+  <button type="button" role="tab" id="tab-bmp" data-tab="benefits" aria-controls="doc-benefits"><span class="en">Benefits Management Plan</span><span class="ru">План управления выгодами</span></button>
+</nav>
+
+<!-- ===================== БИЗНЕС-КЕЙС ===================== -->
+<div class="doc" id="doc-business-case" role="tabpanel" aria-labelledby="tab-bc">
+<header class="head">
+  <div class="logo" role="img" aria-label="Логотип фермы «Тёплый Нил»"></div>
+  <div class="head-main">
+    <div class="eyebrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 1 0-4 0v2z"/></svg>Группа «ЭкзоАгро» · Для внутреннего пользования<span class="doctype">Бизнес-кейс</span></div>
+    <h1>Бизнес-кейс · «КрокоМетрика: MVP аппаратно-программного комплекса для крокодиловой фермы»</h1>
+    <div class="facts"><span>Версия <b>1.0</b></span><span>Статус <b>Утверждён</b></span><span>Решение от <b class="num" data-d="-4"></b></span><span>Автор <b>Сергей Калинин</b></span><span>Утвердил <b>Марк Волынский</b></span><span>Запрос <b class="num">18,9 млн ₽</b></span></div>
+  </div>
+</header>
+
+<article class="sheet">
+  <div class="req">
+    <dl>
+      <dt>Документ</dt><dd>BC-KM-<span data-d="1" data-f="y"></span>-01, версия 1.0</dd>
+      <dt>Проект</dt><dd>«КрокоМетрика»</dd>
+      <dt>Подготовил</dt><dd>Сергей Калинин, генеральный директор фермы</dd>
+      <dt>Адресат</dt><dd>Марк Волынский, управляющий партнёр АО «ЭкзоАгро»</dd>
+      <dt>Основание</dt><dd>Маркетинговый план АО «ЭкзоАгро» на <span data-d="1" data-f="y"></span> год, инициатива генерального директора фермы</dd>
+      <dt>Доступ</dt><dd>Руководство холдинга, руководство фермы, участники проекта</dd>
+    </dl>
+    <div class="approve">
+      <div class="cap">УТВЕРЖДАЮ</div>
+      <div>Управляющий партнёр<br>АО «ЭкзоАгро»</div>
+      <div class="sigline"><span class="sig" style="flex:1">М. Волынский</span><span>М. Волынский</span></div>
+      <div class="num" style="margin-top:6px" data-d="-4" data-f="long"></div>
+    </div>
+  </div>
+
+  <div class="title">
+    <div class="kind">Бизнес-кейс проекта</div>
+    <h2>«КрокоМетрика: MVP аппаратно-программного комплекса для крокодиловой фермы»</h2>
+    <p>Обоснование того, что ожидаемая ценность проекта оправдывает вложения и риски. Служит основой для решения о запуске проекта</p>
+  </div>
+
+  <section><div class="n">1</div><div class="b">
+    <h3>Резюме и запрашиваемое решение</h3>
+    <p>АО «ЭкзоАгро» выходит на рынок Москвы, Московской области и соседних регионов. Первая маркетинговая кампания стартует <span class="num" data-m="3"></span>, вторая волна в соседних регионах — <span class="num" data-m="9"></span>. Холдинг ожидает, что заказы мяса и поток туристов на ферме «Тёплый Нил» вырастут в разы, возможно скачком.</p>
+    <p>Ферма «Тёплый Нил» входит в группу АО «ЭкзоАгро», которой принадлежат крокодиловые, страусиные и анакондовые фермы по всей стране. Ферма разводит нильских крокодилов в климате Московской области: около 650 особей в трёх отапливаемых ангарах, 8 бассейнов с фильтрацией и инкубаторная станция на 12 шкафов. Сейчас режимы контролируют вручную: обходы каждые 3 часа, бумажные журналы, бытовые термостаты. Любой сбой отопления или фильтрации зимой за несколько часов приводит к гибели животных, а ошибка инкубации в несколько десятых градуса влияет на пол и здоровье всей кладки.</p>
+    <p>У фермы три направления дохода: мясо, кожа и экскурсии. Рестораны требуют от поставщика электронный ветеринарный сертификат из ФГИС «Меркурий», поэтому этот канал продаж сейчас фактически закрыт.</p>
+    <p>Руководство фермы проанализировало планы холдинга и инициирует данный проект, чтобы подготовить ферму к предстоящим вызовам. С нынешними процессами ферма не переживёт ни аварию в разгар кампании, ни кратный рост заказов.</p>
+    <p>Предлагается за 120 рабочих дней внедрить единую систему «КрокоМетрика» и закончить проект до старта кампании в Москве.</p>
+    <div class="ask"><b>Холдингу предлагается</b> одобрить вариант Г, выделить <b class="num">18,9 млн ₽</b> (включая резервы) и запустить проект со стартом <span class="num" data-d="1"></span>.</div>
+  </div></section>
+
+  <section><div class="n">2</div><div class="b">
+    <h3>Бизнес-потребность</h3>
+    <dl class="situ">
+      <dt>Повод</dt><dd>Экспансия холдинга и маркетинговые кампании в Москве, Московской области и соседних регионах.</dd>
+      <dt>Проблема</dt><dd>Ферма работает на ручных обходах, бумажных журналах и бытовых термостатах. Ветеринарные документы на мясо не оформляются. Процессы не масштабируются.</dd>
+      <dt>Затрагивает</dt><dd>Поголовье стоимостью около 25 млн ₽ в одном ангаре, выход молодняка, ресторанный канал продаж, экскурсии, нагрузку на зоотехников и ветврача.</dd>
+      <dt>Последствие</dt><dd>Кампания приведёт клиентов, которых ферма не сможет обслужить: заказы без документов, очереди на экскурсии, аварии из-за перегруженного персонала. Это удар по репутации всей группы, а не одной фермы.</dd>
+      <dt>Решение</dt><dd>Единая система фермы с датчиками, превентивными алертами, точным управлением инкубаторами, интеграцией с ФГИС «Меркурий», учётом и онлайн-бронированием.</dd>
+    </dl>
+  </div></section>
+
+  <section><div class="n">3</div><div class="b">
+    <h3>Цели проекта и связь с целями организации</h3>
+    <div class="wrap"><table>
+      <thead><tr><th>Цель холдинга и фермы</th><th>Цель проекта</th></tr></thead>
+      <tbody>
+        <tr><td>Выдержать кратный рост заказов после кампаний без сбоев</td><td>Единая система для трёх ролей до старта кампании в Москве; ферма работает без бумажных журналов</td></tr>
+        <tr><td>Сохранить и нарастить поголовье без новых ангаров</td><td>Инкубаторный модуль до первой закладки, климат и вода под круглосуточным контролем</td></tr>
+        <tr><td>Продавать мясо легально ресторанам Москвы и области</td><td>Шлюз ВетИС.API, первая отгрузка в ресторан с eВСД до Д85</td></tr>
+        <tr><td>Принять поток туристов, который приведёт кампания</td><td>Онлайн-бронирование и учёт потока экскурсий</td></tr>
+      </tbody></table></div>
+      </div></section>
+
+  <section><div class="n">4</div><div class="b">
+    <h3>Рассмотренные варианты и аппетит к риску</h3>
+    <p>Варианты сравнивались с риск-аппетитом, который холдинг утвердил для ферм группы на <span data-d="1" data-f="y"></span> год:</p>
+    <dl class="situ">
+      <dt>Финансы</dt><dd>До <b>20 млн ₽</b> на проект развития одной фермы, возврат вложений не дольше трёх лет после внедрения.</dd>
+      <dt>Животные</dt><dd>Низкий аппетит: никакое изменение не должно повышать риск гибели поголовья, ручной режим сохраняется как резерв.</dd>
+      <dt>Ветеринарный комплаенс</dt><dd>Нулевая толерантность: продукция уходит с фермы только с ветеринарными документами.</dd>
+      <dt>Репутация группы</dt><dd>Низкий аппетит: после старта кампаний ферма не должна срывать заказы и экскурсии.</dd>
+    </dl>
+    <div class="wrap" style="margin-top:10px"><table class="opt">
+      <thead><tr><th>Вариант и вывод</th><th class="r">Затраты</th><th>Готовность к росту заказов</th><th class="r">NPV без B6</th><th>Аппетит к риску</th></tr></thead>
+      <tbody>
+        <tr><td><b>А. Ничего не делать.</b> Ручные обходы, бумажные журналы, продажи частникам.<div class="vrd">Отклонён</div></td><td class="r num">0</td><td>Нет</td><td class="r">—</td><td><span class="pill no">Превышен</span> Животные, комплаенс, репутация</td></tr>
+        <tr><td><b>Б. Коробочная система для АПК</b> и штатные контроллеры производителей оборудования.<div class="vrd">Отклонён</div></td><td class="r num">≈ 11,0 млн ₽</td><td>Частично: учёт есть, модулей для рептилий нет</td><td class="r">—</td><td><span class="pill no">Превышен</span> Животные: инкубация остаётся на точности ±0,5&nbsp;°C</td></tr>
+        <tr><td><b>В. Только блок 1:</b> инкубатор, климат, вода, «Меркурий».<div class="vrd">Отклонён</div></td><td class="r num">≈ 13,2 млн ₽</td><td>Частично: животные защищены, но рост заказов упирается в ручной учёт и ветврача</td><td class="r neg num">−0,2 млн ₽</td><td><span class="pill no">Превышен</span> Репутация: туристы и заказы при пиковой нагрузке</td></tr>
+        <tr class="rec"><td><b>Г. MVP «КрокоМетрика» по приоритетам:</b> блок 1 полностью, блок 2 упрощённо, блок 3 по остаточному принципу.<div class="vrd"><b>Рекомендован</b></div></td><td class="r num">18,9 млн ₽</td><td>Да</td><td class="r pos num">+3,5 млн ₽</td><td><span class="pill yes">В пределах</span> Запас до финансового порога 1,1 млн ₽</td></tr>
+        <tr><td><b>Д. «Цифровая ферма» целиком:</b> полноценная ERP, CRM туризма, мобильное приложение для посетителей.<div class="vrd">Отклонён: избыточен</div></td><td class="r num">≈ 41 млн ₽</td><td>Да, с большим избытком</td><td class="r">—</td><td><span class="pill no">Превышен</span> Финансы: больше 20 млн ₽; не успевает к кампании</td></tr>
+      </tbody></table></div>
+    <p style="margin-top:10px"><b>Рекомендация: вариант Г.</b> Вариант В дешевле на 5,7 млн ₽ и защищает поголовье, но рост заказов при нём упирается в ручной учёт. Ветврачу придётся вести документы на каждую партию по бумажному журналу, кормления и запасы считать вручную, экскурсии бронировать по телефону. Г дороже, но готовит ферму к нагрузке, ради которой проект и затевается. Вариант Д закрывает то, что понадобится только через несколько лет, и не помещается ни в бюджет, ни в срок до кампании.</p>
+  </div></section>
+
+  <section><div class="n">5</div><div class="b">
+    <h3>Ожидаемые выгоды</h3>
+    <div class="wrap"><table id="ben-bc" class="ben"></table></div>
+    <p class="note" style="margin-top:8px">Проект также даёт холдингу типовое решение, которое можно повторить на других фермах группы, и данные для селекции. Эти выгоды не измеряются и в расчёт не входят.</p>
+    <div class="ask"><b>Итог анализа затрат и выгод.</b> Затраты 18,9 млн ₽ и 5,8 млн ₽ на эксплуатацию за горизонт расчёта. Финансовые выгоды B1–B5 растут с 9,9 до 14,7 млн ₽ в год вместе с заказами после кампаний. Проект окупается на втором году эксплуатации даже без расчётной ценности предотвращённых потерь (B6). Вывод держится на допущении, что экспансия состоится в срок.</div>
+    <p class="note" style="margin-top:8px">Метрики, владельцы и сроки получения выгод описаны в <a href="#benefits" data-go="benefits">плане управления выгодами</a>.</p>
+  </div></section>
+
+  <details class="clevel">
+    <summary><span class="lock"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 1 0-4 0v2z"/></svg>Только для руководства холдинга и директора фермы</span><span class="st">6. Затраты и финансовая оценка · 7. Чувствительность</span></summary>
+
+  <section><div class="n">6</div><div class="b">
+    <h3>Затраты и финансовая оценка</h3>
+    <p class="note">Млн ₽. Год 0 — год проекта, годы 1–3 — эксплуатация. Сценарий экспансии: кампания в Москве и области стартует в начале года 1, в соседних регионах — в его середине. Ставка дисконтирования 20&nbsp;% (барьерная ставка холдинга). Затраты на проект — по оценке подрядчика, включая оба резерва.</p>
+    <div class="wrap"><table class="num cf">
+      <thead><tr><th>Статья</th><th class="r">Год 0</th><th class="r">Год 1</th><th class="r">Год 2</th><th class="r">Год 3</th><th class="r">Итого</th></tr></thead>
+      <tbody>
+        <tr><td>Инвестиции в проект</td><td class="r neg">−18,9</td><td class="r">—</td><td class="r">—</td><td class="r">—</td><td class="r neg">−18,9</td></tr>
+        <tr><td>Эксплуатация: связь, облако, сопровождение</td><td class="r neg">−0,4</td><td class="r neg">−1,8</td><td class="r neg">−1,8</td><td class="r neg">−1,8</td><td class="r neg">−5,8</td></tr>
+        <tr><td>B1. Выход молодняка</td><td class="r">—</td><td class="r pos">+1,2</td><td class="r pos">+1,2</td><td class="r pos">+1,2</td><td class="r pos">+3,6</td></tr>
+        <tr><td>B2. Продажи в рестораны</td><td class="r pos">+1,0</td><td class="r pos">+4,8</td><td class="r pos">+6,0</td><td class="r pos">+7,2</td><td class="r pos">+19,0</td></tr>
+        <tr><td>B3. Рост без пропорционального найма</td><td class="r">—</td><td class="r pos">+2,2</td><td class="r pos">+3,0</td><td class="r pos">+3,0</td><td class="r pos">+8,2</td></tr>
+        <tr><td>B4. Насосы и фильтры</td><td class="r">—</td><td class="r pos">+0,9</td><td class="r pos">+0,9</td><td class="r pos">+0,9</td><td class="r pos">+2,7</td></tr>
+        <tr><td>B5. Онлайн-продажа экскурсий</td><td class="r">—</td><td class="r pos">+0,8</td><td class="r pos">+1,6</td><td class="r pos">+2,4</td><td class="r pos">+4,8</td></tr>
+        <tr class="tot"><td>Чистый поток, консервативный сценарий</td><td class="r neg">−18,3</td><td class="r pos">+8,1</td><td class="r pos">+10,9</td><td class="r pos">+12,9</td><td class="r pos">+13,6</td></tr>
+        <tr><td class="muted">Накопленный поток</td><td class="r muted">−18,3</td><td class="r muted">−10,2</td><td class="r muted">+0,7</td><td class="r muted">+13,6</td><td class="r"></td></tr>
+        <tr><td>B6. Предотвращённые потери поголовья</td><td class="r pos">+0,6</td><td class="r pos">+2,5</td><td class="r pos">+2,5</td><td class="r pos">+2,5</td><td class="r pos">+8,1</td></tr>
+        <tr class="tot"><td>Чистый поток с учётом B6</td><td class="r neg">−17,7</td><td class="r pos">+10,6</td><td class="r pos">+13,4</td><td class="r pos">+15,4</td><td class="r pos">+21,7</td></tr>
+      </tbody></table></div>
+    <div class="wrap"><table class="num kp">
+      <thead><tr><th>Показатель</th><th class="r">Консервативный (B1–B5)</th><th class="r">С предотвращёнными потерями (B1–B6)</th></tr></thead>
+      <tbody>
+        <tr><td>NPV при 20&nbsp;%</td><td class="r pos"><b>+3,5 млн ₽</b></td><td class="r pos"><b>+9,4 млн ₽</b></td></tr>
+        <tr><td>Приведённые выгоды / приведённые затраты</td><td class="r">26,6 / 23,1</td><td class="r">32,4 / 23,1</td></tr>
+        <tr><td>Коэффициент выгоды к затратам (BCR)</td><td class="r">1,15</td><td class="r">1,40</td></tr>
+        <tr><td>ROI (по приведённым величинам)</td><td class="r pos">+15&nbsp;%</td><td class="r pos">+40&nbsp;%</td></tr>
+        <tr><td>Срок окупаемости (без дисконтирования)</td><td class="r">≈ 1,9 года эксплуатации</td><td class="r">≈ 1,5 года эксплуатации</td></tr>
+      </tbody></table></div>
+  </div></section>
+
+  <section><div class="n">7</div><div class="b">
+    <h3>Чувствительность</h3>
+    <ul class="l">
+      <li><b>Экспансия откладывается.</b> Если кампании сдвинутся на год и заказы останутся на уровне года 1, консервативный NPV варианта Г падает до −1,2 млн ₽, а у варианта В он около +0,8 млн ₽. Выбор Г — ставка на то, что рост действительно наступит. Поэтому сроки кампаний — ключевое допущение (A4).</li>
+      <li><b>B2, рестораны.</b> Самая крупная выгода. Если ресторанный канал даст вдвое меньше маржи, консервативный NPV становится отрицательным (около −3,2 млн ₽); с учётом B6 проект остаётся в плюсе, около +2,7 млн ₽.</li>
+      <li><b>Вариант В при росте заказов.</b> Без хозяйственного модуля, «Ветжурнала» и бронирования ферма не сможет продавать больше 6 т мяса в год без новых ставок, а онлайн-продаж экскурсий не будет вовсе. Поэтому NPV варианта В в сценарии экспансии около −0,2 млн ₽.</li>
+      <li><b>Срок.</b> Если инкубаторный модуль не успеет к закладке, первый сезон идёт по-старому, и B1 сдвигается на год: NPV снижается примерно на 1 млн ₽. Если система не готова к старту кампании, B2 и B5 первого года под угрозой.</li>
+    </ul>
+  </div></section>
+  </details>
+
+  <section><div class="n">8</div><div class="b">
+    <h3>Пересмотр бизнес-кейса</h3>
+    <p>Спонсор подтверждает актуальность бизнес-кейса на вехах «Инкубаторный модуль принят» (Д55) и «Первый eВСД выписан системой» (Д85). Внеочередной пересмотр проводится, если прогноз затрат превышает 18,9 млн ₽, если холдинг переносит или отменяет маркетинговые кампании, если инкубаторный модуль не успевает к первой закладке или если возникают обстоятельства, при которых цели проекта становятся недостижимыми.</p>
+  </div></section>
+
+  <section><div class="n">9</div><div class="b">
+    <h3>Решение холдинга</h3>
+    <p><b>Решение управляющего партнёра № ЭА-<span data-d="-4" data-f="y"></span>/44 от <span class="num" data-d="-4"></span>.</b> Бизнес-кейс версии 1.0 одобрен. Ферме «Тёплый Нил» выделено 18,9 млн ₽ на вариант Г, включая резерв на непредвиденные расходы 1,6 млн ₽ и управленческий резерв 0,9 млн ₽, который остаётся в распоряжении холдинга. Генеральному директору фермы поручено назначить руководителя проекта.</p>
+    <p><b>Условие холдинга:</b> модуль бронирования экскурсий должен работать до старта кампании в Москве. Остальные работы блока 3 начинать только после вехи «Первый eВСД выписан системой».</p>
+  </div></section>
+
+  <section><div class="n">10</div><div class="b">
+    <h3>Лист согласования</h3>
+    <div class="signs">
+      <div class="sg"><div class="who"><span class="role">Подготовлено · Заказчик</span><b>Сергей Калинин</b><span>Генеральный директор ООО «Тёплый Нил»</span></div>
+        <div><div class="sig">С. Калинин</div><div class="cap2">подпись</div></div><div><div class="date num" data-d="-6"></div><div class="cap2">дата</div></div></div>
+      <div class="sg"><div class="who"><span class="role">Согласовано · Финансовая модель</span><b>Ольга Лаптева</b><span>Главный бухгалтер фермы</span></div>
+        <div><div class="sig">О. Лаптева</div><div class="cap2">подпись</div></div><div><div class="date num" data-d="-5"></div><div class="cap2">дата</div></div></div>
+      <div class="sg"><div class="who"><span class="role">Согласовано · Оценка аварий и оборудования</span><b>Николай Ершов</b><span>Главный инженер фермы</span></div>
+        <div><div class="sig">Н. Ершов</div><div class="cap2">подпись</div></div><div><div class="date num" data-d="-5"></div><div class="cap2">дата</div></div></div>
+      <div class="sg"><div class="who"><span class="role">Утверждено · Спонсор</span><b>Марк Волынский</b><span>Управляющий партнёр АО «ЭкзоАгро»</span></div>
+        <div><div class="sig">М. Волынский</div><div class="cap2">подпись</div></div><div><div class="date num" data-d="-4"></div><div class="cap2">дата</div></div></div>
+    </div>
+  </div></section>
+
+  <section><div class="n">11</div><div class="b">
+    <h3>История версий</h3>
+    <div class="wrap"><table class="num">
+      <thead><tr><th>Версия</th><th>Дата</th><th>Что изменилось</th></tr></thead>
+      <tbody>
+        <tr><td>0.9</td><td data-d="-9"></td><td>Черновик директора фермы: варианты А–Д, оценка затрат подрядчика.</td></tr>
+        <tr><td>1.0</td><td data-d="-4"></td><td>По замечаниям холдинга добавлены сценарий экспансии, выгода B6 и анализ чувствительности. Утверждён управляющим партнёром.</td></tr>
+      </tbody></table></div>
+  </div></section>
+
+  <div class="foot"><span>BC-KM-<span data-d="1" data-f="y"></span>-01 · v1.0</span><span>Связанные документы: <a href="#benefits" data-go="benefits">план управления выгодами</a></span></div>
+</article>
+
+</div>
+
+<!-- ===================== ПЛАН УПРАВЛЕНИЯ ВЫГОДАМИ ===================== -->
+<div class="doc" id="doc-benefits" role="tabpanel" aria-labelledby="tab-bmp" hidden>
+<header class="head">
+  <div class="logo" role="img" aria-label="Логотип фермы «Тёплый Нил»"></div>
+  <div class="head-main">
+    <div class="eyebrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 1 0-4 0v2z"/></svg>Группа «ЭкзоАгро» · Для внутреннего пользования<span class="doctype">План управления выгодами</span></div>
+    <h1>План управления выгодами · «КрокоМетрика: MVP аппаратно-программного комплекса для крокодиловой фермы»</h1>
+    <div class="facts"><span>Версия <b>1.0</b></span><span>Статус <b>Утверждён</b></span><span>Действует до <b class="num" data-m="36"></b></span><span>Владелец <b>Марк Волынский</b></span></div>
+  </div>
+</header>
+
+<article class="sheet">
+  <div class="req">
+    <dl>
+      <dt>Документ</dt><dd>BMP-KM-<span data-d="1" data-f="y"></span>-01, версия 1.0</dd>
+      <dt>Проект</dt><dd>«КрокоМетрика»</dd>
+      <dt>Владелец плана</dt><dd>Марк Волынский, спонсор проекта; ведёт по поручению Сергей Калинин, генеральный директор фермы</dd>
+      <dt>Основание</dt><dd>Бизнес-кейс BC-KM-<span data-d="1" data-f="y"></span>-01 v1.0</dd>
+      <dt>Горизонт</dt><dd><span class="num" data-d="1"></span> – <span class="num" data-m="36"></span>, дольше срока проекта</dd>
+      <dt>Доступ</dt><dd>Руководство холдинга и фермы, владельцы выгод</dd>
+    </dl>
+    <div class="approve">
+      <div class="cap">УТВЕРЖДАЮ</div>
+      <div>Управляющий партнёр<br>АО «ЭкзоАгро»</div>
+      <div class="sigline"><span class="sig" style="flex:1">М. Волынский</span><span>М. Волынский</span></div>
+      <div class="num" style="margin-top:6px" data-d="-4" data-f="long"></div>
+    </div>
+  </div>
+
+  <div class="title">
+    <div class="kind">План управления выгодами</div>
+    <h2>«КрокоМетрика: MVP аппаратно-программного комплекса для крокодиловой фермы»</h2>
+    <p>Когда, как и кем будут получены и измерены выгоды, обещанные в бизнес-кейсе</p>
+  </div>
+
+  <section><div class="n">1</div><div class="b">
+    <h3>Назначение плана</h3>
+    <p>Бизнес-кейс обосновал проект ожидаемыми выгодами. Этот план отвечает за то, чтобы выгоды были получены и подтверждены цифрами. Почти все выгоды появляются после закрытия проекта <span class="num" data-d="120"></span> (Д120), поэтому план принадлежит спонсору, а не руководителю проекта, и действует ещё три года. Холдинг отвечает за выгоды, ферма — за ежедневную работу, которая их даёт.</p>
+    <p>Проект создаёт результаты: датчики, модули системы, шлюз «Меркурий», обученный персонал. Выгоды появляются, когда этими результатами пользуются каждый день: зоотехник отказывается от ночных обходов, отдел продаж выходит на рестораны, инженер чистит фильтры по прогнозу.</p>
+  </div></section>
+
+  <section><div class="n">2</div><div class="b">
+    <h3><span class="en">Benefits</span> · Целевые выгоды и метрики</h3>
+    <p class="note">Выгоды из <a href="#business-case" data-go="business-case">бизнес-кейса</a>: B1–B6 и N1, те же номера и названия.</p>
+    <div class="wrap"><table id="ben-bmp" class="ben reg"></table></div>
+    <p class="note" style="margin-top:8px">Денежная оценка B6 расчётная и прямому измерению не подлежит. Поэтому для неё измеряется факт: число аварий, дошедших до гибели животных.</p>
+  </div></section>
+
+  <section><div class="n">3</div><div class="b">
+    <h3><span class="en">Benefits Realization Timeline</span> · Таймлайн реализации выгод</h3>
+    <p>Проект длится около полугода и заканчивается до старта маркетинговой кампании в Москве. Выгоды растут вместе с заказами после кампаний и измеряются ещё три года после закрытия проекта. Первая выгода, B2, появляется ещё во время проекта.</p>
+    <div class="tlw" id="tl" role="img" aria-label="Таймлайн реализации выгод от старта проекта до конца горизонта плана"></div>
+    <div class="legend"><span><i style="background:var(--proj)"></i>Проект</span><span><i style="background:var(--bar)"></i>Выгода реализуется</span><span><i class="hatch"></i>Подготовка, выгоды ещё нет</span><span><i class="d" style="background:var(--warn)"></i>Точка измерения</span><span><i class="vline"></i>Закрытие проекта <b class="num" id="close-date"></b></span></div>
+  </div></section>
+
+  <details class="clevel">
+    <summary><span class="lock"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 1 0-4 0v2z"/></svg>Только для владельца и владельцев выгод</span><span class="st">4. Точки измерения · 5. Передача результатов</span></summary>
+
+  <section><div class="n">4</div><div class="b">
+    <h3>Точки измерения и отчётность</h3>
+    <div class="wrap"><table class="num">
+      <thead><tr><th>Дата</th><th>Что измеряем</th><th>Кто отчитывается → кому</th></tr></thead>
+      <tbody>
+        <tr><td data-m="0"></td><td>B2: первые отгрузки в рестораны с eВСД. Результаты проекта переданы владельцам выгод</td><td>А. Сорокина → С. Калинин → М. Волынский</td></tr>
+        <tr><td data-m="3"></td><td>B1: выход молодняка первого сезона на новой системе</td><td>П. Гончаров → С. Калинин</td></tr>
+        <tr><td data-m="6"></td><td>B3: ночные обходы сокращены. B5: доля онлайн-билетов. N1: время реакции на SOS</td><td>П. Гончаров, А. Сорокина, Т. Ахмедов → С. Калинин</td></tr>
+        <tr><td data-m="9"></td><td>B2, B5: нагрузка после кампании в Москве. Готовность к второй волне в соседних регионах</td><td>А. Сорокина → С. Калинин → М. Волынский</td></tr>
+        <tr><td data-m="12"></td><td>Все выгоды за первый год, в том числе B4 и B6. Решение о договоре сопровождения и о тиражировании решения на другие фермы группы</td><td>Владельцы выгод, С. Калинин → М. Волынский</td></tr>
+        <tr><td data-m="24"></td><td>Все выгоды за второй год</td><td>Владельцы выгод, С. Калинин → М. Волынский</td></tr>
+        <tr><td data-m="36"></td><td>Итог за три года, закрытие плана</td><td>С. Калинин → М. Волынский</td></tr>
+      </tbody></table></div>
+    <p class="note" style="margin-top:8px">Если выгода отстаёт от цели больше чем на 20&nbsp;%, её владелец за месяц готовит корректирующие действия.</p>
+  </div></section>
+
+  <section><div class="n">5</div><div class="b">
+    <h3>Передача результатов и поддержание выгод</h3>
+    <div class="wrap"><table>
+      <thead><tr><th>Результат проекта</th><th>Кому передаётся</th><th>Что нужно для выгоды</th></tr></thead>
+      <tbody>
+        <tr><td>Инкубаторный модуль (ИСР 3.1)</td><td>Главный зоотехник</td><td>Калибровка датчиков перед каждым сезоном</td></tr>
+        <tr><td>Климат-контроль и вода (3.2, 3.3)</td><td>Главный инженер</td><td>Договор сопровождения, ЗИП датчиков, дежурства по алертам</td></tr>
+        <tr><td>Шлюз «Меркурий» (3.4)</td><td>Главный ветврач</td><td>Действующая регистрация площадки, своевременное обновление ВетИС.API</td></tr>
+        <tr><td>Модуль бронирования (5.1)</td><td>Менеджер по продажам и туризму</td><td>Сайт фермы и эквайринг</td></tr>
+      </tbody></table></div>
+  </div></section>
+  </details>
+
+  <section><div class="n">6</div><div class="b">
+    <h3><span class="en">Disbenefits</span> · Негативные последствия</h3>
+    <div class="wrap"><table>
+      <thead><tr><th>Последствие</th><th>Когда</th><th>Как ограничиваем</th></tr></thead>
+      <tbody>
+        <tr><td>Стресс животных из-за монтажа датчиков и камер в вольерах</td><td>Д20 – Д75</td><td>Работы по графику зоотехника, не в дни кормления и не в инкубаторной после закладки</td></tr>
+        <tr><td>Ферма зависит от связи и электропитания системы</td><td>После внедрения</td><td>Оборудование работает по последним уставкам локально, ИБП, резервный 4G-канал</td></tr>
+        <tr><td>Ветврач и зоотехник первые недели тратят больше времени на ввод данных</td><td>Д95 – Д120</td><td>Импорт старых журналов подрядчиком, обучение на рабочих местах</td></tr>
+        <tr><td>Меньше ночных обходов — меньше «живых глаз» в ангарах</td><td>После внедрения</td><td>Камеры и модуль компьютерного зрения, контрольный обход раз за смену</td></tr>
+      </tbody></table></div>
+  </div></section>
+
+  <section><div class="n">7</div><div class="b">
+    <h3>Риски получения выгод</h3>
+    <ul class="l">
+      <li><b>Риск выгоды B1:</b> выход молодняка зависит не только от инкубатора, но и от качества яиц и здоровья самок. Рост выхода можно ошибочно приписать системе, а падение — свалить на неё. Зоотехник ведёт учёт кладок по самкам.</li>
+      <li><b>Риск выгоды B2:</b> рестораны не выберут весь объём 6&nbsp;т, или регистрацию площадки приостановят. Отдел продаж до Д85 переводит письма о намерениях в договоры.</li>
+      <li><b>Риск выгоды B3:</b> персонал не доверяет алертам и продолжает ночные обходы «на всякий случай». Сокращение обходов поэтапное, после месяца без пропущенных алертов.</li>
+    </ul>
+  </div></section>
+
+  <section><div class="n">8</div><div class="b">
+    <h3>Лист согласования</h3>
+    <div class="signs">
+      <div class="sg"><div class="who"><span class="role">Согласовано · Владелец выгод B1, B3</span><b>Пётр Гончаров</b><span>Главный зоотехник</span></div>
+        <div><div class="sig">П. Гончаров</div><div class="cap2">подпись</div></div><div><div class="date num" data-d="-5"></div><div class="cap2">дата</div></div></div>
+      <div class="sg"><div class="who"><span class="role">Согласовано · Владелец выгод B2, B5</span><b>Алина Сорокина</b><span>Менеджер по продажам и туризму</span></div>
+        <div><div class="sig">А. Сорокина</div><div class="cap2">подпись</div></div><div><div class="date num" data-d="-5"></div><div class="cap2">дата</div></div></div>
+      <div class="sg"><div class="who"><span class="role">Согласовано · Владелец выгоды B4</span><b>Николай Ершов</b><span>Главный инженер</span></div>
+        <div><div class="sig">Н. Ершов</div><div class="cap2">подпись</div></div><div><div class="date num" data-d="-5"></div><div class="cap2">дата</div></div></div>
+      <div class="sg"><div class="who"><span class="role">Согласовано · Владелец выгоды N1</span><b>Тимур Ахмедов</b><span>Главный ветеринарный врач</span></div>
+        <div><div class="sig">Т. Ахмедов</div><div class="cap2">подпись</div></div><div><div class="date num" data-d="-5"></div><div class="cap2">дата</div></div></div>
+      <div class="sg"><div class="who"><span class="role">Согласовано · Заказчик, владелец выгоды B6</span><b>Сергей Калинин</b><span>Генеральный директор ООО «Тёплый Нил»</span></div>
+        <div><div class="sig">С. Калинин</div><div class="cap2">подпись</div></div><div><div class="date num" data-d="-5"></div><div class="cap2">дата</div></div></div>
+      <div class="sg"><div class="who"><span class="role">Утверждено · Спонсор, владелец плана</span><b>Марк Волынский</b><span>Управляющий партнёр АО «ЭкзоАгро»</span></div>
+        <div><div class="sig">М. Волынский</div><div class="cap2">подпись</div></div><div><div class="date num" data-d="-4"></div><div class="cap2">дата</div></div></div>
+    </div>
+  </div></section>
+
+  <section><div class="n">9</div><div class="b">
+    <h3>История версий</h3>
+    <div class="wrap"><table class="num">
+      <thead><tr><th>Версия</th><th>Дата</th><th>Что изменилось</th></tr></thead>
+      <tbody>
+        <tr><td>1.0</td><td data-d="-4"></td><td>Первичный план вместе с бизнес-кейсом v1.0.</td></tr>
+      </tbody></table></div>
+  </div></section>
+
+  <div class="foot"><span>BMP-KM-<span data-d="1" data-f="y"></span>-01 · v1.0</span><span>Связанные документы: <a href="#business-case" data-go="business-case">бизнес-кейс</a></span></div>
+</article>
+
+</div>
+
+<script src="data/project.js" charset="utf-8"></script>
+<script src="data/benefits.js" charset="utf-8"></script>
+<script src="js/dates.js" charset="utf-8"></script>
+<script src="js/shell.js" charset="utf-8"></script>
+<script>
+const {BEN,ASSUME}=KM_BEN;
+const bid=b=>`<span class="bid${b.id[0]==='N'?' n':''}">${b.id}</span>`;
+document.getElementById('ben-bc').innerHTML=`<thead><tr><th>Выгода</th><th class="r">Оценка и срок</th></tr></thead><tbody>`+
+  BEN.map(b=>`<tr><td>${bid(b)} <b>${b.name}.</b> ${b.desc}</td><td class="r">${b.val}</td></tr>`).join('')+`</tbody>`;
+document.getElementById('ben-bmp').innerHTML=`<thead><tr><th>Выгода и связь со стратегией</th><th>Метрика и источник</th><th>База → цель</th><th>Владелец</th><th>Когда измеряем</th></tr></thead><tbody>`+
+  BEN.map(b=>`<tr><td>${bid(b)} <b>${b.name}</b><div class="fcn">${b.strat}</div></td><td>${b.metric}</td><td class="num">${b.goal}</td><td>${b.owner}</td><td>${b.when}</td></tr>`).join('')+`</tbody>`;
+(()=>{const t=document.getElementById('ben-bmp');const host=t.closest('.wrap')||t;
+  host.insertAdjacentHTML('afterend',`<h4 class="ash">Ключевые допущения бизнес-кейса</h4><div class="wrap"><table class="asm"><thead><tr><th>Допущение</th><th>Статус</th><th>Основание</th></tr></thead><tbody>${ASSUME.map(a=>`<tr><td><b>${a.id}</b> ${a.t}</td><td>${a.st==='doubt'?'<span class="fc warn">под вопросом</span>':'<span class="fc ok">подтверждается</span>'}</td><td>${a.note}</td></tr>`).join('')}</tbody></table></div>`);})();
+
+/* Таймлайн реализации выгод: ось от месяца старта до конца горизонта плана, по кварталам */
+(()=>{
+  const host=document.getElementById('tl');if(!host)return;
+  const {wd,mEnd,closeDn,D,fmt}=window.KM_DATES;
+  const mi=n=>{const d=D(n);return d.getUTCFullYear()*12+d.getUTCMonth()};
+  const a0=mi(wd(1)),aN=mi(mEnd(36))+2,T=aN-a0;
+  const pos=n=>{const d=D(n),dim=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,0)).getUTCDate();return (mi(n)-a0+(d.getUTCDate()-1)/dim)/T*100};
+  const P=x=>x.toFixed(3)+'%';
+  let yrs='',qs='',grid='';
+  for(let m=a0;m<aN;){const y=Math.floor(m/12),e=Math.min(aN,(y+1)*12);
+    yrs+=`<div style="left:${P((m-a0)/T*100)};width:${P((e-m)/T*100)}">${(e-m)>=3?y:''}</div>`;m=e;}
+  for(let m=a0;m<aN;){const e=Math.min(aN,m-(m%3)+3);
+    qs+=`<div style="left:${P((m-a0)/T*100)};width:${P((e-m)/T*100)}">${(e-m)>=2?'Q'+(Math.floor((m%12)/3)+1):''}</div>`;
+    if(m!==a0)grid+=`<i style="left:${P((m-a0)/T*100)}"></i>`;m=e;}
+  const close=pos(closeDn);
+  const bar=(c,a,b,t)=>`<div class="bar ${c}" style="left:${P(pos(a))};width:${P(pos(b)-pos(a))}" title="${fmt(a)} – ${fmt(b)}">${t||''}</div>`;
+  const dia=(c,n,lab)=>`<div class="dia ${c}" style="left:${P(pos(n))}" title="${fmt(n)}"></div>`+(lab?`<div class="dlab" style="left:${P(pos(n))}">${fmt(n).slice(3)}</div>`:'');
+  const rows=[
+    ['Проект «КрокоМетрика»','Создаёт результаты, Д1 – Д120',bar('proj',wd(1),closeDn,'Проект')],
+    ['Кампании холдинга','Москва и область, затем соседние регионы',bar('soft',mEnd(3),mEnd(9),'Москва')+bar('soft',mEnd(9),mEnd(36),'+ соседние регионы')],
+    ['B2 · Рестораны','С первого eВСД, Д85',bar('',wd(85),mEnd(36),'4,8 → 7,2 млн ₽ маржи в год')],
+    ['B6 · Потери поголовья','С запуска климат-контроля, Д75',bar('',wd(75),mEnd(36),'Расчётно 2,5 млн ₽ в год')],
+    ['B1 · Выход молодняка','Первый сезон, затем ежегодно',bar('prep',wd(60),mEnd(3),'1-й сезон')+bar('',mEnd(3),mEnd(36),'+1,2 млн ₽ в год')],
+    ['B3 · Рост без найма','Обходы сокращают поэтапно',bar('prep',closeDn,mEnd(6),'Поэтапно')+bar('',mEnd(6),mEnd(36),'2,2 → 3,0 млн ₽ в год')],
+    ['B4 · Насосы и фильтры','ТО по прогнозу',bar('prep',wd(95),closeDn,'')+bar('',closeDn,mEnd(36),'−0,9 млн ₽ в год')],
+    ['B5 · Онлайн-экскурсии','Растёт с кампаниями',bar('',closeDn,mEnd(36),'0,8 → 2,4 млн ₽ в год')],
+    ['N1 · Безопасность и история','SOS-браслеты, цифровые карты',bar('soft',closeDn,mEnd(36),'Нефинансовая')],
+    ['Точки измерения','Отчёт владельцев выгод',[0,3,6,9,12,24,36].map(k=>dia('m',mEnd(k),k%12===0)).join(''),'tall']
+  ];
+  const g=`<div class="grid">${grid}</div><div class="vl" style="left:${P(close)}"></div>`;
+  host.innerHTML=`<div class="tl"><div class="lab hdl"></div><div class="trk hdl"><div class="yrs">${yrs}</div><div class="qs">${qs}</div></div>`+
+    rows.map(([n,s,c,x])=>`<div class="lab"><b>${n}</b><span>${s}</span></div><div class="trk ${x||''}">${g}${c}</div>`).join('')+`</div>`;
+  const cl=document.getElementById('close-date');if(cl)cl.textContent=fmt(closeDn);
+})();
+
+/* Вкладки: #business-case и #benefits */
+(()=>{
+  const tabs=[...document.querySelectorAll('[role=tab]')];
+  const show=id=>{if(!document.getElementById('doc-'+id))id='business-case';
+    tabs.forEach(t=>{const on=t.dataset.tab===id;t.setAttribute('aria-selected',on);t.tabIndex=on?0:-1});
+    document.querySelectorAll('.doc').forEach(d=>d.hidden=d.id!=='doc-'+id);
+    document.body.dataset.doc=id;};
+  tabs.forEach(t=>t.addEventListener('click',()=>{if(location.hash!=='#'+t.dataset.tab)location.hash=t.dataset.tab;else show(t.dataset.tab);window.scrollTo(0,0)}));
+  tabs.forEach((t,i)=>t.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){const n=tabs[(i+(e.key==='ArrowRight'?1:tabs.length-1))%tabs.length];n.focus();n.click();}}));
+  document.querySelectorAll('a[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();location.hash=a.dataset.go;window.scrollTo(0,0)}));
+  addEventListener('hashchange',()=>show(location.hash.slice(1)));
+  show(location.hash.slice(1));
+})();
+
+</script>
+</body>
+</html>

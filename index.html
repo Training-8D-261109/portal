@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Устав проекта «КрокоМетрика» · шаблон</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Marck+Script&display=swap">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>
+/* Layout: шапка компании (как в Ганте, реестре и плане коммуникаций) → один лист документа на светло-красной подложке: реквизиты и «Утверждаю» → разделы устава → лист согласования с подписями → история версий. */
+:root{
+  --page:#f6dedb; --page-line:#e7bfba; --doc:#a3302b;
+  --paper:#ffffff; --paper-2:#fbf5f4; --line:#ead9d7; --line-strong:#d4bcb9;
+  --ink:#231a1b; --ink-2:#5e5152; --ink-3:#938687;
+  --sign:#1f3f8f; --stamp:#a3302b; --ok:#2c7a4d; --ok-soft:#e3f1e8; --warn:#a2581a; --warn-soft:#f8ebde;
+  --shadow:0 18px 50px rgba(90,30,26,.14);
+  --f-ui:"IBM Plex Sans",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --f-doc:"IBM Plex Serif",Georgia,"Times New Roman",serif;
+  --f-sig:"Marck Script","Segoe Script","Brush Script MT",cursive;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page:#24110f; --page-line:#4a2522; --doc:#f0897f;
+  --paper:#1b1617; --paper-2:#221b1c; --line:#33292a; --line-strong:#4a3c3d;
+  --ink:#ece4e3; --ink-2:#b5a8a7; --ink-3:#857878;
+  --sign:#9db4ff; --stamp:#f0897f; --ok:#6cc895; --ok-soft:#18301f; --warn:#e3a468; --warn-soft:#3a2818;
+  --shadow:0 18px 50px rgba(0,0,0,.5); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --page:#24110f; --page-line:#4a2522; --doc:#f0897f;
+  --paper:#1b1617; --paper-2:#221b1c; --line:#33292a; --line-strong:#4a3c3d;
+  --ink:#ece4e3; --ink-2:#b5a8a7; --ink-3:#857878;
+  --sign:#9db4ff; --stamp:#f0897f; --ok:#6cc895; --ok-soft:#18301f; --warn:#e3a468; --warn-soft:#3a2818;
+  --shadow:0 18px 50px rgba(0,0,0,.5); color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--page);color:var(--ink);font-family:var(--f-ui);font-size:14px;line-height:1.5;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 36px}
+:focus-visible{outline:2px solid var(--doc);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+
+/* Шапка */
+.head{display:flex;gap:16px;align-items:center;max-width:920px;margin:0 auto}
+.logo{border-radius:14px;width:64px;height:64px;flex:none;background:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxZjVmNDUiLz48cGF0aCBkPSJNMTAgMzZjNC05IDEwLTEzIDE0LTEzIDMgMCA0IDMgNiAzczMtMyA2LTNjNCAwIDEwIDQgMTggMTMiIGZpbGw9IiM3ZmM3OWEiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48Y2lyY2xlIGN4PSIzNiIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48cGF0aCBkPSJNNiAzOGM0IDAgNCAzIDggM3M0LTMgOC0zIDQgMyA4IDMgNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDQgM3Y5SDZ6IiBmaWxsPSIjM2I4ZmM5Ii8+PHBhdGggZD0iTTYgNDZjNCAwIDQgMyA4IDNzNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDggMyA0LTMgOC0zIDQgMyA0IDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E5ZDZmMiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4K) center/contain no-repeat}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo{border-radius:14px;filter:invert(1)}}
+:root[data-theme="dark"] .logo{border-radius:14px;filter:invert(1)}
+.head-main{min-width:0}
+.eyebrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.eyebrow svg{width:12px;height:12px;fill:currentColor}
+.doctype{margin-left:6px;padding:2px 8px;border-radius:5px;background:var(--doc);color:var(--paper);letter-spacing:.06em}
+.head h1{margin:2px 0 4px;font-size:clamp(19px,2.6vw,26px);line-height:1.2;font-weight:600;text-wrap:balance}
+.facts{display:flex;flex-wrap:wrap;gap:4px 18px;color:var(--ink-2);font-size:13.5px}
+.facts b{color:var(--ink);font-weight:600}
+
+/* Лист */
+.sheet{max-width:920px;margin:20px auto 0;background:var(--paper);border:1px solid var(--page-line);box-shadow:var(--shadow);
+  padding:clamp(20px,5vw,56px) clamp(16px,5.5vw,64px) clamp(24px,5vw,52px);font-family:var(--f-doc);font-size:15px;line-height:1.55}
+.req{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px 32px;align-items:flex-start;font-family:var(--f-ui);font-size:12.5px;color:var(--ink-2)}
+.req dl{display:grid;grid-template-columns:auto 1fr;gap:3px 14px;margin:0}
+.req dt{color:var(--ink-3);text-transform:uppercase;letter-spacing:.06em;font-size:11px;padding-top:1px}
+.req dd{margin:0;color:var(--ink)}
+.approve{min-width:250px;border:1px solid var(--line-strong);padding:12px 16px;font-family:var(--f-doc);font-size:13.5px;color:var(--ink);background:var(--paper-2)}
+.approve .cap{font-family:var(--f-ui);font-weight:600;letter-spacing:.14em;font-size:12px;color:var(--stamp)}
+.approve .sigline{display:flex;align-items:flex-end;gap:10px;margin-top:6px}
+.title{text-align:center;margin:30px 0 26px}
+.title .kind{font-family:var(--f-ui);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--doc);font-weight:600}
+.title h2{font-size:clamp(21px,3.4vw,30px);font-weight:600;line-height:1.2;margin:6px auto 6px;max-width:28ch;text-wrap:balance}
+.title p{margin:0;color:var(--ink-2);font-style:italic}
+
+section{display:grid;grid-template-columns:2.4em minmax(0,1fr);gap:0 6px;padding:16px 0;border-top:1px solid var(--line)}
+section>.n{font-family:var(--f-ui);font-weight:600;color:var(--doc);font-size:15px;padding-top:1px}
+section>.b{min-width:0}
+section h3{font-family:var(--f-ui);font-size:15px;font-weight:600;margin:0 0 6px;letter-spacing:.01em}
+section p{margin:0 0 8px;max-width:72ch}
+section p:last-child{margin-bottom:0}
+ul.l,ol.l{margin:4px 0 0;padding-left:1.2em;max-width:72ch}
+ul.l li,ol.l li{margin:3px 0}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 28px}
+.sub{font-family:var(--f-ui);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin:2px 0 2px}
+.wrap{overflow-x:auto;margin-top:6px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th{font-family:var(--f-ui);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-3);font-weight:600;text-align:left;padding:6px 10px 6px 0;border-bottom:1px solid var(--line-strong);white-space:nowrap}
+td{padding:6px 10px 6px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td.r,th.r{text-align:right}
+tr.tot td{font-weight:600;border-bottom:0;border-top:1px solid var(--line-strong)}
+.code{font-family:var(--f-ui);font-size:12.5px;color:var(--ink-2);white-space:nowrap}
+.chip{display:inline-block;font-family:var(--f-ui);font-size:11.5px;padding:0 6px;border-radius:4px;background:var(--warn-soft);color:var(--warn);white-space:nowrap}
+
+/* Лист согласования */
+.signs{margin-top:8px;display:grid;gap:0}
+.sg{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(130px,1fr) 104px;gap:6px 18px;align-items:end;padding:12px 0;border-bottom:1px solid var(--line)}
+.sg .who b{display:block;font-weight:600}
+.sg .who span{display:block;font-size:13px;color:var(--ink-2);font-family:var(--f-ui)}
+.sg .role{font-family:var(--f-ui);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--doc);font-weight:600}
+.sig{font-family:var(--f-sig);color:var(--sign);font-size:26px;line-height:1;border-bottom:1px solid var(--ink-3);padding:0 4px 2px;transform:rotate(-3deg);transform-origin:left bottom;white-space:nowrap;overflow:hidden}
+.date{font-family:var(--f-ui);font-size:13px;border-bottom:1px solid var(--ink-3);padding-bottom:3px;text-align:center}
+.cap2{font-family:var(--f-ui);font-size:10.5px;color:var(--ink-3);text-align:center;letter-spacing:.05em;margin-top:2px}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;margin-top:22px;font-family:var(--f-ui);font-size:11.5px;color:var(--ink-3)}
+
+/* Вопросы */
+details.qs{max-width:920px;margin:16px auto 0;background:var(--paper);border:1px solid var(--page-line);padding:12px 18px}
+details.qs summary{cursor:pointer;font-weight:600;color:var(--doc)}
+details.qs ol{margin:10px 0 2px;padding-left:1.3em;font-family:var(--f-doc);font-size:14.5px;max-width:80ch}
+details.qs li{margin:5px 0}
+
+@media (max-width:620px){
+  .sg{grid-template-columns:1fr 104px}
+  .sg .who{grid-column:1/-1}
+  section{grid-template-columns:1.9em minmax(0,1fr)}
+  .approve{min-width:0;width:100%}
+}
+.mission{margin:0 0 10px;padding:8px 12px;background:var(--paper-2);border:1px solid var(--line);border-radius:6px}
+</style>
+<style>section a{color:var(--doc)}
+.hard{margin-top:10px!important;padding:10px 14px;background:var(--warn-soft);border-left:3px solid var(--warn);max-width:72ch}
+.note{font-size:13.5px;color:var(--ink-2)}
+.budget{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:6px 20px;padding:10px 14px;background:var(--paper-2);border:1px solid var(--line);max-width:72ch}
+.budget span{font-family:var(--f-ui);font-size:14px}.budget b{font-family:var(--f-ui);font-size:20px;font-weight:600;color:var(--doc)}
+details.calc{margin-top:8px;max-width:72ch}details.calc>summary{cursor:pointer;font-family:var(--f-ui);font-size:13px;font-weight:600;color:var(--doc)}
+.locked-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--f-ui);font-size:13px;color:var(--ink-3);text-decoration:underline dotted;cursor:not-allowed}
+.locked-link svg{width:11px;height:11px;fill:currentColor}
+.ph{color:var(--ink-3)!important;font-style:italic;font-weight:400}
+.foot a{color:var(--doc)}
+section.svc .b>.signs,section.svc .b>.wrap{opacity:.4;pointer-events:none;filter:grayscale(1)}
+section.svc h3{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+section.svc .n{opacity:.45}
+.svc-tag{font-family:var(--f-ui);font-size:10.5px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);border:1px solid var(--line);border-radius:4px;padding:1px 7px}
+.svc-note{margin:2px 0 10px;font-family:var(--f-ui);font-size:13px;color:var(--ink-3);font-style:italic}
+.tpl-banner{max-width:920px;margin:20px auto 16px;padding:10px 14px;border:1px dashed var(--doc);color:var(--doc);background:var(--paper);font:13.5px/1.5 var(--f-ui)}
+.hint{margin:2px 0 10px;padding:9px 13px;border-left:3px solid var(--doc);background:color-mix(in srgb,var(--doc) 6%,transparent);font-family:var(--f-ui);font-size:13.5px;color:var(--ink-2);max-width:76ch}
+.hint p{margin:0 0 4px}.hint ul{margin:4px 0 0;padding-left:1.2em}.hint li{margin:2px 0}
+.fill{min-height:84px;border:1.5px dashed var(--line);border-radius:6px;background:repeating-linear-gradient(transparent 0 27px,color-mix(in srgb,var(--line) 55%,transparent) 27px 28px)}
+.fill.short{min-height:56px;margin-top:8px}
+</style>
+</head>
+<body>
+<km-shell page="charter" bleed></km-shell>
+<header class="head">
+  <div class="logo" role="img" aria-label="Логотип фермы «Тёплый Нил»"></div>
+  <div class="head-main">
+    <div class="eyebrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 1 0-4 0v2z"/></svg>Собственность ООО «Тёплый Нил» · Для внутреннего пользования<span class="doctype">Устав проекта</span></div>
+    <h1>Устав проекта · «КрокоМетрика: MVP аппаратно-программного комплекса для крокодиловой фермы»</h1>
+    <div class="facts"><span>Версия <b class="ph">…</b></span><span>Статус <b class="ph">черновик</b></span><span>Действует с <b class="ph">…</b></span><span>Спонсор <b class="ph">…</b></span><span>Заказчик <b class="ph">…</b></span></div>
+  </div>
+</header>
+
+<div class="tpl-banner"><b>Шаблон устава.</b> Разделы и подсказки — что должно быть в каждом разделе и на какие вопросы он отвечает. Содержание заполняет руководитель проекта. Подсказки в итоговом документе не нужны.</div>
+
+<article class="sheet">
+  <div class="req">
+    <dl>
+      <dt>Документ</dt><dd>PC-KM-<span data-d="1" data-f="y"></span>-01, версия <span class="ph">…</span></dd>
+      <dt>Проект</dt><dd>«КрокоМетрика»</dd>
+      <dt>Спонсор</dt><dd class="ph">…</dd>
+      <dt>Заказчик</dt><dd class="ph">…</dd>
+      <dt>Исполнитель</dt><dd class="ph">…</dd>
+      <dt>Доступ</dt><dd class="ph">…</dd>
+    </dl>
+    <div class="approve">
+      <div class="cap">УТВЕРЖДАЮ</div>
+      <div class="ph">Должность, организация</div>
+      <div class="sigline"><span class="sig" style="flex:1">&nbsp;</span><span class="ph">И. О. Фамилия</span></div>
+      <div class="ph" style="margin-top:6px">«__» ________ 20__ г.</div>
+    </div>
+  </div>
+
+  <div class="title">
+    <div class="kind">Устав проекта</div>
+    <h2>«КрокоМетрика: MVP аппаратно-программного комплекса для крокодиловой фермы»</h2>
+    <p>Документ формально санкционирует проект и наделяет руководителя проекта полномочиями использовать ресурсы организации</p>
+  </div>
+
+  <section><div class="n">1</div><div class="b">
+    <h3>Обоснование проекта</h3>
+    <div class="hint"><p>Один-два абзаца: почему проект существует и почему именно сейчас. Подробное обоснование уже есть в бизнес-кейсе — здесь достаточно сути и ссылки на него.</p>
+      <ul><li>Какое событие или потребность бизнеса запустили проект?</li><li>Кто инициировал проект и кто выделяет на него ресурсы?</li></ul></div>
+    <div class="fill"></div>
+  </div></section>
+
+  <section><div class="n">2</div><div class="b">
+    <h3>Цели проекта и критерии успеха</h3>
+    <div class="hint"><p>Цель одной фразой, затем 3–5 измеримых целей и критерии, по которым проект признают успешным.</p>
+      <ul><li>Можно ли по каждой цели однозначно сказать «достигнута / не достигнута»?</li><li>Как успех понимают спонсор и заказчик? Одинаково ли?</li><li>Какие отклонения по срокам и бюджету ещё считаются нормой?</li></ul></div>
+    <div class="two"><div><div class="sub">Цели</div><div class="fill"></div></div><div><div class="sub">Проект успешен, если</div><div class="fill"></div></div></div>
+  </div></section>
+
+  <section><div class="n">3</div><div class="b">
+    <h3>Содержание проекта и границы</h3>
+    <div class="hint"><p>Что проект делает и — не менее важно — чего не делает.</p>
+      <ul><li>Какие функциональные блоки входят в проект и в каком порядке приоритета?</li><li>Что стейкхолдеры явно исключили? Что легко ошибочно посчитать частью проекта?</li></ul></div>
+    <div class="two"><div><div class="sub">Входит в проект</div><div class="fill"></div></div><div><div class="sub">Не входит в проект</div><div class="fill"></div></div></div>
+  </div></section>
+
+  <section><div class="n">4</div><div class="b">
+    <h3>Основные результаты (поставки)</h3>
+    <div class="hint"><p>Перечень того, что проект передаст заказчику. Каждый результат можно предъявить и принять.</p></div>
+    <div class="fill"></div>
+  </div></section>
+
+  <section><div class="n">5</div><div class="b">
+    <h3>Сводное расписание вех</h3>
+    <div class="hint"><p>Только ключевые вехи: старт, завершение и вехи, сдвиг которых критичен для проекта. Подробный график — в ИСР и диаграмме Ганта.</p>
+      <ul><li>Есть ли внешние события, которые проект не может сдвинуть?</li><li>Если веха жёсткая — почему, и что произойдёт при её срыве?</li></ul></div>
+    <div class="wrap"><table class="num">
+      <thead><tr><th>Веха</th><th>ИСР</th><th class="r">День</th><th class="r">Дата</th></tr></thead>
+      <tbody><tr><td class="ph">…</td><td class="ph">…</td><td class="r ph">Д…</td><td class="r ph">…</td></tr><tr><td class="ph">…</td><td class="ph">…</td><td class="r ph">Д…</td><td class="r ph">…</td></tr></tbody></table></div>
+    <div class="fill short"></div>
+  </div></section>
+
+  <section><div class="n">6</div><div class="b">
+    <h3>Сводный бюджет</h3>
+    <div class="hint"><p>Итоговая сумма бюджета на виду, под ней — из чего она складывается.</p>
+      <ul><li>Из каких частей складывается бюджет? Где резервы?</li><li>Кто распоряжается каждой частью?</li></ul></div>
+    <div class="budget"><span>Бюджет проекта</span><b class="ph">… ₽</b></div>
+    <div class="fill short"></div>
+  </div></section>
+
+  <section><div class="n">7</div><div class="b">
+    <h3>Высокоуровневые требования</h3>
+    <div class="hint"><p>Несколько требований, без выполнения которых результат не примут. Это не техническое задание.</p>
+      <ul><li>Какие условия эксплуатации и ограничения пользователей важны для решения?</li></ul></div>
+    <div class="fill"></div>
+  </div></section>
+
+  <section><div class="n">8</div><div class="b">
+    <h3>Допущения и ограничения</h3>
+    <div class="hint"><p><b>Допущение</b> — то, что принимаем за верное без доказательств; если оно не подтвердится, план меняется. <b>Ограничение</b> — рамка, которую нельзя нарушить.</p>
+      <ul><li>На каких условиях держатся сроки и стоимость, заявленные исполнителем?</li><li>Какие правила работы на объекте нельзя нарушать?</li></ul></div>
+    <div class="two"><div><div class="sub">Допущения</div><div class="fill"></div></div><div><div class="sub">Ограничения</div><div class="fill"></div></div></div>
+  </div></section>
+
+  <section><div class="n">9</div><div class="b">
+    <h3>Терминирующие риски</h3>
+    <div class="hint"><p>Не реестр рисков. Только события, при наступлении которых цели проекта становятся недостижимыми и на которые проект повлиять не может.</p>
+      <ul><li>Что делает руководитель проекта, если такой риск наступил, и кто принимает решение о судьбе проекта?</li></ul></div>
+    <div class="fill"></div>
+  </div></section>
+
+  <section><div class="n">10</div><div class="b">
+    <h3>Руководитель проекта и его полномочия</h3>
+    <div class="hint"><p>Кто назначен, кем, кому подчиняется по проекту. Что руководитель проекта решает сам, что выносит наверх, кому и как быстро.</p>
+      <ul><li>Каковы финансовые полномочия руководителя проекта?</li><li>Кто принимает решения по изменениям сроков, бюджета, содержания?</li><li>Кто и что принимает у исполнителя?</li><li>О каких событиях и кому нужно сообщать немедленно?</li></ul></div>
+    <div class="fill"></div>
+  </div></section>
+
+  <section><div class="n">11</div><div class="b">
+    <h3>Ключевые стейкхолдеры</h3>
+    <div class="hint"><p>Только спонсор, заказчик и руководитель проекта, с их ролью в проекте. Остальные — в реестре стейкхолдеров.</p></div>
+    <div class="wrap"><table>
+      <thead><tr><th>Роль</th><th>Кто</th></tr></thead>
+      <tbody><tr><td>Спонсор</td><td class="ph">…</td></tr><tr><td>Заказчик</td><td class="ph">…</td></tr><tr><td>Руководитель проекта</td><td class="ph">…</td></tr></tbody></table></div>
+    <p style="margin-top:8px"><a class="locked-link" href="soon.html#sh" title="Реестр стейкхолдеров пока закрыт" aria-disabled="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 1 0-4 0v2z"/></svg>Реестр стейкхолдеров</a></p>
+  </div></section>
+
+  <section><div class="n">12</div><div class="b">
+    <h3>Критерии завершения проекта</h3>
+    <div class="hint"><p>Когда проект считается закрытым и кто это подтверждает.</p>
+      <ul><li>Как и кем принимается результат?</li><li>При каких условиях проект может быть остановлен досрочно и кто это решает?</li></ul></div>
+    <div class="fill"></div>
+  </div></section>
+
+  <section class="svc"><div class="n">13</div><div class="b">
+    <h3>Лист согласования <span class="svc-tag">служебный раздел · заполнять не нужно</span></h3>
+    <div class="svc-note">Заполняется при реальном согласовании документа: подписи и даты. В домашнем задании этот раздел не заполняйте.</div>
+    <div class="signs">
+      <div class="sg"><div class="who"><span class="role">Утверждено · …</span><b class="ph">…</b><span class="ph">должность</span></div>
+        <div><div class="sig">&nbsp;</div><div class="cap2">подпись</div></div><div><div class="date ph">…</div><div class="cap2">дата</div></div></div>
+      <div class="sg"><div class="who"><span class="role">Согласовано · …</span><b class="ph">…</b><span class="ph">должность</span></div>
+        <div><div class="sig">&nbsp;</div><div class="cap2">подпись</div></div><div><div class="date ph">…</div><div class="cap2">дата</div></div></div>
+      <div class="sg"><div class="who"><span class="role">Ознакомлен, полномочия принял</span><b>Руководитель проекта</b><span class="ph">…</span></div>
+        <div><div class="sig">&nbsp;</div><div class="cap2">подпись</div></div><div><div class="date ph">…</div><div class="cap2">дата</div></div></div>
+    </div>
+  </div></section>
+
+  <section class="svc"><div class="n">14</div><div class="b">
+    <h3>История версий <span class="svc-tag">служебный раздел · заполнять не нужно</span></h3>
+    <div class="svc-note">Ведётся при выпуске новых версий документа. В домашнем задании этот раздел не заполняйте.</div>
+    <div class="wrap"><table class="num">
+      <thead><tr><th>Версия</th><th>Дата</th><th>Что изменилось</th></tr></thead>
+      <tbody><tr><td class="ph">…</td><td class="ph">…</td><td class="ph">…</td></tr></tbody></table></div>
+  </div></section>
+
+  <div class="foot"><span>PC-KM-<span data-d="1" data-f="y"></span>-01 · шаблон</span><span>Связанные документы: <a href="business-case.html">бизнес-кейс</a>, <a href="business-case.html#benefits">план управления выгодами</a></span></div>
+</article>
+
+<script src="data/project.js" charset="utf-8"></script>
+<script src="data/benefits.js" charset="utf-8"></script>
+<script src="js/dates.js" charset="utf-8"></script>
+<script src="js/shell.js" charset="utf-8"></script>
+<script>document.querySelectorAll(".locked-link").forEach(a=>a.addEventListener("click",e=>e.preventDefault()))</script>
+</body>
+</html>
