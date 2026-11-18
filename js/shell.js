@@ -9,7 +9,7 @@ const U=h=>{try{return BASE?new URL(h,BASE).href:h}catch(e){return h}};
 window.KM_BASE=BASE;
 const LOCK='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 1 0-4 0v2z"/></svg>';
 const NAV=[
-  {k:'gantt',color:'серый',t:'Гант',lock:1,hint:'ИСР, диаграмма Ганта, вехи и критический путь'},
+  {k:'gantt',color:'серый',href:'gantt.html',t:'Гант',hint:'ИСР, диаграмма Ганта, вехи и критический путь'},
   {k:'charter',href:'index.html',t:'Устав',hint:P.charter.hint||('Устав проекта v'+P.charter.v+' · '+P.charter.st.toLowerCase())},
   {k:'bc',href:'business-case.html',t:'Бизнес-кейс',hint:'Business Case и Benefits Management Plan'},
   {k:'sh',color:'голубой',t:'Стейкхолдеры',lock:1,hint:'Реестр стейкхолдеров, матрица влияния и интереса'},

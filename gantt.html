@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>ИСР и диаграмма Ганта «КрокоМетрика»</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxZjVmNDUiLz48cGF0aCBkPSJNMTAgMzZjNC05IDEwLTEzIDE0LTEzIDMgMCA0IDMgNiAzczMtMyA2LTNjNCAwIDEwIDQgMTggMTMiIGZpbGw9IiM3ZmM3OWEiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48Y2lyY2xlIGN4PSIzNiIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48cGF0aCBkPSJNNiAzOGM0IDAgNCAzIDggM3M0LTMgOC0zIDQgMyA4IDMgNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDQgM3Y5SDZ6IiBmaWxsPSIjM2I4ZmM5Ii8+PHBhdGggZD0iTTYgNDZjNCAwIDQgMyA4IDNzNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDggMyA0LTMgOC0zIDQgMyA0IDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E5ZDZmMiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4K">
+<style>
+/* Layout: шапка документа → панель инструментов → рабочая область (таблица ИСР слева, шкала времени справа, обе прокручиваются вместе) → легенда */
+:root{
+  --page:#eef0f4; --bg:#ffffff; --surface:#ffffff; --surface-2:#f2f4f8; --hover:#f6f8fc; --sel:#fff4cc;
+  --line:#e3e6ec; --rowline:#eef0f4; --line-strong:#c8cdd7;
+  --ink:#1a2130; --ink-2:#5d6676; --ink-3:#8a92a1;
+  --accent:#2f5bd3; --accent-soft:#e1e8fb; --dlc:#a3480f; --crit:#d13b3b; --crit-soft:#fbe3e3; --warn:#b86e00; --warn-soft:#fbefdc;
+  --summary:#2a3140; --link:#9aa2b1; --tip-bg:#1a2130; --tip-fg:#f1f3f7;
+  --f-ui:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --f-mono:"SF Mono",ui-monospace,"JetBrains Mono",Menlo,Consolas,monospace;
+  --rh:28px; --dw:9px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page:#0e1117; --bg:#161a21; --surface:#161a21; --surface-2:#1c212a; --hover:#1a1f27; --sel:#2c2a1a;
+  --line:#272d38; --rowline:#1e232c; --line-strong:#353c4a; --ink:#e6e9ef; --ink-2:#9aa3b3; --ink-3:#6e7787;
+  --accent:#6189f0; --accent-soft:#1f2c4a; --dlc:#e08a4a; --crit:#f0625b; --crit-soft:#3a1f22; --warn:#e3a23d; --warn-soft:#3a2c14;
+  --summary:#cdd3de; --link:#5f6878; --tip-bg:#e6e9ef; --tip-fg:#11141a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --page:#0e1117; --bg:#161a21; --surface:#161a21; --surface-2:#1c212a; --hover:#1a1f27; --sel:#2c2a1a;
+  --line:#272d38; --rowline:#1e232c; --line-strong:#353c4a; --ink:#e6e9ef; --ink-2:#9aa3b3; --ink-3:#6e7787;
+  --accent:#6189f0; --accent-soft:#1f2c4a; --dlc:#e08a4a; --crit:#f0625b; --crit-soft:#3a1f22; --warn:#e3a23d; --warn-soft:#3a2c14;
+  --summary:#cdd3de; --link:#5f6878; --tip-bg:#e6e9ef; --tip-fg:#11141a; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--f-ui);font-size:14px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:18px 28px}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+.head{display:flex;gap:16px;align-items:center}
+.logo{width:64px;height:64px;flex:none;border-radius:14px;background:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxZjVmNDUiLz48cGF0aCBkPSJNMTAgMzZjNC05IDEwLTEzIDE0LTEzIDMgMCA0IDMgNiAzczMtMyA2LTNjNCAwIDEwIDQgMTggMTMiIGZpbGw9IiM3ZmM3OWEiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48Y2lyY2xlIGN4PSIzNiIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48cGF0aCBkPSJNNiAzOGM0IDAgNCAzIDggM3M0LTMgOC0zIDQgMyA4IDMgNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDQgM3Y5SDZ6IiBmaWxsPSIjM2I4ZmM5Ii8+PHBhdGggZD0iTTYgNDZjNCAwIDQgMyA4IDNzNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDggMyA0LTMgOC0zIDQgMyA0IDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E5ZDZmMiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4K) center/contain no-repeat}
+.head-main{min-width:0}
+.eyebrow{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.eyebrow svg{width:12px;height:12px;fill:currentColor}
+.doctype{margin-left:6px;padding:2px 8px;border-radius:5px;background:var(--summary);color:var(--page);letter-spacing:.06em}
+h1{margin:2px 0 4px;font-size:clamp(19px,2.6vw,26px);line-height:1.2;font-weight:700;text-wrap:balance}
+.facts{display:flex;flex-wrap:wrap;gap:4px 18px;color:var(--ink-2);font-size:13.5px}
+.facts b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.facts .c b{color:var(--crit)}
+
+.tb{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:16px 0 10px}
+.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:7px;overflow:hidden;height:32px;background:var(--surface)}
+.seg button{border:0;background:none;padding:0 12px;cursor:pointer;font-size:12.5px;color:var(--ink-2)}
+.seg button+button{border-left:1px solid var(--line-strong)}
+.seg button[aria-pressed="true"]{background:var(--summary);color:var(--page);font-weight:500}
+.btn{height:32px;border:1px solid var(--line-strong);border-radius:7px;background:var(--surface);padding:0 11px;cursor:pointer;font-size:12.5px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.btn:hover{background:var(--hover)}
+.btn.sq{width:32px;padding:0;justify-content:center;font-size:16px}
+.zoom{display:inline-flex;align-items:center;gap:4px}
+.zoom span{font-size:12px;color:var(--ink-2);min-width:58px;text-align:center}
+.chk{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;cursor:pointer;color:var(--ink-2)}
+.chk input{accent-color:var(--summary)}
+.grow{flex:1}
+
+/* рабочая область */
+.pane{position:relative;overflow:auto;max-height:calc(100vh - 150px);min-height:420px;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px}
+.grid{position:relative;width:calc(var(--lw) + var(--tw))}
+.hdr{position:sticky;top:0;z-index:8;display:flex;height:68px;background:var(--surface);border-bottom:1px solid var(--line-strong)}
+.lh{position:sticky;left:0;z-index:9;width:var(--lw);flex:none;display:grid;grid-template-columns:var(--cols);align-items:end;background:var(--surface);border-right:1px solid var(--line-strong);padding-bottom:7px}
+.lh div{padding:0 8px;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lh .r{text-align:right}
+.th{width:var(--tw);flex:none;position:relative;overflow:hidden}
+.th .r1,.th .r2{position:absolute;left:0;right:0;height:25px}
+.th .r1{top:0;border-bottom:1px solid var(--line)} .th .r2{top:25px}
+.th span{position:absolute;top:0;height:25px;line-height:25px;padding:0 6px;border-left:1px solid var(--line);white-space:nowrap;overflow:hidden;text-overflow:clip;font-size:11px;color:var(--ink-2)}
+.th .r1 span{font-weight:600;color:var(--ink)}
+.th .r2 span{font-family:var(--f-mono);font-size:10.5px}
+.th .hol{position:absolute;top:51px;transform:translateX(-50%);font:500 10px/15px var(--f-ui);padding:0 6px;border-radius:8px;background:var(--surface-2);box-shadow:inset 0 0 0 1px var(--line-strong);color:var(--ink-2);white-space:nowrap;z-index:2;border:0;cursor:default}
+.bgl .hl{position:absolute;top:0;bottom:0;width:0;border-left:1.5px dotted var(--ink-3)}
+.sw.hl{width:0;height:13px;border-left:1.5px dotted var(--ink-3);border-radius:0;background:none;margin:0 6px}
+.th .ext{position:absolute;top:51px;transform:translateX(-50%);font:600 10px/16px var(--f-ui);padding:0 6px;border-radius:8px;background:var(--warn);color:var(--surface);white-space:nowrap;z-index:2;cursor:default;border:0}
+
+.body{position:relative}
+.bgl{position:absolute;left:var(--lw);top:0;width:var(--tw);height:100%;pointer-events:none}
+.bgl .wl{position:absolute;top:0;bottom:0;width:1px;background:var(--rowline)}
+.bgl .wl.m{background:var(--line)}
+.bgl .ex{position:absolute;top:0;bottom:0;width:0;border-left:2px dashed var(--warn);z-index:3}
+.bgl .ex::after{content:"";position:absolute;left:0;top:0;bottom:0;width:22px;background:linear-gradient(90deg,var(--warn-soft),transparent);opacity:.7}
+svg.links{position:absolute;left:var(--lw);top:0;pointer-events:none;overflow:visible;z-index:1}
+.links path{fill:none;stroke:var(--link);stroke-width:1.1}
+.links path.soft{stroke-dasharray:4 3}
+.links path.crit{stroke:var(--crit);stroke-width:1.3}
+.links .ah{fill:var(--link)} .links .ahc{fill:var(--crit)}
+
+.row{display:flex;height:var(--rh);position:relative}
+.lc{position:sticky;left:0;z-index:5;width:var(--lw);flex:none;display:grid;grid-template-columns:var(--cols);align-items:center;background:var(--surface);border-right:1px solid var(--line-strong);border-bottom:1px solid var(--line);font-size:13px}
+.tl{width:var(--tw);flex:none;position:relative;border-bottom:1px solid var(--rowline)}
+.row:hover .lc{background:var(--hover)}
+.k-proj .lc,.k-proj:hover .lc{background:var(--summary);color:var(--page);font-weight:600}
+.k-proj .lc .c{color:inherit}
+.k-l1 .lc,.k-l1:hover .lc{background:var(--surface-2);font-weight:600}
+.k-l1 .tl{background:color-mix(in srgb,var(--surface-2) 55%,transparent)}
+.k-l2 .lc{font-weight:600}
+.row.on .lc{background:var(--sel)} .row.on .tl{background:color-mix(in srgb,var(--sel) 60%,transparent)}
+.c{padding:0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.c.r{text-align:right}
+.c.id{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-2)}
+.c.nm{display:flex;align-items:center;gap:4px}
+.c.nm .t{overflow:hidden;text-overflow:ellipsis}
+.c.dt,.c.du,.c.pr{font-family:var(--f-mono);font-size:11.5px;font-variant-numeric:tabular-nums}
+.c.pr,.c.res{color:var(--ink-2);font-size:12px}
+.c.pr{font-size:11.5px}
+.caret{flex:none;width:18px;height:18px;border:0;background:none;padding:0;cursor:pointer;color:inherit;opacity:.7;display:grid;place-items:center;border-radius:4px}
+.caret:hover{background:color-mix(in srgb,currentColor 12%,transparent)}
+.caret svg{width:10px;height:10px;transition:transform .15s}
+.caret[aria-expanded="false"] svg{transform:rotate(-90deg)}
+.sp{flex:none;width:18px}
+.tag{flex:none;font-size:10px;line-height:15px;padding:0 5px;border-radius:3px;font-weight:600;white-space:nowrap;letter-spacing:.02em}
+.tag.wave{box-shadow:inset 0 0 0 1px var(--ink-3);color:var(--ink-2);font-weight:500}
+.tag.loe{background:var(--surface-2);color:var(--ink-2)}
+.tag.ext{background:var(--warn-soft);color:var(--warn)}
+.tag.b1{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)} .tag.b2{box-shadow:inset 0 0 0 1px var(--accent);color:var(--accent);font-weight:500} .tag.b3{box-shadow:inset 0 0 0 1px var(--ink-3);color:var(--ink-2);font-weight:500}
+.k-proj .tag{display:none}
+.tag.dl{background:var(--crit-soft);color:var(--crit)}
+.ms-n{font-weight:600}
+
+.bar{position:absolute;top:calc(50% - 8px);height:16px;border-radius:3px;background:var(--accent);z-index:2;cursor:pointer}
+.bar.crit{background:var(--crit)}
+.bar.dlc{background:var(--dlc)}
+.ms.dlc{background:var(--dlc)}
+.bl.ms-l.dlc{color:var(--dlc);font-weight:600}
+.links path.dlc{stroke:var(--dlc);stroke-width:1.3}
+.links .ahd{fill:var(--dlc)}
+.sw.dlc{background:var(--dlc)}
+.bar.wave{background:color-mix(in srgb,var(--accent) 22%,var(--surface));box-shadow:inset 0 0 0 1.5px var(--accent);border-radius:3px}
+.bar.wave::after{content:"";position:absolute;inset:3px;border-top:1.5px dashed color-mix(in srgb,var(--accent) 60%,transparent)}
+.bar.wave.crit{background:color-mix(in srgb,var(--crit) 20%,var(--surface));box-shadow:inset 0 0 0 1.5px var(--crit)}
+.bar.wave.crit::after{border-color:color-mix(in srgb,var(--crit) 60%,transparent)}
+.bar.loe{background:repeating-linear-gradient(135deg,var(--ink-3) 0 2px,transparent 2px 7px);box-shadow:inset 0 0 0 1px var(--ink-3);height:12px;top:calc(50% - 6px)}
+.bar:hover{filter:brightness(1.08)}
+.bbar{position:absolute;top:calc(50% + 9px);height:4px;border-radius:1px;background:var(--ink-3);opacity:.8;z-index:1;pointer-events:none}
+.bms{position:absolute;top:calc(50% - 5px);width:10px;height:10px;margin-left:-5px;transform:rotate(45deg);box-shadow:inset 0 0 0 1.5px var(--ink-3);z-index:1;pointer-events:none}
+.bgl .stl{position:absolute;top:0;bottom:0;width:0;border-left:2px solid var(--accent);z-index:3}
+.th .ext.stb{background:var(--accent)}
+.facts .st b{color:var(--accent)}
+.sw.base{height:4px;background:var(--ink-3)} .sw.stl{width:0;height:13px;border-left:2px solid var(--accent);border-radius:0;background:none;margin:0 6px}
+.ld{position:absolute;top:6px;bottom:6px;border-radius:2px;background:var(--accent-soft);font:500 10px/16px var(--f-mono);text-align:center;color:var(--ink);overflow:hidden;z-index:2;cursor:default}
+.ld.full{background:color-mix(in srgb,var(--accent) 40%,var(--accent-soft))}
+.ld.ovr{background:var(--crit);color:#fff}
+.k-res .lc{font-size:13px} .pk.ovr{color:var(--crit);font-weight:700}
+.sw.ld1{background:var(--accent-soft)} .sw.ld2{background:color-mix(in srgb,var(--accent) 40%,var(--accent-soft))} .sw.ld3{background:var(--crit)}
+.sbar{position:absolute;top:calc(50% - 5px);height:7px;background:var(--summary);z-index:2;cursor:pointer}
+.sbar::before,.sbar::after{content:"";position:absolute;top:100%;border-top:5px solid var(--summary)}
+.sbar::before{left:0;border-right:6px solid transparent}
+.sbar::after{right:0;border-left:6px solid transparent}
+.k-l2 .sbar,.k-l3 .sbar{height:5px;top:calc(50% - 4px);opacity:.75}
+.k-proj .sbar{height:9px;top:calc(50% - 6px)}
+.ms{position:absolute;top:calc(50% - 7px);width:14px;height:14px;margin-left:-7px;transform:rotate(45deg);background:var(--ink);z-index:3;cursor:pointer;border-radius:2px}
+.ms.crit{background:var(--crit)}
+.ms.l1{width:18px;height:18px;margin-left:-9px;top:calc(50% - 9px)}
+.ms.ext{background:var(--surface);box-shadow:inset 0 0 0 2px var(--warn)}
+.dln{position:absolute;top:2px;bottom:2px;width:0;border-left:2px solid var(--crit);z-index:2;cursor:pointer}
+.dln::before{content:"";position:absolute;left:-6px;top:-1px;border:5px solid transparent;border-top:7px solid var(--crit);border-bottom:0}
+.bl{position:absolute;top:0;line-height:var(--rh);font-size:11px;color:var(--ink-2);white-space:nowrap;pointer-events:none;z-index:2}
+.bl.ms-l{font-family:var(--f-mono);font-size:10.5px;color:var(--ink)}
+.bl.ms-l.crit{color:var(--crit);font-weight:600}
+.dim{opacity:.25}
+
+.foot{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12px;color:var(--ink-2);align-items:center;margin-top:10px}
+.lg{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.sw{width:22px;height:10px;border-radius:2px;background:var(--accent);display:inline-block;flex:none}
+.sw.crit{background:var(--crit)}
+.sw.wave{background:color-mix(in srgb,var(--accent) 22%,var(--surface));box-shadow:inset 0 0 0 1.5px var(--accent)}
+.sw.ham{background:color-mix(in srgb,var(--ink-3) 30%,var(--surface));border:1.5px dotted var(--ink);border-radius:0;height:9px}
+.hbar{position:absolute;top:calc(50% - 6px);height:12px;background:color-mix(in srgb,var(--ink-3) 30%,var(--surface));border:2px dotted var(--ink);z-index:2;cursor:pointer}
+.pct{display:flex;align-items:center;gap:6px;font-family:var(--f-mono);font-size:11.5px;color:var(--ink-2)}
+.pm{width:26px;height:4px;border-radius:2px;background:var(--line);overflow:hidden;flex:none}
+.pm i{display:block;height:100%;background:var(--ink-2)}
+.bar .done{position:absolute;left:0;top:0;bottom:0;background:rgb(0 0 0 / .28)}
+.c.rs{display:flex;gap:4px;align-items:center;overflow:hidden}
+.chip{display:inline-flex;align-items:center;flex:none;height:18px;padding:0 6px;border-radius:4px;font-size:11px;line-height:1;white-space:nowrap;box-shadow:inset 0 0 0 1px var(--line-strong);color:var(--ink)}
+.chip.contractor{background:var(--accent-soft);box-shadow:none}
+.chip.external{box-shadow:none;outline:1px dashed var(--ink-3);outline-offset:-1px;color:var(--ink-2)}
+.chip.more{box-shadow:none;color:var(--ink-2);padding:0 2px}
+.c.sl{font-family:var(--f-mono);font-size:11.5px;color:var(--ink-2)}
+.c.sl .z{color:var(--crit);font-weight:600}
+.c.sl .d{color:var(--dlc);font-weight:600}
+.sw.chc{width:16px;height:12px;background:var(--accent-soft)} .sw.che{width:16px;height:12px;background:none;outline:1px dashed var(--ink-3);outline-offset:-1px}
+.sw.loe{background:repeating-linear-gradient(135deg,var(--ink-3) 0 2px,transparent 2px 6px);box-shadow:inset 0 0 0 1px var(--ink-3)}
+.sw.sum{height:5px;background:var(--summary);border-radius:0}
+.sw.msd{width:10px;height:10px;transform:rotate(45deg);background:var(--ink);margin:0 4px}
+.sw.msx{width:10px;height:10px;transform:rotate(45deg);background:var(--surface);box-shadow:inset 0 0 0 2px var(--warn);margin:0 4px}
+.sw.dlm{width:0;height:13px;border-left:2px solid var(--crit);border-radius:0;background:none;margin:0 6px}
+.sw.sq{width:22px;height:0;border-top:1.5px dashed var(--ink-2);border-radius:0;background:none}
+.sw.ex{width:0;height:13px;border-left:2px dashed var(--warn);border-radius:0;background:none;margin:0 6px}
+.note{margin:10px 0 0;font-size:12.5px;color:var(--ink-2);max-width:110ch}
+.note b{color:var(--ink)}
+
+.tip{position:fixed;z-index:50;background:var(--tip-bg);color:var(--tip-fg);border-radius:7px;padding:9px 11px;font-size:12px;max-width:340px;pointer-events:none;box-shadow:0 6px 24px rgb(0 0 0 / .22)}
+.tip h4{margin:0 0 5px;font-size:12.5px;font-weight:600;line-height:1.3}
+.tip dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 10px}
+.tip dt{opacity:.65} .tip dd{margin:0}
+.tip p{margin:6px 0 0;opacity:.85;line-height:1.35}
+@media (max-width:640px){.head{align-items:flex-start}.logo{width:48px;height:48px}.lc,.lh{position:relative}.pane{max-height:none}}
+</style>
+</head>
+<body>
+<km-shell page="gantt" bleed></km-shell>
+<header class="head">
+  <div class="logo" role="img" aria-label="Логотип фермы «Тёплый Нил»"></div>
+  <div class="head-main">
+    <div class="eyebrow"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1zm2 0h4V5a2 2 0 1 0-4 0v2z"/></svg>Собственность ООО «Тёплый Нил» · Для внутреннего пользования<span class="doctype">ИСР и Гант</span></div>
+    <h1>ИСР и диаграмма Ганта · «КрокоМетрика: MVP аппаратно-программного комплекса для крокодиловой фермы»</h1>
+    <div class="facts" id="facts"></div>
+  </div>
+</header>
+
+<div class="tb" role="toolbar" aria-label="Вид диаграммы">
+  <div class="seg" id="view" aria-label="Вид">
+    <button type="button" data-v="gantt" aria-pressed="true">Гант</button>
+    <button type="button" data-v="load" aria-pressed="false">Загрузка</button>
+  </div>
+  <div class="seg gonly" id="scale" aria-label="Шкала">
+    <button type="button" data-s="cal" aria-pressed="true">Календарь</button>
+    <button type="button" data-s="dn" aria-pressed="false">Дни проекта</button>
+  </div>
+  <div class="zoom"><button class="btn sq" type="button" id="zout" aria-label="Мельче">−</button><span id="zl"></span><button class="btn sq" type="button" id="zin" aria-label="Крупнее">+</button></div>
+  <div class="seg gonly" id="lvl" aria-label="Уровень ИСР">
+    <button type="button" data-l="1">Результаты и ключевые вехи</button>
+    <button type="button" data-l="9" aria-pressed="true">Все работы</button>
+  </div>
+  <label class="chk gonly"><input type="checkbox" id="lk" checked>Связи</label>
+  <label class="chk gonly"><input type="checkbox" id="cols" checked>Все столбцы</label>
+  <label class="chk gonly"><input type="checkbox" id="cp">Только критический путь</label>
+</div>
+
+<div class="pane" id="pane"><div class="grid" id="grid"></div></div>
+
+<div class="foot" id="foot">
+  <span class="lg"><i class="sw"></i>Работа (затемнённая часть — выполнено)</span>
+  <span class="lg bonly"><i class="sw base"></i>Утверждённый план</span>
+  <span class="lg bonly"><i class="sw stl"></i>День статуса</span>
+  <span class="lg"><i class="sw crit"></i>Критический путь: резерв 0 до конца проекта</span>
+  <span class="lg" data-need="dlc"><i class="sw dlc"></i>Около-критический путь</span>
+  <span class="lg" data-need="wave"><i class="sw wave"></i>Пакет планирования: детализируется следующей волной</span>
+  <span class="lg"><i class="sw sum"></i>Результат ИСР (суммарная)</span>
+  <span class="lg"><i class="sw msd"></i>Веха (крупная — ключевая веха устава)</span>
+  <span class="lg" data-need="fix"><i class="sw msx"></i>Внешняя веха с фиксированной датой</span>
+  <span class="lg" data-need="dl"><i class="sw dlm"></i>Крайний срок</span>
+  <span class="lg"><i class="sw chc"></i>Ресурс подрядчика</span>
+  <span class="lg"><i class="sw che"></i>Внешний участник</span>
+  <span class="lg"><i class="sw hl"></i>Праздники (производственный календарь РФ)</span>
+  <span class="lg"><i class="sw ex"></i>Внешнее событие</span>
+  <span class="lg" data-need="sq"><i class="sw sq"></i>Связь по очерёдности одной команды (не технология)</span>
+  <span class="lg" data-need="ham"><i class="sw ham"></i>Гамак: управление проектом на всё время проекта</span>
+</div>
+<div class="foot" id="footl" hidden>
+  <span class="lg"><i class="sw ld1"></i>Загрузка ниже ёмкости</span>
+  <span class="lg"><i class="sw ld2"></i>Загрузка равна ёмкости</span>
+  <span class="lg"><i class="sw ld3"></i>Перегрузка: работ больше, чем ресурс может вести одновременно</span>
+  <span class="lg">Цифра — сколько работ одновременно стоит на ресурсе; ёмкость — сколько он может вести параллельно</span>
+</div>
+<div class="tip" id="tip" hidden></div>
+
+<script src="data/project.js" charset="utf-8"></script>
+<script src="js/plan-engine.js" charset="utf-8"></script>
+<script src="data/plan.js" charset="utf-8"></script>
+<script src="js/dates.js" charset="utf-8"></script>
+<script src="js/shell.js" charset="utf-8"></script>
+<script>
+(()=>{
+const P=window.KM_PROJECT, DT=window.KM_DATES, R0=KM_ENGINE.model(window.KM_PLAN_SRC), M=R0.M, D=R0.D, by=D.by, END=D.END, BASE=R0.base, ST=R0.status, STU=!!window.KM_GANTT_STUDENT;
+const MON=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const p2=x=>String(x).padStart(2,'0');
+const dd=k=>{const d=DT.D(DT.wd(k));return p2(d.getUTCDate())+'.'+p2(d.getUTCMonth()+1)+'.'+String(d.getUTCFullYear()).slice(2)};
+const S={view:'gantt',scale:'cal',dw:9,lvl:9,links:true,cols:innerWidth>=1280,cp:false,col:new Set()};
+$('#cols').checked=S.cols;
+const PROJ={code:'',name:M.result||P.full||P.name,kind:'sum',es:0,ef:END,dur:END,depth:0,kids:M.items.filter(t=>!t.parent).map(t=>t.code)};
+const sDay=t=>t.kind==='ms'?t.ef:t.es+1, fDay=t=>t.ef;
+const BASEP=R0.hasBase?{es:Math.min(...Object.values(BASE).map(b=>b.es)),ef:Math.max(...Object.values(BASE).map(b=>b.ef))}:null;
+{const lv=D.net.filter(t=>t.kind==='task'),w=lv.reduce((a,t)=>a+t.dur,0); PROJ.pct=w?Math.round(lv.reduce((a,t)=>a+t.dur*t.pct,0)/w):0;}
+const isCrit=t=>!!t.crit;
+const RES={}; (M.resources||[]).forEach(r=>RES[r.id]=r);
+const chips=s=>{const a=String(s||'').split(',').map(x=>x.trim()).filter(Boolean); if(!a.length)return '';
+  return a.map(id=>{const r=RES[id]; return `<span class="chip ${r?r.type:''}" title="${esc(r?r.name:id)}">${esc(id)}</span>`;}).join('');};
+const slackCell=t=>{
+  if(t.kind==='loe'||t.kind==='ham'||t.kind==='sum'||t.code==='')return '';
+  if(t.fix!=null)return '<span title="Внешняя веха с фиксированной датой">—</span>';
+  if(t.slack==null)return '';
+  const main=t.slack<=0?`<span class="z">${t.slack<0?'−'+(-t.slack):0}</span>`:String(t.slack);
+  if(t.dslack!=null&&t.dslack<t.slack)return `<span title="Резерв до конца проекта ${t.slack} д; запас до жёсткого срока Д55 ${t.dslack} д"><span class="${t.dslack<=0?'d':''}">${t.dslack}</span><small> до Д55</small></span>`;
+  return main;};
+const predTxt=t=>{const s=t.soft||new Set(), h=(t.pc||[]).filter(c=>!s.has(c)); return h.join(', ')+(s.size?(h.length?'; ':'')+'очер. '+[...s].join(', '):'');};
+const hasCrit=t=>(t.kind==='sum'||t.kind==='ham')?t.kids.some(c=>hasCrit(by[c])):isCrit(t);
+
+/* факты в шапке */
+const leaves=M.items.filter(t=>t.kind==='task'), mss=M.items.filter(t=>t.kind==='ms');
+const cpN=D.net.filter(t=>t.crit&&t.kind==='task').length;
+$('#facts').innerHTML=`<span title="Праздники и переносы — по постановлениям Правительства РФ на 2026 и 2027 годы">Календарь: <b>пятидневка с праздниками РФ</b></span><span>Старт <b>${DT.fmt(DT.wd(1))}</b> (Д1)</span><span>Окончание <b>${DT.fmt(DT.wd(END))}</b> (Д${END})</span>`+
+  `<span>Длительность <b>${END}</b> раб. дн.</span><span>Работ <b>${leaves.length}</b> · вех <b>${mss.length}</b></span>`+
+  `<span class="c">На критическом пути <b>${cpN}</b> работ</span>`+(ST!=null?`<span class="st">Статус на <b>${DT.fmt(DT.wd(ST))}</b> (Д${ST})</span>`:'')+(!STU&&D.problems.length?`<span class="c"><b>Ошибки плана: ${D.problems.length}</b></span>`:'');
+const ext=M.ext[0];
+
+/* видимые строки */
+function rows(){
+  const out=[{t:PROJ,lv:0}];
+  const walk=(codes,lv)=>codes.forEach(c=>{const t=by[c];
+    if(S.lvl===1&&!(t.kind==='sum'||t.kind==='ham'||(t.kind==='ms'&&t.ml===1)))return;
+    if(S.cp&&!hasCrit(t))return;
+    out.push({t,lv});
+    if((t.kind==='sum'||t.kind==='ham')&&!S.col.has(t.code))walk(t.kids,lv+1);
+  });
+  if(!S.col.has(''))walk(PROJ.kids,1);
+  return out;
+}
+const COLS=()=>S.cols?[['ИСР','52px'],['Задача','minmax(240px,300px)'],['Длит.','58px','r'],['Прогресс','82px'],['Начало','72px','r'],['Окончание','94px','r'],['Предш.','92px'],['Ресурсы','190px'],['Резерв','66px','r']]
+                     :[['ИСР','52px'],['Задача',innerWidth<700?'minmax(160px,200px)':'minmax(200px,340px)'],['Длит.','58px','r'],['Резерв','66px','r']];
+const CARET='<svg viewBox="0 0 10 10"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
+
+function render(){
+  document.querySelectorAll('.gonly').forEach(el=>el.hidden=S.view!=='gantt');
+  $('#foot').hidden=S.view!=='gantt'; $('#footl').hidden=S.view==='gantt';
+  if(S.view==='load')return renderLoad();
+  const cols=COLS(), lw=cols.reduce((a,c)=>a+(parseInt(c[1].replace('minmax(','').split(',').pop())||0),0);
+  const dw=S.dw, LAST=Math.ceil((Math.max(END,...M.ext.map(e=>e.day))+12)/5)*5, tw=LAST*dw, x=k=>k*dw;
+  const g=$('#grid'); g.style.setProperty('--cols',cols.map(c=>c[1].startsWith('minmax')?c[1].split(',').pop().replace(')',''):c[1]).join(' '));
+  g.style.setProperty('--lw',lw+'px'); g.style.setProperty('--tw',tw+'px'); g.style.setProperty('--dw',dw+'px');
+  $('#zl').textContent=dw>=16?'дни':dw>=8?'недели':'месяцы';
+  /* шкала */
+  let r1='',r2='';
+  if(S.scale==='cal'){
+    let k=1; while(k<=LAST){const d=DT.D(DT.wd(k)),m=d.getUTCMonth(),y=d.getUTCFullYear(); let j=k; while(j+1<=LAST){const e=DT.D(DT.wd(j+1)); if(e.getUTCMonth()!==m)break; j++;}
+      r1+=`<span style="left:${x(k-1)}px;width:${x(j-k+1)}px">${MON[m]} ${dw*(j-k+1)>70?y:''}</span>`; k=j+1;}
+    for(let k=1;k<=LAST;k+=5){const d=DT.D(DT.wd(k)); r2+=`<span style="left:${x(k-1)}px;width:${x(5)}px">${dw*5>=40?p2(d.getUTCDate())+'.'+p2(d.getUTCMonth()+1):dw*5>=18?d.getUTCDate():''}</span>`;}
+  } else {
+    const step=dw*5>=48?5:dw*5>=22?10:20;
+    for(let k=1;k<=LAST;k+=step*2)r1+=`<span style="left:${x(k-1)}px;width:${x(step*2)}px">Нед. ${(k-1)/5+1}–${(k-1)/5+step*2/5}</span>`;
+    for(let k=1;k<=LAST;k+=step)r2+=`<span style="left:${x(k-1)}px;width:${x(step)}px">Д${k}</span>`;
+  }
+  /* праздники: разрывы между соседними рабочими днями, в которые попал нерабочий будний день */
+  const HN={'12-31':'Новый год','01-01':'Новый год','01-04':'Новый год','02-22':'23 февраля','02-23':'23 февраля','03-08':'8 марта','05-01':'1 мая','05-03':'1 мая','05-10':'9 мая','05-11':'9 мая','06-12':'12 июня','06-14':'12 июня','11-04':'4 ноября','11-05':'4 ноября'};
+  const gaps=[]; for(let k=2;k<=LAST;k++){const a=DT.wd(k-1),b=DT.wd(k),off=[]; for(let n=a+1;n<b;n++){const w=(new Date(n*864e5).getUTCDay()+6)%7; if(w<5)off.push(n);} if(off.length){const d=DT.D(off[0]),key=p2(d.getUTCMonth()+1)+'-'+p2(d.getUTCDate()); gaps.push({k:k-1,off,name:HN[key]||'праздник'});}}
+  const holH=gaps.map(gp=>`<button class="hol" data-hol="${gp.off.map(n=>DT.fmt(n)).join(', ')}" data-hn="${esc(gp.name)}" style="left:${x(gp.k)}px">${esc(gp.name)}</button>`).join('');
+  const stH=ST!=null?`<button class="ext stb" data-st="1" style="left:${x(ST)}px">Статус Д${ST}</button>`:'';
+  const exH=stH+M.ext.map((e,i)=>`<button class="ext" data-ext="${i}" style="left:${x(e.day)}px">${esc(e.name)}</button>`).join('');
+  let h=`<div class="hdr"><div class="lh">${cols.map(c=>`<div class="${c[2]||''}">${c[0]}</div>`).join('')}</div><div class="th"><div class="r1">${r1}</div><div class="r2">${r2}</div>${holH}${exH}</div></div>`;
+  const R=rows(), rh=28, idx={};
+  R.forEach((r,i)=>{if(r.t.code)idx[r.t.code]=i;});
+  let bg=''; for(let k=0;k<=LAST;k+=5)bg+=`<i class="wl${S.scale==='cal'?'':' '}" style="left:${x(k)}px"></i>`;
+  bg+=gaps.map(gp=>`<i class="hl" style="left:${x(gp.k)}px"></i>`).join('');
+  if(ST!=null)bg+=`<i class="stl" style="left:${x(ST)}px"></i>`;
+  bg+=M.ext.map(e=>`<i class="ex" style="left:${x(e.day)}px"></i>`).join('');
+  let b='';
+  R.forEach(({t,lv})=>{
+    const ham=t.kind==='ham', sum=t.kind==='sum'||ham, loe=t.kind==='loe', cls=lv===0?'k-proj':sum?'k-l'+Math.min(lv,3):'k-t';
+    const ind=Math.max(0,lv-1)*14;
+    const nm=`<div class="c nm" style="padding-left:${8+ind}px">${sum?`<button class="caret" type="button" data-col="${t.code}" aria-expanded="${!S.col.has(t.code)}" aria-label="Свернуть или развернуть">${CARET}</button>`:'<i class="sp"></i>'}`+
+      `<span class="t${t.kind==='ms'?' ms-n':''}" title="${esc(t.name)}">${esc(t.name)}</span>`+
+      (t.blk&&t.blk!=='—'?`<span class="tag b${esc(t.blk)}" title="Приоритет по уставу">блок ${esc(t.blk)}</span>`:'')+
+      (t.wave?'<span class="tag wave" title="Пакет планирования: детализируется, когда подойдёт волна">пакет планирования</span>':'')+
+      (ham?'<span class="tag loe" title="Длительность задаётся началом и окончанием проекта">гамак</span>':'')+
+      (t.fix!=null?'<span class="tag ext">внешняя</span>':'')+(t.dl!=null?`<span class="tag dl">не позднее Д${t.dl}</span>`:'')+`</div>`;
+    const du=loe?'—':t.kind==='ms'?'0':t.dur+' д';
+    let cells=`<div class="c id">${esc(t.code||'')}</div>${nm}<div class="c du r">${du}</div>`;
+    if(S.cols){
+      const pc=loe?'':`<div class="pct"><span class="pm"><i style="width:${t.pct|0}%"></i></span>${t.pct|0}%</div>`;
+      cells+=`<div class="c">${pc}</div><div class="c dt r">${loe?'—':dd(sDay(t))}</div><div class="c dt r">${loe?'—':dd(fDay(t))}</div><div class="c pr" title="${esc(predTxt(t))}">${esc(predTxt(t))}</div><div class="c rs">${chips(t.res)}</div>`;
+    }
+    cells+=`<div class="c r sl">${slackCell(t)}</div>`;
+    let bar='';
+    if(ham) bar=`<div class="hbar" data-c="${t.code}" style="left:${x(t.es)}px;width:${x(t.ef-t.es)}px"></div>`;
+    else if(loe) bar='';
+    else if(sum) bar=`<div class="sbar" data-c="${t.code}" style="left:${x(t.es)}px;width:${Math.max(2,x(t.ef-t.es))}px"></div>`;
+    else if(t.kind==='ms'){const l1=t.ml===1, c=t.crit?' crit':t.dlcrit?' dlc':'';
+      bar=`<div class="ms${l1?' l1':''}${c}${t.fix!=null?' ext':''}" data-c="${t.code}" style="left:${x(t.ef)}px"></div><span class="bl ms-l${c}" style="left:${x(t.ef)+12}px">Д${t.ef} · ${dd(t.ef)}</span>`;}
+    else bar=`<div class="bar${t.crit?' crit':t.dlcrit?' dlc':''}${t.wave?' wave':''}" data-c="${t.code}" style="left:${x(t.es)}px;width:${Math.max(3,x(t.ef-t.es))}px">${t.pct>0?`<i class="done" style="width:${t.pct}%"></i>`:''}</div>`+
+      (dw*(END-t.ef)>60?`<span class="bl" style="left:${x(t.ef)+6}px">${esc(t.res||'')}</span>`:'');
+    if(t.dl!=null)bar+=`<i class="dln" data-dl="${t.code}" style="left:${x(t.dl)}px"></i>`;
+    const bb=t.code===''?BASEP:BASE[t.code];
+    if(R0.hasBase&&bb&&!loe){ if(t.kind==='ms')bar+=`<i class="bms" style="left:${x(bb.ef)}px"></i>`; else bar+=`<i class="bbar" style="left:${x(bb.es)}px;width:${Math.max(2,x(bb.ef-bb.es))}px"></i>`; }
+    b+=`<div class="row ${cls}" data-r="${t.code}"><div class="lc">${cells}</div><div class="tl">${bar}</div></div>`;
+  });
+  /* связи окончание→начало */
+  let paths='';
+  if(S.links){
+    R.forEach(({t},i)=>{ if(!t.p)return; t.p.forEach(c=>{ const j=idx[c]; if(j==null)return; const q=by[c];
+      const x1=x(q.ef)+(q.kind==='ms'?7:0), y1=j*rh+rh/2, x2=x(t.es)-(t.kind==='ms'?7:0), y2=i*rh+rh/2, drv=q.ef===t.es||t.fix!=null, cr=q.crit&&t.crit&&drv, dc=!cr&&q.dlcrit&&t.dlcrit&&drv, lc=(cr?'crit':dc?'dlc':'')+(t.soft&&t.soft.has(c)?' soft':''), ac=cr?'ahc':dc?'ahd':'ah';
+      const down=y2>y1, yv=y2+(down?-7:7);
+      let d;
+      if(x2-x1>=8) d=`M${x1} ${y1}H${x2-4}V${y2+(down?-9:9)}`;
+      else d=`M${x1} ${y1}h6V${y1+(down?rh/2:-rh/2)}H${x2-8}V${y2}H${x2-1}`;
+      if(x2-x1>=8) paths+=`<path class="${lc}" d="${d}"/><path class="${ac}" d="M${x2-7.5} ${y2+(down?-10:10)}l3.5 ${down?5:-5} 3.5 ${down?-5:5}z"/>`;
+      else paths+=`<path class="${lc}" d="${d}"/><path class="${ac}" d="M${x2-1} ${y2}l-5 -3.5v7z"/>`;
+    });});
+  }
+  const H=R.length*rh;
+  g.innerHTML=h+`<div class="body" style="height:${H}px"><div class="bgl">${bg}</div><svg class="links" width="${tw}" height="${H}">${paths}</svg>${b}</div>`;
+}
+
+
+/* загрузка ресурсов: сколько работ одновременно стоит на ресурсе в каждый рабочий день */
+function loadMap(){
+  const L={}; D.net.filter(t=>t.kind==='task'&&t.dur>0).forEach(t=>String(t.res||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(id=>{
+    (L[id]=L[id]||{}); for(let d=t.es+1;d<=t.ef;d++){(L[id][d]=L[id][d]||[]).push(t.code);} }));
+  return L;
+}
+function renderLoad(){
+  const L=loadMap(), dw=S.dw, LAST=Math.ceil((Math.max(END,...M.ext.map(e=>e.day))+12)/5)*5, tw=LAST*dw, x=k=>k*dw;
+  const cols=[['Ресурс','240px'],['Кто это','110px'],['Ёмкость','74px','r'],['Пик','56px','r']], lw=cols.reduce((a,c)=>a+parseInt(c[1]),0);
+  const g=$('#grid'); g.style.setProperty('--cols',cols.map(c=>c[1]).join(' ')); g.style.setProperty('--lw',lw+'px'); g.style.setProperty('--tw',tw+'px');
+  let r1='',r2='';
+  let k=1; while(k<=LAST){const d=DT.D(DT.wd(k)),m=d.getUTCMonth(),y=d.getUTCFullYear(); let j=k; while(j+1<=LAST){const e=DT.D(DT.wd(j+1)); if(e.getUTCMonth()!==m)break; j++;}
+    r1+=`<span style="left:${x(k-1)}px;width:${x(j-k+1)}px">${MON[m]} ${dw*(j-k+1)>70?y:''}</span>`; k=j+1;}
+  for(let k=1;k<=LAST;k+=5){const d=DT.D(DT.wd(k)); r2+=`<span style="left:${x(k-1)}px;width:${x(5)}px">${dw*5>=40?p2(d.getUTCDate())+'.'+p2(d.getUTCMonth()+1):''}</span>`;}
+  const stH=ST!=null?`<button class="ext stb" style="left:${x(ST)}px">Статус Д${ST}</button>`:'';
+  const exH=M.ext.map((e,i)=>`<button class="ext" data-ext="${i}" style="left:${x(e.day)}px">${esc(e.name)}</button>`).join('');
+  const h=`<div class="hdr"><div class="lh">${cols.map(c=>`<div class="${c[2]||''}">${c[0]}</div>`).join('')}</div><div class="th"><div class="r1">${r1}</div><div class="r2">${r2}</div>${stH}${exH}</div></div>`;
+  const TY={staff:'ферма',contractor:'подрядчик',external:'внешний'};
+  const list=(M.resources||[]).filter(r=>L[r.id]);
+  let b='', bg=''; for(let k=0;k<=LAST;k+=5)bg+=`<i class="wl" style="left:${x(k)}px"></i>`;
+  if(ST!=null)bg+=`<i class="stl" style="left:${x(ST)}px"></i>`;
+  bg+=M.ext.map(e=>`<i class="ex" style="left:${x(e.day)}px"></i>`).join('');
+  list.forEach(r=>{
+    const days=L[r.id], peak=Math.max(...Object.values(days).map(a=>a.length));
+    let segs='', d=1;
+    while(d<=LAST){ const n=(days[d]||[]).length; if(!n){d++;continue;} let e=d; while(e+1<=LAST&&(days[e+1]||[]).length===n)e++;
+      const cls=n>r.cap?'ovr':n===r.cap?'full':'';
+      segs+=`<div class="ld ${cls}" data-ld="${esc(r.id)}|${d}" style="left:${x(d-1)}px;width:${x(e-d+1)}px">${x(e-d+1)>=14?n:''}</div>`; d=e+1; }
+    b+=`<div class="row k-res"><div class="lc"><div class="c" title="${esc(r.name)}">${esc(r.id)}</div><div class="c res">${TY[r.type]||''}</div><div class="c r mono">${r.cap}</div><div class="c r mono pk ${peak>r.cap?'ovr':''}">${peak}</div></div><div class="tl">${segs}</div></div>`;
+  });
+  g.innerHTML=h+`<div class="body" style="height:${list.length*28}px"><div class="bgl">${bg}</div>${b}</div>`;
+}
+/* подсказка */
+const tip=$('#tip');
+function tipFor(code){
+  const t=code===''?PROJ:by[code]; if(!t)return '';
+  const rows=[];
+  if(t.kind==='ms') rows.push(['Дата',`Д${t.ef} · ${DT.fmt(DT.wd(t.ef))}`]);
+  else rows.push(['Сроки',`Д${t.es+1}–Д${t.ef} · ${dd(t.es+1)} – ${dd(t.ef)}`],['Длительность',t.dur+' раб. дн.']);
+  if(t.kind==='task'||t.kind==='ms'){ if(t.slack!=null)rows.push(['Резерв до конца проекта',t.slack<=0?'0 — критический путь':t.slack+' раб. дн.']);
+    if(t.dslack!=null&&t.dslack<t.slack)rows.push(['Запас до срока Д55',t.dslack<=0?'0 — срок держится на этой работе':t.dslack+' раб. дн.']); }
+  const hard=(t.pc||[]).filter(c=>!(t.soft&&t.soft.has(c))), soft=(t.sq||[]);
+  if(hard.length)rows.push(['Предшественники',hard.join(', ')]);
+  if(soft.length)rows.push(['По очерёдности команды',soft.join(', ')]);
+  if(t.blk&&t.blk!=='—')rows.push(['Приоритет по уставу','блок '+t.blk]);
+  if(t.succ&&t.succ.length)rows.push(['Последователи',t.succ.join(', ')]);
+  if(t.res)rows.push(['Исполнитель',t.res]);
+  let p='';
+  if(t.fix!=null)p='Внешняя веха: дата задана извне и не следует из логики плана.';
+  if(t.dl!=null)p=`Крайний срок Д${t.dl} (${DT.fmt(DT.wd(t.dl))}). Работы без запаса до этого срока — около-критический путь.`;
+  if(t.wave)p='Пакет планирования: состав работ уточним, когда подойдёт волна.';
+  if(t.kind==='ham')p='Гамак: начало и окончание задаются первой и последней работой проекта. Составляющие — работы на всё время проекта, отдельно не планируются и в расчёте критического пути не участвуют.';
+  return `<h4>${esc((t.code?t.code+' · ':'')+t.name)}</h4><dl>${rows.map(r=>`<dt>${r[0]}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl>${p?`<p>${p}</p>`:''}`;
+}
+const place=(e)=>{const w=tip.offsetWidth,h=tip.offsetHeight; let X=e.clientX+14,Y=e.clientY+14; if(X+w>innerWidth-8)X=e.clientX-w-14; if(Y+h>innerHeight-8)Y=e.clientY-h-14; tip.style.left=Math.max(8,X)+'px'; tip.style.top=Math.max(8,Y)+'px';};
+$('#grid').addEventListener('pointermove',e=>{
+  const el=e.target.closest('[data-c],[data-dl],[data-ext],[data-hol],[data-ld],[data-st],.row'); if(!el){tip.hidden=true;return;}
+  let html='';
+  if(el.dataset.ld!=null){const [rid,day]=el.dataset.ld.split('|'); const L=loadMap(), r=RES[rid], codes=(L[rid]||{})[+day]||[];
+    html=`<h4>${esc(rid)}: ${codes.length} ${codes.length===1?'работа':'работы'} одновременно (ёмкость ${r?r.cap:1})</h4><p>${codes.map(c=>esc(c+' '+by[c].name)).join('<br>')}</p>`;}
+  else if(el.dataset.st!=null){html=`<h4>День статуса: Д${ST} · ${DT.fmt(DT.wd(ST))}</h4><p>Слева от линии — то, что уже должно быть сделано. Серые полосы под работами — утверждённый план.</p>`;}
+  else if(el.dataset.hol!=null){html=`<h4>${esc(el.dataset.hn)}: нерабочие дни</h4><p>${esc(el.dataset.hol)}</p><p>Шкала показывает только рабочие дни, поэтому праздники выглядят как стык между соседними днями.</p>`;}
+  else if(el.dataset.ext!=null){const x=M.ext[+el.dataset.ext]; html=`<h4>${esc(x.name)}</h4><dl><dt>Дата</dt><dd>Д${x.day} · ${DT.fmt(DT.wd(x.day))}</dd></dl><p>${esc(x.note)}</p>`;}
+  else if(el.dataset.dl!=null)html=tipFor(el.dataset.dl);
+  else if(el.dataset.c!=null)html=tipFor(el.dataset.c);
+  else if(el.classList.contains('row')&&e.target.closest('.tl'))html='';
+  if(!html){tip.hidden=true;return;}
+  tip.innerHTML=html; tip.hidden=false; place(e);
+});
+$('#grid').addEventListener('pointerleave',()=>tip.hidden=true);
+$('#grid').addEventListener('click',e=>{const b=e.target.closest('[data-col]'); if(!b)return; const c=b.dataset.col; S.col.has(c)?S.col.delete(c):S.col.add(c); render();});
+
+const pressed=(sel,attr,val)=>document.querySelectorAll(sel+' button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset[attr]===String(val))));
+$('#view').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.view=b.dataset.v;pressed('#view','v',S.view);render();});
+$('#scale').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.scale=b.dataset.s;pressed('#scale','s',S.scale);render();});
+$('#lvl').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.lvl=+b.dataset.l;S.col.clear();pressed('#lvl','l',S.lvl);render();});
+const Z=[4,6,9,13,18,24];
+$('#zin').onclick=()=>{S.dw=Z[Math.min(Z.length-1,Z.indexOf(S.dw)+1)];render();};
+$('#zout').onclick=()=>{S.dw=Z[Math.max(0,Z.indexOf(S.dw)-1)];render();};
+$('#lk').onchange=e=>{S.links=e.target.checked;render();};
+$('#cols').onchange=e=>{S.cols=e.target.checked;render();};
+$('#cp').onchange=e=>{S.cp=e.target.checked;render();};
+document.querySelectorAll('.bonly').forEach(el=>el.hidden=!R0.hasBase);
+{const I=M.items, has={dlc:D.net.some(t=>t.dlcrit),dl:I.some(t=>t.dl!=null),ham:I.some(t=>t.kind==='ham'),fix:I.some(t=>t.fix!=null),sq:I.some(t=>t.sq&&t.sq.length),wave:I.some(t=>t.wave)};
+ document.querySelectorAll('[data-need]').forEach(el=>el.hidden=!has[el.dataset.need]);}
+if(STU)$('#lvl').remove();
+render();
+})();
+</script>
+</body>
+</html>
