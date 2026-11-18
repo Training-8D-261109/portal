@@ -54,6 +54,7 @@ h1{margin:2px 0 4px;font-size:clamp(19px,2.6vw,26px);line-height:1.2;font-weight
 .seg button[aria-pressed="true"]{background:var(--summary);color:var(--page);font-weight:500}
 .btn{height:32px;border:1px solid var(--line-strong);border-radius:7px;background:var(--surface);padding:0 11px;cursor:pointer;font-size:12.5px;display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
 .btn:hover{background:var(--hover)}
+.btn[aria-pressed="true"]{background:var(--summary);color:var(--page);border-color:var(--summary)}
 .btn.sq{width:32px;padding:0;justify-content:center;font-size:16px}
 .zoom{display:inline-flex;align-items:center;gap:4px}
 .zoom span{font-size:12px;color:var(--ink-2);min-width:58px;text-align:center}
@@ -229,7 +230,8 @@ svg.links{position:absolute;left:var(--lw);top:0;pointer-events:none;overflow:vi
     <button type="button" data-l="9" aria-pressed="true">Все работы</button>
   </div>
   <label class="chk gonly"><input type="checkbox" id="lk" checked>Связи</label>
-  <label class="chk gonly"><input type="checkbox" id="cols" checked>Все столбцы</label>
+  <button class="btn gonly" type="button" id="cmp" aria-pressed="false" title="Скрыть столбцы «Начало», «Окончание», «Предш.» и «Ресурсы»">Компактный вид</button>
+  <button class="btn gonly" type="button" id="tost" hidden title="Прокрутить шкалу к дню статуса">К дню статуса</button>
   <label class="chk gonly"><input type="checkbox" id="cp">Только критический путь</label>
 </div>
 
@@ -274,7 +276,7 @@ const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,c=>
 const p2=x=>String(x).padStart(2,'0');
 const dd=k=>{const d=DT.D(DT.wd(k));return p2(d.getUTCDate())+'.'+p2(d.getUTCMonth()+1)+'.'+String(d.getUTCFullYear()).slice(2)};
 const S={view:'gantt',scale:'cal',dw:9,lvl:9,links:true,cols:innerWidth>=1280,cp:false,col:new Set()};
-$('#cols').checked=S.cols;
+$('#cmp').setAttribute('aria-pressed',String(!S.cols));
 const PROJ={code:'',name:M.result||P.full||P.name,kind:'sum',es:0,ef:END,dur:END,depth:0,kids:M.items.filter(t=>!t.parent).map(t=>t.code)};
 const sDay=t=>t.kind==='ms'?t.ef:t.es+1, fDay=t=>t.ef;
 const BASEP=R0.hasBase?{es:Math.min(...Object.values(BASE).map(b=>b.es)),ef:Math.max(...Object.values(BASE).map(b=>b.ef))}:null;
@@ -314,11 +316,12 @@ function rows(){
   return out;
 }
 const COLS=()=>S.cols?[['ИСР','52px'],['Задача','minmax(240px,300px)'],['Длит.','58px','r'],['Прогресс','82px'],['Начало','72px','r'],['Окончание','94px','r'],['Предш.','92px'],['Ресурсы','190px'],['Резерв','66px','r']]
-                     :[['ИСР','52px'],['Задача',innerWidth<700?'minmax(160px,200px)':'minmax(200px,340px)'],['Длит.','58px','r'],['Резерв','66px','r']];
+                     :[['ИСР','52px'],['Задача',innerWidth<700?'minmax(160px,200px)':'minmax(200px,340px)'],['Длит.','58px','r'],['Прогресс','82px'],['Резерв','66px','r']];
 const CARET='<svg viewBox="0 0 10 10"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
 
 function render(){
   document.querySelectorAll('.gonly').forEach(el=>el.hidden=S.view!=='gantt');
+  $('#tost').hidden=S.view!=='gantt'||ST==null;
   $('#foot').hidden=S.view!=='gantt'; $('#footl').hidden=S.view==='gantt';
   if(S.view==='load')return renderLoad();
   const cols=COLS(), lw=cols.reduce((a,c)=>a+(parseInt(c[1].replace('minmax(','').split(',').pop())||0),0);
@@ -362,9 +365,10 @@ function render(){
       (t.fix!=null?'<span class="tag ext">внешняя</span>':'')+(t.dl!=null?`<span class="tag dl">не позднее Д${t.dl}</span>`:'')+`</div>`;
     const du=loe?'—':t.kind==='ms'?'0':t.dur+' д';
     let cells=`<div class="c id">${esc(t.code||'')}</div>${nm}<div class="c du r">${du}</div>`;
+    const pc=loe?'':`<div class="pct"><span class="pm"><i style="width:${t.pct|0}%"></i></span>${t.pct|0}%</div>`;
+    cells+=`<div class="c">${pc}</div>`;
     if(S.cols){
-      const pc=loe?'':`<div class="pct"><span class="pm"><i style="width:${t.pct|0}%"></i></span>${t.pct|0}%</div>`;
-      cells+=`<div class="c">${pc}</div><div class="c dt r">${loe?'—':dd(sDay(t))}</div><div class="c dt r">${loe?'—':dd(fDay(t))}</div><div class="c pr" title="${esc(predTxt(t))}">${esc(predTxt(t))}</div><div class="c rs">${chips(t.res)}</div>`;
+      cells+=`<div class="c dt r">${loe?'—':dd(sDay(t))}</div><div class="c dt r">${loe?'—':dd(fDay(t))}</div><div class="c pr" title="${esc(predTxt(t))}">${esc(predTxt(t))}</div><div class="c rs">${chips(t.res)}</div>`;
     }
     cells+=`<div class="c r sl">${slackCell(t)}</div>`;
     let bar='';
@@ -475,16 +479,21 @@ $('#view').addEventListener('click',e=>{const b=e.target.closest('button');if(!b
 $('#scale').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.scale=b.dataset.s;pressed('#scale','s',S.scale);render();});
 $('#lvl').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.lvl=+b.dataset.l;S.col.clear();pressed('#lvl','l',S.lvl);render();});
 const Z=[4,6,9,13,18,24];
-$('#zin').onclick=()=>{S.dw=Z[Math.min(Z.length-1,Z.indexOf(S.dw)+1)];render();};
-$('#zout').onclick=()=>{S.dw=Z[Math.max(0,Z.indexOf(S.dw)-1)];render();};
+$('#zin').onclick=()=>{S.dw=Z[Math.min(Z.length-1,Z.indexOf(S.dw)+1)];render();toStatus();};
+$('#zout').onclick=()=>{S.dw=Z[Math.max(0,Z.indexOf(S.dw)-1)];render();toStatus();};
 $('#lk').onchange=e=>{S.links=e.target.checked;render();};
-$('#cols').onchange=e=>{S.cols=e.target.checked;render();};
+$('#cmp').onclick=e=>{S.cols=!S.cols; e.currentTarget.setAttribute('aria-pressed',String(!S.cols)); render();};
+/* прокрутка шкалы к дню статуса: линия статуса — примерно на трети видимой части шкалы */
+const toStatus=()=>{ if(ST==null||S.view!=='gantt')return; const pane=$('#pane'), lw=parseInt(getComputedStyle($('#grid')).getPropertyValue('--lw'))||0;
+  const vis=pane.clientWidth-lw; pane.scrollLeft=Math.max(0,ST*S.dw-vis*0.35); };
+$('#tost').hidden=ST==null; $('#tost').onclick=toStatus;
 $('#cp').onchange=e=>{S.cp=e.target.checked;render();};
 document.querySelectorAll('.bonly').forEach(el=>el.hidden=!R0.hasBase);
 {const I=M.items, has={dlc:D.net.some(t=>t.dlcrit),dl:I.some(t=>t.dl!=null),ham:I.some(t=>t.kind==='ham'),fix:I.some(t=>t.fix!=null),sq:I.some(t=>t.sq&&t.sq.length),wave:I.some(t=>t.wave)};
  document.querySelectorAll('[data-need]').forEach(el=>el.hidden=!has[el.dataset.need]);}
 if(STU)$('#lvl').remove();
 render();
+toStatus();
 })();
 </script>
 </body>
