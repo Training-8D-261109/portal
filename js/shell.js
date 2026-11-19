@@ -12,7 +12,7 @@ const NAV=[
   {k:'gantt',color:'серый',href:'gantt.html',t:'Гант',hint:'ИСР, диаграмма Ганта, вехи и критический путь'},
   {k:'charter',href:'index.html',t:'Устав',hint:P.charter.hint||('Устав проекта v'+P.charter.v+' · '+P.charter.st.toLowerCase())},
   {k:'bc',href:'business-case.html',t:'Бизнес-кейс',hint:'Business Case и Benefits Management Plan'},
-  {k:'sh',color:'голубой',t:'Стейкхолдеры',lock:1,hint:'Реестр стейкхолдеров, матрица влияния и интереса'},
+  {k:'sh',color:'голубой',href:'stakeholders.html',t:'Стейкхолдеры',hint:'Реестр стейкхолдеров, матрица влияния и интереса'},
   {k:'comms',color:'жёлтый',t:'Коммуникации',lock:1,hint:'План коммуникаций и RACI'},
   {k:'risks',color:'чёрный',t:'Риски',lock:1,hint:'Реестр рисков, журнал проблем, резервы'},
   {k:'pmo',color:'белый',t:'Сводка PMO',lock:1,hint:'Светофоры и сводка для проектного офиса'}
