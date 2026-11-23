@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>ИСР и диаграмма Ганта «КрокоМетрика»</title>
+<title>ИСР и Гант «КрокоМетрика» · версия ДЗ №2 (Д45)</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTQiIGZpbGw9IiMxZjVmNDUiLz48cGF0aCBkPSJNMTAgMzZjNC05IDEwLTEzIDE0LTEzIDMgMCA0IDMgNiAzczMtMyA2LTNjNCAwIDEwIDQgMTggMTMiIGZpbGw9IiM3ZmM3OWEiLz48Y2lyY2xlIGN4PSIyNCIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48Y2lyY2xlIGN4PSIzNiIgY3k9IjI3IiByPSIyLjYiIGZpbGw9IiMxMzI0MWIiLz48cGF0aCBkPSJNNiAzOGM0IDAgNCAzIDggM3M0LTMgOC0zIDQgMyA4IDMgNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDQgM3Y5SDZ6IiBmaWxsPSIjM2I4ZmM5Ii8+PHBhdGggZD0iTTYgNDZjNCAwIDQgMyA4IDNzNC0zIDgtMyA0IDMgOCAzIDQtMyA4LTMgNCAzIDggMyA0LTMgOC0zIDQgMyA0IDMiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2E5ZDZmMiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4K">
 <style>
@@ -141,12 +141,47 @@ svg.links{position:absolute;left:var(--lw);top:0;pointer-events:none;overflow:vi
 .bbar{position:absolute;top:calc(50% + 9px);height:4px;border-radius:1px;background:var(--ink-3);opacity:.8;z-index:1;pointer-events:none}
 .bms{position:absolute;top:calc(50% - 5px);width:10px;height:10px;margin-left:-5px;transform:rotate(45deg);box-shadow:inset 0 0 0 1.5px var(--ink-3);z-index:1;pointer-events:none}
 .bgl .stl{position:absolute;top:0;bottom:0;width:0;border-left:2px solid var(--accent);z-index:3}
-.th .ext.stb{background:var(--accent)}
+.th .ext.stb{background:var(--accent);top:30px;z-index:3}
 .facts .st b{color:var(--accent)}
 .sw.base{height:4px;background:var(--ink-3)} .sw.stl{width:0;height:13px;border-left:2px solid var(--accent);border-radius:0;background:none;margin:0 6px}
 .ld{position:absolute;top:6px;bottom:6px;border-radius:2px;background:var(--accent-soft);font:500 10px/16px var(--f-mono);text-align:center;color:var(--ink);overflow:hidden;z-index:2;cursor:default}
 .ld.full{background:color-mix(in srgb,var(--accent) 40%,var(--accent-soft))}
 .ld.ovr{background:var(--crit);color:#fff}
+
+.c.money{font-size:11.5px;color:var(--ink-2)} .c.money.over{color:var(--crit);font-weight:600}
+.k-proj .c.money,.k-proj .c.money.over{color:inherit}
+.pane.evmode{max-height:none;overflow:visible;background:none;border:0;min-height:0}
+.pane.evmode .grid{width:auto}
+.evm{display:flex;flex-direction:column;gap:16px;max-width:1240px}
+.evm h2{margin:0;font-size:18px} .evsub{margin:4px 0 0;color:var(--ink-2);font-size:13px;max-width:110ch}
+.budget{background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+.budget .bh{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline} .budget .bh b{font-size:15px} .budget .bh span{color:var(--ink-2);font-size:12.5px}
+.bbarw{display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--line)} .bbarw i{display:block;height:100%}
+.budget ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px;font-size:12.5px}
+.budget li i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px} .budget li b{font-family:var(--f-mono);margin-right:4px} .budget li span{color:var(--ink-2)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.kpi{background:var(--surface);border:1px solid var(--line-strong);border-radius:9px;padding:10px 12px}
+.kpi .k{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2);font-weight:600}
+.kpi .v{font:600 18px/1.3 var(--f-mono);margin-top:2px;font-variant-numeric:tabular-nums}
+.kpi .n{font-size:11.5px;color:var(--ink-3)}
+.ix{font-family:var(--f-mono);font-weight:600} .ix.good{color:#1f8a4c} .ix.warn{color:var(--warn)} .ix.bad{color:var(--crit)}
+.chartbox{position:relative;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;padding:10px 12px}
+.clegend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--ink-2);margin-bottom:4px}
+.clegend i{display:inline-block;width:22px;border-top:2px solid;vertical-align:middle;margin-right:6px}
+#scurve{width:100%;display:block}
+#scurve .gl{stroke:var(--rowline)} #scurve .ax{font:10.5px var(--f-mono);fill:var(--ink-3)} #scurve .lbl{font:600 11px var(--f-ui)}
+.ctip{position:absolute;z-index:5;background:var(--tip-bg);color:var(--tip-fg);border-radius:6px;padding:7px 9px;font-size:11.5px;pointer-events:none;min-width:150px}
+.ctip div{display:flex;justify-content:space-between;gap:12px;font-family:var(--f-mono)}
+.tblwrap{overflow:auto;background:var(--surface);border:1px solid var(--line-strong);border-radius:10px}
+table.evt{border-collapse:collapse;width:100%;font-size:12.5px}
+.evt th{position:sticky;top:0;background:var(--surface-2);text-align:right;padding:7px 10px;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-2);white-space:nowrap;border-bottom:1px solid var(--line-strong)}
+.evt th:first-child,.evt td:first-child{text-align:left}
+.evt td{padding:6px 10px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.evt td:first-child{font-family:var(--f-ui);white-space:normal;min-width:260px}
+.evt tr.l0 td{font-weight:700;background:var(--surface-2)} .evt .cd{display:inline-block;min-width:34px;color:var(--ink-3);font-family:var(--f-mono);font-size:11px}
+.evt .neg{color:var(--crit)} .evt .pos{color:#1f8a4c}
+.evnote{font-size:12.5px;color:var(--ink-2);margin:0;max-width:120ch}
+:root{--s-pv:#6b7280;--s-ev:#2f5bd3;--s-ac:#d13b3b}
 .k-res .lc{font-size:13px} .pk.ovr{color:var(--crit);font-weight:700}
 .sw.ld1{background:var(--accent-soft)} .sw.ld2{background:color-mix(in srgb,var(--accent) 40%,var(--accent-soft))} .sw.ld3{background:var(--crit)}
 .sbar{position:absolute;top:calc(50% - 5px);height:7px;background:var(--summary);z-index:2;cursor:pointer}
@@ -202,6 +237,34 @@ svg.links{position:absolute;left:var(--lw);top:0;pointer-events:none;overflow:vi
 .tip dt{opacity:.65} .tip dd{margin:0}
 .tip p{margin:6px 0 0;opacity:.85;line-height:1.35}
 @media (max-width:640px){.head{align-items:flex-start}.logo{width:48px;height:48px}.lc,.lh{position:relative}.pane{max-height:none}}
+
+/* вид «Вехи» */
+.msr .tl{overflow:visible}
+.msd2{position:absolute;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;transform:rotate(45deg);z-index:3;border:2px solid var(--ink-3);background:var(--surface)}
+.msd2.l1{width:16px;height:16px;margin:-8px 0 0 -8px}
+.msd2.ok{border-color:#2c8a4e;background:var(--surface)}.msd2.ok.done{background:#2c8a4e}
+.msd2.warn{border-color:var(--warn);background:var(--warn)}
+.msd2.bad{border-color:var(--crit);background:var(--crit)}
+.msd2.mb{border-style:dashed;background:transparent;z-index:2}
+.msd2.lgc{border-style:dotted;border-color:var(--crit);background:transparent;z-index:2}
+.msln{position:absolute;top:50%;height:2px;margin-top:-1px;z-index:2}
+.msln.warn{background:var(--warn)}.msln.bad{background:var(--crit)}
+.mspc{position:absolute;top:-1px;transform:translateX(-50%);font:600 9.5px/1 var(--f-mono);color:var(--ink-2);z-index:3;white-space:nowrap}
+.msdl{position:absolute;top:4px;bottom:4px;width:0;border-left:2px solid var(--crit);z-index:3}
+.msdl::after{content:"";position:absolute;top:0;left:-5px;width:8px;border-top:2px solid var(--crit)}
+.mst{font-size:12px;font-weight:600}.mst.ok{color:#2c8a4e}.mst.warn{color:var(--warn)}.mst.bad{color:var(--crit)}
+.mlvl{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:4px;font:600 11px/1 var(--f-mono);background:var(--surface-2)}
+.mlvl.l1{background:var(--summary);color:var(--page)}
+.msk{display:inline-block;width:10px;height:10px;transform:rotate(45deg);border:2px solid var(--ink-3);margin-right:6px;vertical-align:-1px}
+.msk.mb{border-style:dashed}.msk.ok{border-color:#2c8a4e;background:#2c8a4e}.msk.warn{border-color:var(--warn);background:var(--warn)}.msk.bad{border-color:var(--crit);background:var(--crit)}
+</style>
+<style>
+.steps{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:10px 24px 0;padding:10px 14px;border:1px solid var(--line,#d9dde5);border-radius:10px;background:var(--panel,#f7f8fa);font-size:13px}
+.steps .lbl{font-weight:700;letter-spacing:.04em;text-transform:uppercase;font-size:11px;opacity:.7}
+.steps a{color:inherit;text-decoration:none;padding:4px 10px;border-radius:999px;border:1px solid transparent}
+.steps a:hover{border-color:var(--line,#d9dde5)}
+.steps a[aria-current]{background:var(--accent,#2f6fdf);color:#fff;font-weight:600}
+.steps .note{flex-basis:100%;opacity:.85;line-height:1.4}
 </style>
 </head>
 <body>
@@ -214,11 +277,19 @@ svg.links{position:absolute;left:var(--lw);top:0;pointer-events:none;overflow:vi
     <div class="facts" id="facts"></div>
   </div>
 </header>
+<nav class="steps" aria-label="Шаги разбора ДЗ №2"><span class="lbl">Разбор ДЗ №2</span><a href="gantt.html" aria-current="page">1. Как есть</a> <a href="gantt-dz2-s2.html">2. Исправлены ошибки</a> <a href="gantt-dz2-s3.html">3. Решения РП</a> <a href="gantt-dz2-s4.html">4. Новый базовый план</a><span class="note">План, который получили студенты. День статуса Д45.</span></nav>
+
 
 <div class="tb" role="toolbar" aria-label="Вид диаграммы">
   <div class="seg" id="view" aria-label="Вид">
     <button type="button" data-v="gantt" aria-pressed="true">Гант</button>
     <button type="button" data-v="load" aria-pressed="false">Загрузка</button>
+    <button type="button" data-v="evm" aria-pressed="false">EVA</button>
+    <button type="button" data-v="ms" aria-pressed="false">Вехи</button>
+  </div>
+  <div class="seg monly" id="mlv" aria-label="Уровень вех" hidden>
+    <button type="button" data-ml="1" aria-pressed="false">Уровень 1</button>
+    <button type="button" data-ml="2" aria-pressed="true">Уровни 1–2</button>
   </div>
   <div class="seg gonly" id="scale" aria-label="Шкала">
     <button type="button" data-s="cal" aria-pressed="true">Календарь</button>
@@ -239,6 +310,7 @@ svg.links{position:absolute;left:var(--lw);top:0;pointer-events:none;overflow:vi
 
 <div class="foot" id="foot">
   <span class="lg"><i class="sw"></i>Работа (затемнённая часть — выполнено)</span>
+  <span class="lg">Бюджет, освоено и факт — в тыс. ₽; красный факт — затраты выше освоенного</span>
   <span class="lg bonly"><i class="sw base"></i>Утверждённый план</span>
   <span class="lg bonly"><i class="sw stl"></i>День статуса</span>
   <span class="lg"><i class="sw crit"></i>Критический путь: резерв 0 до конца проекта</span>
@@ -254,6 +326,15 @@ svg.links{position:absolute;left:var(--lw);top:0;pointer-events:none;overflow:vi
   <span class="lg"><i class="sw ex"></i>Внешнее событие</span>
   <span class="lg" data-need="sq"><i class="sw sq"></i>Связь по очерёдности одной команды (не технология)</span>
   <span class="lg" data-need="ham"><i class="sw ham"></i>Гамак: управление проектом на всё время проекта</span>
+</div>
+<div class="foot" id="footm" hidden>
+  <span class="lg"><i class="msk mb"></i>Утверждённый план</span>
+  <span class="lg"><i class="msk ok"></i>Прогноз: в срок или достигнута (закрашена)</span>
+  <span class="lg"><i class="msk warn"></i>Отставание в пределах допуска устава (до 5 раб. дн.)</span>
+  <span class="lg"><i class="msk bad"></i>Отставание больше допуска или позже крайнего срока</span>
+  <span class="lg"><i class="sw dlm"></i>Крайний срок</span>
+  <span class="lg"><i class="msk" style="border-style:dotted;border-color:var(--crit)"></i>Где наступит веха по логике плана, если её дата закреплена вручную</span>
+  <span class="lg">Процент над ромбом — готовность результата ИСР, который закрывает веха</span>
 </div>
 <div class="foot" id="footl" hidden>
   <span class="lg"><i class="sw ld1"></i>Загрузка ниже ёмкости</span>
@@ -275,7 +356,7 @@ const MON=['янв','фев','мар','апр','май','июн','июл','ав�
 const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const p2=x=>String(x).padStart(2,'0');
 const dd=k=>{const d=DT.D(DT.wd(k));return p2(d.getUTCDate())+'.'+p2(d.getUTCMonth()+1)+'.'+String(d.getUTCFullYear()).slice(2)};
-const S={view:'gantt',scale:'cal',dw:9,lvl:9,links:true,cols:innerWidth>=1280,cp:false,col:new Set()};
+const S={mlv:2,view:'gantt',scale:'cal',dw:9,lvl:9,links:true,cols:innerWidth>=1280,cp:false,col:new Set()};
 $('#cmp').setAttribute('aria-pressed',String(!S.cols));
 const PROJ={code:'',name:M.result||P.full||P.name,kind:'sum',es:0,ef:END,dur:END,depth:0,kids:M.items.filter(t=>!t.parent).map(t=>t.code)};
 const sDay=t=>t.kind==='ms'?t.ef:t.es+1, fDay=t=>t.ef;
@@ -283,14 +364,20 @@ const BASEP=R0.hasBase?{es:Math.min(...Object.values(BASE).map(b=>b.es)),ef:Math
 {const lv=D.net.filter(t=>t.kind==='task'),w=lv.reduce((a,t)=>a+t.dur,0); PROJ.pct=w?Math.round(lv.reduce((a,t)=>a+t.dur*t.pct,0)/w):0;}
 const isCrit=t=>!!t.crit;
 const RES={}; (M.resources||[]).forEach(r=>RES[r.id]=r);
-const chips=s=>{const a=String(s||'').split(',').map(x=>x.trim()).filter(Boolean); if(!a.length)return '';
-  return a.map(id=>{const r=RES[id]; return `<span class="chip ${r?r.type:''}" title="${esc(r?r.name:id)}">${esc(id)}</span>`;}).join('');};
+const PR=KM_ENGINE.parseRes, EV=R0.ev;
+const chips=s=>{const a=PR(s); if(!a.length)return '';
+  return a.map(x=>{const r=RES[x.id]; return `<span class="chip ${r?r.type:''}" title="${esc(r?r.name:x.id)}">${esc(x.id)}${x.u!==1?' ×'+String(x.u).replace('.',','):''}</span>`;}).join('');};
+/* деньги */
+const tr=n=>Math.round(n/1000).toLocaleString('ru-RU');
+const mln=n=>(n/1e6).toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2})+' млн ₽';
+const sgn=n=>(n<0?'−':n>0?'+':'')+mln(Math.abs(n));
+const evOf=t=>t.code===''?EV.P:(t.kind==='task'||t.kind==='loe'?t.evm:EV.rows[t.code]);
 const slackCell=t=>{
   if(t.kind==='loe'||t.kind==='ham'||t.kind==='sum'||t.code==='')return '';
   if(t.fix!=null)return '<span title="Внешняя веха с фиксированной датой">—</span>';
   if(t.slack==null)return '';
   const main=t.slack<=0?`<span class="z">${t.slack<0?'−'+(-t.slack):0}</span>`:String(t.slack);
-  if(t.dslack!=null&&t.dslack<t.slack)return `<span title="Резерв до конца проекта ${t.slack} д; запас до жёсткого срока Д55 ${t.dslack} д"><span class="${t.dslack<=0?'d':''}">${t.dslack}</span><small> до Д55</small></span>`;
+  if(t.dslack!=null&&t.dslack<t.slack)return `<span title="Резерв до конца проекта ${t.slack} д; запас до жёсткого срока ${t.dslack} д"><span class="${t.dslack<=0?'d':''}">${t.dslack}</span><small> до срока</small></span>`;
   return main;};
 const predTxt=t=>{const s=t.soft||new Set(), h=(t.pc||[]).filter(c=>!s.has(c)); return h.join(', ')+(s.size?(h.length?'; ':'')+'очер. '+[...s].join(', '):'');};
 const hasCrit=t=>(t.kind==='sum'||t.kind==='ham')?t.kids.some(c=>hasCrit(by[c])):isCrit(t);
@@ -315,15 +402,19 @@ function rows(){
   if(!S.col.has(''))walk(PROJ.kids,1);
   return out;
 }
-const COLS=()=>S.cols?[['ИСР','52px'],['Задача','minmax(240px,300px)'],['Длит.','58px','r'],['Прогресс','82px'],['Начало','72px','r'],['Окончание','94px','r'],['Предш.','92px'],['Ресурсы','190px'],['Резерв','66px','r']]
-                     :[['ИСР','52px'],['Задача',innerWidth<700?'minmax(160px,200px)':'minmax(200px,340px)'],['Длит.','58px','r'],['Прогресс','82px'],['Резерв','66px','r']];
+const COLS=()=>S.cols?[['ИСР','52px'],['Задача','minmax(240px,300px)'],['Длит.','58px','r'],['Прогресс','82px'],['Начало','72px','r'],['Окончание','94px','r'],['Предш.','92px'],['Ресурсы','190px'],['Резерв','96px','r'],['Бюджет<br>(BAC)','84px','r'],['Освоено<br>(EV)','84px','r'],['Факт<br>(AC)','80px','r']]
+                     :[['ИСР','52px'],['Задача',innerWidth<700?'minmax(160px,200px)':'minmax(200px,340px)'],['Длит.','58px','r'],['Прогресс','82px'],['Резерв','96px','r'],['Бюджет<br>(BAC)','84px','r'],['Освоено<br>(EV)','84px','r'],['Факт<br>(AC)','80px','r']];
 const CARET='<svg viewBox="0 0 10 10"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
 
 function render(){
   document.querySelectorAll('.gonly').forEach(el=>el.hidden=S.view!=='gantt');
   $('#tost').hidden=S.view!=='gantt'||ST==null;
-  $('#foot').hidden=S.view!=='gantt'; $('#footl').hidden=S.view==='gantt';
+  $('#foot').hidden=S.view!=='gantt'; $('#footl').hidden=S.view!=='load'; $('#footm').hidden=S.view!=='ms';
+  document.querySelectorAll('.monly').forEach(el=>el.hidden=S.view!=='ms');
+  $('#pane').classList.toggle('evmode',S.view==='evm');
   if(S.view==='load')return renderLoad();
+  if(S.view==='ms')return renderMs();
+  if(S.view==='evm')return renderEvm();
   const cols=COLS(), lw=cols.reduce((a,c)=>a+(parseInt(c[1].replace('minmax(','').split(',').pop())||0),0);
   const dw=S.dw, LAST=Math.ceil((Math.max(END,...M.ext.map(e=>e.day))+12)/5)*5, tw=LAST*dw, x=k=>k*dw;
   const g=$('#grid'); g.style.setProperty('--cols',cols.map(c=>c[1].startsWith('minmax')?c[1].split(',').pop().replace(')',''):c[1]).join(' '));
@@ -371,6 +462,7 @@ function render(){
       cells+=`<div class="c dt r">${loe?'—':dd(sDay(t))}</div><div class="c dt r">${loe?'—':dd(fDay(t))}</div><div class="c pr" title="${esc(predTxt(t))}">${esc(predTxt(t))}</div><div class="c rs">${chips(t.res)}</div>`;
     }
     cells+=`<div class="c r sl">${slackCell(t)}</div>`;
+    {const e=t.kind==='ms'?null:evOf(t); cells+=`<div class="c r mono money">${e&&e.bac?tr(e.bac):''}</div><div class="c r mono money">${e&&ST!=null&&e.bac?tr(e.ev):''}</div><div class="c r mono money${e&&ST!=null&&e.ac>e.ev*1.005&&e.ac>0?' over':''}">${e&&ST!=null&&e.ac?tr(e.ac):''}</div>`;}
     let bar='';
     if(ham) bar=`<div class="hbar" data-c="${t.code}" style="left:${x(t.es)}px;width:${x(t.ef-t.es)}px"></div>`;
     else if(loe) bar='';
@@ -404,7 +496,7 @@ function render(){
 
 /* загрузка ресурсов: сколько работ одновременно стоит на ресурсе в каждый рабочий день */
 function loadMap(){
-  const L={}; D.net.filter(t=>t.kind==='task'&&t.dur>0).forEach(t=>String(t.res||'').split(',').map(s=>s.trim()).filter(Boolean).forEach(id=>{
+  const L={}; D.net.filter(t=>t.kind==='task'&&t.dur>0).forEach(t=>PR(t.res).map(x=>x.id).forEach(id=>{
     (L[id]=L[id]||{}); for(let d=t.es+1;d<=t.ef;d++){(L[id][d]=L[id][d]||[]).push(t.code);} }));
   return L;
 }
@@ -434,6 +526,125 @@ function renderLoad(){
   });
   g.innerHTML=h+`<div class="body" style="height:${list.length*28}px"><div class="bgl">${bg}</div>${b}</div>`;
 }
+
+
+/* график вех: план, прогноз, отклонение, светофор */
+function msInfo(t){
+  const b=BASE[t.code]||{ef:t.ef}, v=t.ef-b.ef, done=t.pct>=100;
+  let cls='ok',txt='В срок';
+  if(done){txt=v>0?'Достигнута, +'+v+' д':'Достигнута';}
+  else if(t.dl!=null&&t.ef>t.dl){cls='bad';txt='Позже срока на '+(t.ef-t.dl)+' д';}
+  else if(v>5){cls='bad';txt='Отставание '+v+' д';}
+  else if(v>0){cls='warn';txt='Отставание '+v+' д';}
+  else if(v<0){txt='Раньше на '+(-v)+' д';}
+  let lg=null; if(t.pin!=null&&!done){lg=Math.max(...(t.p||[]).map(c=>by[c].ef)); if(lg>t.ef){cls='bad';txt='Закреплена · по логике Д'+lg;} else lg=null;}
+  return {b,v,done,cls,txt,lg};
+}
+function renderMs(){
+  const dw=S.dw, LAST=Math.ceil((Math.max(END,...M.ext.map(e=>e.day))+12)/5)*5, tw=LAST*dw, x=k=>k*dw;
+  const cols=[['Ур.','40px'],['Веха','236px'],['План','64px','r'],['Прогноз','78px','r'],['Откл.','62px','r'],['Статус','200px']], lw=cols.reduce((a,c)=>a+parseInt(c[1]),0);
+  const g=$('#grid'); g.style.setProperty('--cols',cols.map(c=>c[1]).join(' ')); g.style.setProperty('--lw',lw+'px'); g.style.setProperty('--tw',tw+'px');
+  let r1='',r2='';
+  let k=1; while(k<=LAST){const d=DT.D(DT.wd(k)),m=d.getUTCMonth(),y=d.getUTCFullYear(); let j=k; while(j+1<=LAST){const e=DT.D(DT.wd(j+1)); if(e.getUTCMonth()!==m)break; j++;}
+    r1+=`<span style="left:${x(k-1)}px;width:${x(j-k+1)}px">${MON[m]} ${dw*(j-k+1)>70?y:''}</span>`; k=j+1;}
+  for(let k=1;k<=LAST;k+=5){const d=DT.D(DT.wd(k)); r2+=`<span style="left:${x(k-1)}px;width:${x(5)}px">${dw*5>=40?p2(d.getUTCDate())+'.'+p2(d.getUTCMonth()+1):''}</span>`;}
+  const stH=ST!=null?`<button class="ext stb" style="left:${x(ST)}px">Статус Д${ST}</button>`:'';
+  const exH=M.ext.map((e,i)=>`<button class="ext" data-ext="${i}" style="left:${x(e.day)}px">${esc(e.name)}</button>`).join('');
+  const h=`<div class="hdr"><div class="lh">${cols.map(c=>`<div class="${c[2]||''}">${c[0]}</div>`).join('')}</div><div class="th"><div class="r1">${r1}</div><div class="r2">${r2}</div>${stH}${exH}</div></div>`;
+  const list=M.items.filter(t=>t.kind==='ms'&&t.ml>0&&t.ml<=S.mlv).map(t=>by[t.code])
+    .sort((a,b)=>((BASE[a.code]||a).ef-(BASE[b.code]||b).ef)||(a.ef-b.ef));
+  let bg=''; for(let k=0;k<=LAST;k+=5)bg+=`<i class="wl" style="left:${x(k)}px"></i>`;
+  if(ST!=null)bg+=`<i class="stl" style="left:${x(ST)}px"></i>`;
+  bg+=M.ext.map(e=>`<i class="ex" style="left:${x(e.day)}px"></i>`).join('');
+  const ddl=k=>{const d=DT.D(DT.wd(k));return `<span title="${DT.fmt(DT.wd(k))} (Д${k})">${p2(d.getUTCDate())}.${p2(d.getUTCMonth()+1)}</span>`;};
+  let b='';
+  list.forEach(t=>{
+    const I=msInfo(t), par=t.parent?by[t.parent]:null, pc=par&&par.pct!=null?Math.round(par.pct):null, l1=t.ml===1?' l1':'';
+    let tl='';
+    if(I.v!==0){const a=Math.min(I.b.ef,t.ef),z=Math.max(I.b.ef,t.ef); tl+=`<i class="msln ${I.v>0?I.cls==='ok'?'warn':I.cls:''}" style="left:${x(a)}px;width:${x(z-a)}px"></i>`;
+      tl+=`<i class="msd2 mb${l1}" style="left:${x(I.b.ef)}px" title="Утверждённый план: ${DT.fmt(DT.wd(I.b.ef))} (Д${I.b.ef})"></i>`;}
+    if(I.lg!=null)tl+=`<i class="msln bad" style="left:${x(t.ef)}px;width:${x(I.lg-t.ef)}px;opacity:.5"></i><i class="msd2 lgc${l1}" style="left:${x(I.lg)}px" title="По логике плана веха наступит ${DT.fmt(DT.wd(I.lg))} (Д${I.lg}): предшественники заканчиваются позже закреплённой даты"></i>`;
+    if(t.dl!=null)tl+=`<i class="msdl" style="left:${x(t.dl)}px" title="Крайний срок: ${DT.fmt(DT.wd(t.dl))} (Д${t.dl})"></i>`;
+    tl+=`<i class="msd2 ${I.cls}${I.done?' done':''}${l1}" style="left:${x(t.ef)}px" title="${esc(t.code+' '+t.name)} — ${I.done?'достигнута':'прогноз'} ${DT.fmt(DT.wd(t.ef))} (Д${t.ef})"></i>`;
+    if(pc!=null)tl+=`<span class="mspc" style="left:${x(t.ef)}px">${pc}%</span>`;
+    const vtx=I.v===0?'0':(I.v>0?'+':'−')+Math.abs(I.v);
+    b+=`<div class="row msr${t.ml===1?' k-l2':''}"><div class="lc"><div class="c"><span class="mlvl${l1}">${t.ml}</span></div><div class="c" title="${esc(t.code+' '+t.name+(par?' · закрывает '+par.code+' '+par.name:''))}"><span class="mono" style="color:var(--ink-3);margin-right:6px">${esc(t.code)}</span>${esc(t.name)}</div><div class="c r mono">${ddl(I.b.ef)}</div><div class="c r mono">${ddl(t.ef)}</div><div class="c r mono">${vtx}</div><div class="c"><span class="mst ${I.cls}">${I.txt}</span></div></div><div class="tl">${tl}</div></div>`;
+  });
+  g.innerHTML=h+`<div class="body" style="height:${list.length*28}px"><div class="bgl">${bg}</div>${b}</div>`;
+}
+$('#mlv').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;S.mlv=+b.dataset.ml;pressed('#mlv','ml',S.mlv);render();});
+
+/* бюджет проекта по уставу: из чего он складывается и как соотносится с BAC */
+function budgetBlock(){
+  const rs=EV.reserve, P=EV.P; if(!rs)return '';
+  const tot=P.bac+rs.cont+rs.mgmt;
+  const parts=[['Бюджет работ (BAC)',P.bac,'сумма бюджетов всех работ плана: столбец «Бюджет (BAC)» на Ганте','var(--accent)'],
+    ['Резерв на непредвиденные расходы',rs.cont,'у руководителя проекта; вместе с BAC — базовый план по стоимости','var(--warn)'],
+    ['Управленческий резерв',rs.mgmt,'у спонсора, вне базового плана','var(--ink-3)']];
+  const bar=parts.map(p=>`<i style="width:${(p[1]/tot*100).toFixed(2)}%;background:${p[3]}" title="${esc(p[0])}"></i>`).join('');
+  return `<div class="budget"><div class="bh"><b>Бюджет проекта ${mln(tot)}</b><span>базовый план по стоимости — ${mln(P.bac+rs.cont)}</span></div><div class="bbarw">${bar}</div>
+    <ul>${parts.map(p=>`<li><i style="background:${p[3]}"></i><b>${mln(p[1])}</b> ${esc(p[0])} <span>— ${esc(p[2])}</span></li>`).join('')}</ul></div>`;
+}
+/* освоенный объём: плитки, S-кривая, таблица по результатам ИСР */
+const ix=v=>v==null?'<span class="ix" style="color:var(--ink-3)">—</span>':`<span class="ix ${v>=1?'good':v>=.9?'warn':'bad'}">${v.toFixed(2).replace('.',',')}</span>`;
+function renderEvm(){
+  const P=EV.P, S=ST, rs=EV.reserve;
+  const kp=(k,v,n)=>`<div class="kpi"><div class="k">${k}</div><div class="v">${v}</div>${n?`<div class="n">${n}</div>`:''}</div>`;
+  const tiles=[kp('PV',mln(P.pv),'план на день статуса'),kp('EV',mln(P.ev),'освоено'),kp('AC',mln(P.ac),'фактические затраты'),
+    kp('SV',`<span class="ix ${P.sv<0?'bad':'good'}">${sgn(P.sv)}</span>`,'EV − PV'),kp('CV',`<span class="ix ${P.cv<0?'bad':'good'}">${sgn(P.cv)}</span>`,'EV − AC'),
+    kp('SPI',ix(P.spi),'EV / PV'),kp('CPI',ix(P.cpi),'EV / AC'),
+    kp('BAC',mln(P.bac),'бюджет работ'),kp('EAC',mln(P.eac),'BAC / CPI'),kp('ETC',mln(P.etc),'EAC − AC'),
+    kp('VAC',`<span class="ix ${P.vac<0?'bad':'good'}">${sgn(P.vac)}</span>`,'BAC − EAC'),kp('TCPI',P.tcpi==null?ix(null):`<span class="ix ${P.tcpi<=1?'good':P.tcpi<=1.1?'warn':'bad'}">${P.tcpi.toFixed(2).replace('.',',')}</span>`,'нужная эффективность на остаток')];
+  const rows=[{t:PROJ,l:0}].concat(M.items.filter(t=>!t.parent).map(t=>({t,l:1})));
+  const body=rows.map(({t,l})=>{const x=t.code===''?P:EV.rows[t.code]; if(!x||!x.bac)return '';
+    const sg=v=>`<span class="${v<0?'neg':v>0?'pos':''}">${(v<0?'−':v>0?'+':'')+tr(Math.abs(v))}</span>`;
+    return `<tr class="l${l}"><td><span class="cd">${esc(t.code)}</span>${esc(t.name)}</td><td>${tr(x.bac)}</td>${S!=null?`<td>${tr(x.pv)}</td><td>${tr(x.ev)}</td><td>${tr(x.ac)}</td><td>${sg(x.sv)}</td><td>${sg(x.cv)}</td><td>${ix(x.spi)}</td><td>${ix(x.cpi)}</td><td>${tr(x.eac)}</td>`:''}</tr>`;}).join('');
+  const head=['Результат ИСР','BAC'].concat(S!=null?['PV','EV','AC','SV','CV','SPI','CPI','EAC']:[]);
+  const st=S!=null?`на ${DT.fmt(DT.wd(S))} (Д${S})`:'— день статуса не задан';
+  const res=rs?` Резерв на непредвиденные расходы (${mln(rs.cont)}) в BAC не входит: вместе с ним базовый план по стоимости — ${mln(P.bac+rs.cont)}. Управленческий резерв спонсора (${mln(rs.mgmt)}) — вне базового плана.`:'';
+  $('#grid').innerHTML=`<div class="evm">
+    <div><h2>Освоенный объём ${st}</h2><p class="evsub">Бюджет работы — по утверждённому плану: ставка исполнителя × длительность плюс закупки. Работы людей и подрядчика осваиваются по проценту выполнения, закупки — по правилу 0/100 (пока оборудование не получено, освоено ноль), управление проектом — по прошедшему времени.${res}</p></div>
+    ${budgetBlock()}
+    ${S!=null?`<div class="kpis">${tiles.slice(0,3).join('')}</div><div class="kpis">${tiles.slice(3,7).join('')}</div><div class="kpis">${tiles.slice(7).join('')}</div>`:`<div class="kpis">${tiles[7]}</div>`}
+    <div class="chartbox" id="chartbox"><div class="clegend"><span><i style="border-color:var(--s-pv);border-top-style:dashed"></i>PV — план</span>${S!=null?'<span><i style="border-color:var(--s-ev)"></i>EV — освоено</span><span><i style="border-color:var(--s-ac)"></i>AC — факт</span><span><i style="border-color:var(--s-ac);border-top-style:dotted"></i>прогноз EAC</span>':''}</div>
+      <svg id="scurve" role="img" aria-label="S-кривая: плановый и освоенный объём, фактические затраты"></svg><div class="ctip" id="ctip" hidden></div></div>
+    <div class="tblwrap"><table class="evt"><thead><tr>${head.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${body}</tbody></table></div>
+    <p class="evnote">Суммы в таблице — в тысячах рублей. SV = EV − PV, CV = EV − AC, SPI = EV / PV, CPI = EV / AC, EAC = BAC / CPI, ETC = EAC − AC, VAC = BAC − EAC, TCPI = (BAC − EV) / (BAC − AC). Индекс 1 и выше — в плане, от 0,9 до 1 — под угрозой, ниже 0,9 — значимое отклонение.</p>
+  </div>`;
+  drawCurve();
+}
+function drawCurve(){
+  const svg=$('#scurve'), box=$('#chartbox'); if(!svg)return;
+  const W=Math.max(320,box.clientWidth-24), H=Math.round(Math.min(320,Math.max(220,W*.3)));
+  const C=EV.curve, P=EV.P, xMax=EV.xMax, S=ST, BAC=P.bac||1;
+  const yMax=Math.max(BAC,P.eac||0,...C.pv,...(C.ac.length?C.ac:[0]))*1.08;
+  const m={l:58,r:56,t:12,b:26}, iw=W-m.l-m.r, ih=H-m.t-m.b, X=d=>m.l+d/xMax*iw, Y=v=>m.t+ih-v/yMax*ih;
+  const raw=yMax/4, p10=Math.pow(10,Math.floor(Math.log10(raw))), n=raw/p10, step=(n<=1?1:n<=2?2:n<=5?5:10)*p10;
+  let g='';
+  for(let v=0;v<=yMax+1e-9;v+=step)g+=`<line class="gl" x1="${m.l}" x2="${m.l+iw}" y1="${Y(v)}" y2="${Y(v)}"/><text class="ax" x="${m.l-6}" y="${Y(v)+3.5}" text-anchor="end">${(v/1e6).toLocaleString('ru-RU',{maximumFractionDigits:1})} млн</text>`;
+  for(let d=0;d<=xMax;d+=10)g+=`<text class="ax" x="${X(d)}" y="${H-7}" text-anchor="middle">${d===0?'старт':'Д'+d}</text>`;
+  g+=`<line x1="${m.l}" x2="${m.l+iw}" y1="${Y(BAC)}" y2="${Y(BAC)}" stroke="var(--ink-3)" stroke-dasharray="2 3"/><text class="ax" x="${m.l+4}" y="${Y(BAC)-5}">BAC ${mln(BAC)}</text>`;
+  const path=a=>a.map((v,i)=>`${i?'L':'M'}${X(i).toFixed(1)} ${Y(v).toFixed(1)}`).join(' ');
+  if(S!=null)g+=`<line x1="${X(S)}" x2="${X(S)}" y1="${m.t}" y2="${m.t+ih}" stroke="var(--accent)" stroke-width="1.5"/><text class="ax" x="${X(S)+5}" y="${m.t+10}" style="fill:var(--accent)">Статус Д${S}</text>`;
+  g+=`<path d="${path(C.pv)}" fill="none" stroke="var(--s-pv)" stroke-width="2" stroke-dasharray="6 4"/>`;
+  if(S!=null&&C.ev.length>1){
+    const aS=C.ac[C.ac.length-1], eS=C.ev[C.ev.length-1];
+    g+=`<path d="${path(C.ac)}" fill="none" stroke="var(--s-ac)" stroke-width="2"/><path d="${path(C.ev)}" fill="none" stroke="var(--s-ev)" stroke-width="2"/>`;
+    g+=`<path d="M${X(S)} ${Y(aS)} L${X(D.END)} ${Y(P.eac)}" fill="none" stroke="var(--s-ac)" stroke-width="2" stroke-dasharray="1.5 4" stroke-linecap="round"/>`;
+    g+=`<circle cx="${X(D.END)}" cy="${Y(P.eac)}" r="4" fill="var(--surface)" stroke="var(--s-ac)" stroke-width="2"/><text class="lbl" x="${X(D.END)+7}" y="${Y(P.eac)+4}" style="fill:var(--s-ac)">EAC</text>`;
+    const close=Math.abs(Y(aS)-Y(eS))<12, dy=close?(Y(aS)<Y(eS)?-6:6):0;
+    g+=`<text class="lbl" x="${X(S)-8}" y="${Y(aS)+4+dy}" text-anchor="end" style="fill:var(--s-ac)">AC</text><text class="lbl" x="${X(S)-8}" y="${Y(eS)+4-dy}" text-anchor="end" style="fill:var(--s-ev)">EV</text>`;
+  }
+  g+=`<text class="lbl" x="${X(xMax)+6}" y="${Y(C.pv[C.pv.length-1])+14}" style="fill:var(--s-pv)">PV</text>`;
+  g+=`<line id="cx" y1="${m.t}" y2="${m.t+ih}" stroke="var(--ink-3)" visibility="hidden"/><rect id="hit" x="${m.l}" y="${m.t}" width="${iw}" height="${ih}" fill="transparent"/>`;
+  svg.setAttribute('viewBox',`0 0 ${W} ${H}`); svg.innerHTML=g;
+  const tipEl=$('#ctip'), cx=svg.querySelector('#cx'), hit=svg.querySelector('#hit');
+  hit.addEventListener('mousemove',e=>{const r=svg.getBoundingClientRect(), sx=(e.clientX-r.left)*W/r.width, d=Math.max(0,Math.min(xMax,Math.round((sx-m.l)/iw*xMax)));
+    cx.setAttribute('x1',X(d)); cx.setAttribute('x2',X(d)); cx.setAttribute('visibility','visible');
+    tipEl.innerHTML=`<b>${d===0?'старт':'Д'+d+' · '+DT.fmt(DT.wd(d))}</b><div><span>PV</span>${mln(C.pv[d])}</div>`+(S!=null&&d<=S?`<div><span>EV</span>${mln(C.ev[d])}</div><div><span>AC</span>${mln(C.ac[d])}</div>`:'');
+    tipEl.hidden=false; const bx=box.getBoundingClientRect(); let lx=e.clientX-bx.left+14; if(lx+190>bx.width)lx=e.clientX-bx.left-204; tipEl.style.left=lx+'px'; tipEl.style.top=(e.clientY-bx.top-10)+'px';});
+  hit.addEventListener('mouseleave',()=>{tipEl.hidden=true; cx.setAttribute('visibility','hidden');});
+}
 /* подсказка */
 const tip=$('#tip');
 function tipFor(code){
@@ -442,13 +653,14 @@ function tipFor(code){
   if(t.kind==='ms') rows.push(['Дата',`Д${t.ef} · ${DT.fmt(DT.wd(t.ef))}`]);
   else rows.push(['Сроки',`Д${t.es+1}–Д${t.ef} · ${dd(t.es+1)} – ${dd(t.ef)}`],['Длительность',t.dur+' раб. дн.']);
   if(t.kind==='task'||t.kind==='ms'){ if(t.slack!=null)rows.push(['Резерв до конца проекта',t.slack<=0?'0 — критический путь':t.slack+' раб. дн.']);
-    if(t.dslack!=null&&t.dslack<t.slack)rows.push(['Запас до срока Д55',t.dslack<=0?'0 — срок держится на этой работе':t.dslack+' раб. дн.']); }
+    if(t.dslack!=null&&t.dslack<t.slack)rows.push(['Запас до жёсткого срока',t.dslack<=0?'0 — срок держится на этой работе':t.dslack+' раб. дн.']); }
   const hard=(t.pc||[]).filter(c=>!(t.soft&&t.soft.has(c))), soft=(t.sq||[]);
   if(hard.length)rows.push(['Предшественники',hard.join(', ')]);
   if(soft.length)rows.push(['По очерёдности команды',soft.join(', ')]);
   if(t.blk&&t.blk!=='—')rows.push(['Приоритет по уставу','блок '+t.blk]);
   if(t.succ&&t.succ.length)rows.push(['Последователи',t.succ.join(', ')]);
   if(t.res)rows.push(['Исполнитель',t.res]);
+  {const e=t.kind==='ms'?null:evOf(t); if(e&&e.bac){rows.push(['Бюджет (BAC)',mln(e.bac)]); if(t.pur)rows.push(['В т. ч. закупка',mln(t.pur)+' — освоение по правилу 0/100']); if(ST!=null){rows.push(['Освоено (EV)',mln(e.ev)],['Факт (AC)',mln(e.ac)]);}}}
   let p='';
   if(t.fix!=null)p='Внешняя веха: дата задана извне и не следует из логики плана.';
   if(t.dl!=null)p=`Крайний срок Д${t.dl} (${DT.fmt(DT.wd(t.dl))}). Работы без запаса до этого срока — около-критический путь.`;
