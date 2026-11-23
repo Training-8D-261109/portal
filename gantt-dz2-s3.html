@@ -277,14 +277,14 @@ table.evt{border-collapse:collapse;width:100%;font-size:12.5px}
     <div class="facts" id="facts"></div>
   </div>
 </header>
-<nav class="steps" aria-label="Шаги разбора ДЗ №2"><span class="lbl">Разбор ДЗ №2</span><a href="gantt.html">1. Как есть</a> <a href="gantt-dz2-s2.html">2. Исправлены ошибки</a> <a href="gantt-dz2-s3.html" aria-current="page">3. Решения РП</a> <a href="gantt-dz2-s4.html">4. Новый базовый план</a><span class="note">Решения РП с Д45: приёмка инкубаторного модуля разделена, ветврач учится параллельно, «Ветжурнал» не ждёт хозяйственный модуль, браслеты — по остаточному принципу. Сравнение — с исходным утверждённым планом.</span></nav>
+<nav class="steps" aria-label="Шаги разбора ДЗ №2"><span class="lbl">Разбор ДЗ №2</span><a href="gantt.html">1. Как есть</a> <a href="gantt-dz2-s2.html">2. Исправлены ошибки</a> <a href="gantt-dz2-s3.html" aria-current="page">3. Решения РП</a> <a href="gantt-dz2-s4.html">4. Новый базовый план</a> <a href="gantt-dz2-s5.html">5. EVA</a><span class="note">Решения РП с Д45: приёмка инкубаторного модуля разделена, ветврач учится параллельно, «Ветжурнал» не ждёт хозяйственный модуль, браслеты — по остаточному принципу. Сравнение — с исходным утверждённым планом.</span></nav>
 
 
 <div class="tb" role="toolbar" aria-label="Вид диаграммы">
   <div class="seg" id="view" aria-label="Вид">
     <button type="button" data-v="gantt" aria-pressed="true">Гант</button>
     <button type="button" data-v="load" aria-pressed="false">Загрузка</button>
-    <button type="button" data-v="evm" aria-pressed="false">EVA</button>
+    <button type="button" data-v="evm" aria-pressed="false" class="evbtn">EVA</button>
     <button type="button" data-v="ms" aria-pressed="false">Вехи</button>
   </div>
   <div class="seg monly" id="mlv" aria-label="Уровень вех" hidden>
@@ -346,6 +346,7 @@ table.evt{border-collapse:collapse;width:100%;font-size:12.5px}
 
 <script src="data/project.js" charset="utf-8"></script>
 <script src="js/plan-engine.js" charset="utf-8"></script>
+<script>window.KM_NO_EVA=true;</script>
 <script src="data/plan.js" charset="utf-8"></script>
 <script src="data/plan-dz2-s3.js" charset="utf-8"></script>
 <script src="js/dates.js" charset="utf-8"></script>
@@ -403,8 +404,9 @@ function rows(){
   if(!S.col.has(''))walk(PROJ.kids,1);
   return out;
 }
-const COLS=()=>S.cols?[['ИСР','52px'],['Задача','minmax(240px,300px)'],['Длит.','58px','r'],['Прогресс','82px'],['Начало','72px','r'],['Окончание','94px','r'],['Предш.','92px'],['Ресурсы','190px'],['Резерв','96px','r'],['Бюджет<br>(BAC)','84px','r'],['Освоено<br>(EV)','84px','r'],['Факт<br>(AC)','80px','r']]
-                     :[['ИСР','52px'],['Задача',innerWidth<700?'minmax(160px,200px)':'minmax(200px,340px)'],['Длит.','58px','r'],['Прогресс','82px'],['Резерв','96px','r'],['Бюджет<br>(BAC)','84px','r'],['Освоено<br>(EV)','84px','r'],['Факт<br>(AC)','80px','r']];
+const NOEV=!!window.KM_NO_EVA, MONEY=c=>!(NOEV&&/\((BAC|EV|AC)\)/.test(c[0]));
+const COLS=()=>(S.cols?[['ИСР','52px'],['Задача','minmax(240px,300px)'],['Длит.','58px','r'],['Прогресс','82px'],['Начало','72px','r'],['Окончание','94px','r'],['Предш.','92px'],['Ресурсы','190px'],['Резерв','96px','r'],['Бюджет<br>(BAC)','84px','r'],['Освоено<br>(EV)','84px','r'],['Факт<br>(AC)','80px','r']]
+                     :[['ИСР','52px'],['Задача',innerWidth<700?'minmax(160px,200px)':'minmax(200px,340px)'],['Длит.','58px','r'],['Прогресс','82px'],['Резерв','96px','r'],['Бюджет<br>(BAC)','84px','r'],['Освоено<br>(EV)','84px','r'],['Факт<br>(AC)','80px','r']]).filter(MONEY);
 const CARET='<svg viewBox="0 0 10 10"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
 
 function render(){
@@ -463,7 +465,7 @@ function render(){
       cells+=`<div class="c dt r">${loe?'—':dd(sDay(t))}</div><div class="c dt r">${loe?'—':dd(fDay(t))}</div><div class="c pr" title="${esc(predTxt(t))}">${esc(predTxt(t))}</div><div class="c rs">${chips(t.res)}</div>`;
     }
     cells+=`<div class="c r sl">${slackCell(t)}</div>`;
-    {const e=t.kind==='ms'?null:evOf(t); cells+=`<div class="c r mono money">${e&&e.bac?tr(e.bac):''}</div><div class="c r mono money">${e&&ST!=null&&e.bac?tr(e.ev):''}</div><div class="c r mono money${e&&ST!=null&&e.ac>e.ev*1.005&&e.ac>0?' over':''}">${e&&ST!=null&&e.ac?tr(e.ac):''}</div>`;}
+    if(!NOEV){const e=t.kind==='ms'?null:evOf(t); cells+=`<div class="c r mono money">${e&&e.bac?tr(e.bac):''}</div><div class="c r mono money">${e&&ST!=null&&e.bac?tr(e.ev):''}</div><div class="c r mono money${e&&ST!=null&&e.ac>e.ev*1.005&&e.ac>0?' over':''}">${e&&ST!=null&&e.ac?tr(e.ac):''}</div>`;}
     let bar='';
     if(ham) bar=`<div class="hbar" data-c="${t.code}" style="left:${x(t.es)}px;width:${x(t.ef-t.es)}px"></div>`;
     else if(loe) bar='';
@@ -695,6 +697,7 @@ const Z=[4,6,9,13,18,24];
 $('#zin').onclick=()=>{S.dw=Z[Math.min(Z.length-1,Z.indexOf(S.dw)+1)];render();toStatus();};
 $('#zout').onclick=()=>{S.dw=Z[Math.max(0,Z.indexOf(S.dw)-1)];render();toStatus();};
 $('#lk').onchange=e=>{S.links=e.target.checked;render();};
+if(NOEV)document.querySelectorAll('.evbtn').forEach(b=>b.remove());
 $('#cmp').onclick=e=>{S.cols=!S.cols; e.currentTarget.setAttribute('aria-pressed',String(!S.cols)); render();};
 /* прокрутка шкалы к дню статуса: линия статуса — примерно на трети видимой части шкалы */
 const toStatus=()=>{ if(ST==null||S.view!=='gantt')return; const pane=$('#pane'), lw=parseInt(getComputedStyle($('#grid')).getPropertyValue('--lw'))||0;
