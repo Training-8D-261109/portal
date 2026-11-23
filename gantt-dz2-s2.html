@@ -257,6 +257,13 @@ table.evt{border-collapse:collapse;width:100%;font-size:12.5px}
 .mlvl.l1{background:var(--summary);color:var(--page)}
 .msk{display:inline-block;width:10px;height:10px;transform:rotate(45deg);border:2px solid var(--ink-3);margin-right:6px;vertical-align:-1px}
 .msk.mb{border-style:dashed}.msk.ok{border-color:#2c8a4e;background:#2c8a4e}.msk.warn{border-color:var(--warn);background:var(--warn)}.msk.bad{border-color:var(--crit);background:var(--crit)}
+
+.panew{position:relative}
+.lwh{position:absolute;top:1px;bottom:1px;width:9px;margin-left:-4px;cursor:col-resize;z-index:12;touch-action:none}
+.lwh::after{content:'';position:absolute;left:3px;top:0;bottom:0;width:3px;border-radius:2px;background:transparent;transition:background .15s}
+.lwh:hover::after,.lwh.drag::after{background:var(--accent)}
+.lh,.lc{overflow:hidden}
+body.lwdrag{cursor:col-resize;user-select:none}
 </style>
 <style>
 .steps{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px;margin:10px 24px 0;padding:10px 14px;border:1px solid var(--line,#d9dde5);border-radius:10px;background:var(--panel,#f7f8fa);font-size:13px}
@@ -306,7 +313,7 @@ table.evt{border-collapse:collapse;width:100%;font-size:12.5px}
   <label class="chk gonly"><input type="checkbox" id="cp">Только критический путь</label>
 </div>
 
-<div class="pane" id="pane"><div class="grid" id="grid"></div></div>
+<div class="panew"><div class="pane" id="pane"><div class="grid" id="grid"></div></div><div class="lwh" id="lwh" title="Потяните, чтобы сузить или расширить таблицу слева. Двойной щелчок — вернуть ширину" hidden></div></div>
 
 <div class="foot" id="foot">
   <span class="lg"><i class="sw"></i>Работа (затемнённая часть — выполнено)</span>
@@ -409,7 +416,20 @@ const COLS=()=>(S.cols?[['ИСР','52px'],['Задача','minmax(240px,300px)']
                      :[['ИСР','52px'],['Задача',innerWidth<700?'minmax(160px,200px)':'minmax(200px,340px)'],['Длит.','58px','r'],['Прогресс','82px'],['Резерв','96px','r'],['Бюджет<br>(BAC)','84px','r'],['Освоено<br>(EV)','84px','r'],['Факт<br>(AC)','80px','r']]).filter(MONEY);
 const CARET='<svg viewBox="0 0 10 10"><path d="M1 3l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>';
 
+/* ручка ширины левой таблицы (только вид «Гант»): ширина запоминается в браузере */
+const LWMIN=110; let LWN=0, LWU=null; try{LWU=parseInt(localStorage.getItem('km-gantt-lw'))||null;}catch(e){}
+function placeLwh(w){const h=$('#lwh'); if(!h)return; h.hidden=S.view!=='gantt'; h.style.left=w+'px';}
+function setLw(w,save){ LWU=w==null?null:Math.round(w); try{ if(save){ LWU==null?localStorage.removeItem('km-gantt-lw'):localStorage.setItem('km-gantt-lw',LWU);} }catch(e){}
+  const lwe=LWU?Math.max(LWMIN,Math.min(LWU,LWN)):LWN; $('#grid').style.setProperty('--lw',lwe+'px'); placeLwh(lwe); }
+(()=>{ const h=$('#lwh'); let x0=0,w0=0,on=false;
+  h.addEventListener('pointerdown',e=>{on=true; x0=e.clientX; w0=parseInt(getComputedStyle($('#grid')).getPropertyValue('--lw'))||LWN; h.setPointerCapture(e.pointerId); h.classList.add('drag'); document.body.classList.add('lwdrag'); e.preventDefault();});
+  h.addEventListener('pointermove',e=>{ if(!on)return; setLw(Math.max(LWMIN,Math.min(LWN,w0+e.clientX-x0)),false); });
+  const end=()=>{ if(!on)return; on=false; h.classList.remove('drag'); document.body.classList.remove('lwdrag'); setLw(LWU,true); };
+  h.addEventListener('pointerup',end); h.addEventListener('pointercancel',end);
+  h.addEventListener('dblclick',()=>setLw(null,true));
+})();
 function render(){
+  {const h=$('#lwh'); if(h&&S.view!=='gantt')h.hidden=true;}
   document.querySelectorAll('.gonly').forEach(el=>el.hidden=S.view!=='gantt');
   $('#tost').hidden=S.view!=='gantt'||ST==null;
   $('#foot').hidden=S.view!=='gantt'; $('#footl').hidden=S.view!=='load'; $('#footm').hidden=S.view!=='ms';
@@ -421,7 +441,8 @@ function render(){
   const cols=COLS(), lw=cols.reduce((a,c)=>a+(parseInt(c[1].replace('minmax(','').split(',').pop())||0),0);
   const dw=S.dw, LAST=Math.ceil((Math.max(END,...M.ext.map(e=>e.day))+12)/5)*5, tw=LAST*dw, x=k=>k*dw;
   const g=$('#grid'); g.style.setProperty('--cols',cols.map(c=>c[1].startsWith('minmax')?c[1].split(',').pop().replace(')',''):c[1]).join(' '));
-  g.style.setProperty('--lw',lw+'px'); g.style.setProperty('--tw',tw+'px'); g.style.setProperty('--dw',dw+'px');
+  LWN=lw; const lwe=LWU?Math.max(LWMIN,Math.min(LWU,lw)):lw; placeLwh(lwe);
+  g.style.setProperty('--lw',lwe+'px'); g.style.setProperty('--tw',tw+'px'); g.style.setProperty('--dw',dw+'px');
   $('#zl').textContent=dw>=16?'дни':dw>=8?'недели':'месяцы';
   /* шкала */
   let r1='',r2='';
